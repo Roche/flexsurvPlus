@@ -74,6 +74,11 @@ summaryPSM <- function(x,
     msg = "x must be created using runPSM"
   )
   
+  # fix bindings check
+  mdl1 <- mdl2 <- mdl3 <- ARM <- ARM2 <- NULL
+  Model <- Dist <- Strata <- type <- variable <- time <- value <- NULL
+  
+  
   # impute t if not provided
   if (is.null(t)){
     t <- seq(0, max(x$models[[1]]$data$Y[,"time"]), length.out = 10)
@@ -94,8 +99,8 @@ summaryPSM <- function(x,
   # build appropriate new data for the models with and without parameters
   arm.newdata <- data.frame(ARM = c("Int", "Ref"))
 
-  temp.df <- tibble(mdl = "", ARM = "", type = "", variable = "", time = 1, value = 1) %>%
-    filter(1 ==2)
+  temp.df <- tibble::tibble(mdl = "", ARM = "", type = "", variable = "", time = 1, value = 1) %>%
+    dplyr::filter(1 ==2)
   
   ##################################################
   # cycle through the types and extract information
@@ -125,11 +130,11 @@ summaryPSM <- function(x,
       this.lst[[i]]$mdl = this.lbls[i]
     }
     
-    this.df <- bind_rows(this.lst)
+    this.df <- dplyr::bind_rows(this.lst)
     
     # append to other results
     temp.df <- temp.df %>%
-      bind_rows(this.df)
+      dplyr::bind_rows(this.df)
   }
   
   ##################################################
@@ -139,7 +144,7 @@ summaryPSM <- function(x,
   s1 <- strsplit(temp.df$mdl, split = ".", fixed = TRUE)
   
   final.df <- temp.df %>%
-    mutate(
+    dplyr::mutate(
       mdl1 = sapply(s1, function(x){x[1]}),
       mdl2 = sapply(s1, function(x){x[2]}),
       mdl3 = sapply(s1, function(x){x[3]}),
@@ -155,7 +160,7 @@ summaryPSM <- function(x,
   
   
   rc <- final.df %>%
-    transmute(
+    dplyr::transmute(
       Model = ifelse(Model == "sep","Separate",
                      ifelse(Model == "comshp", "Common shape", 
                             ifelse(Model == "indshp", "Independent shape", "One arm"))),
@@ -181,14 +186,17 @@ summaryPSM <- function(x,
 
 tryFlexSurvPlusSummary <- function(object, type, newdata = NULL, ci = TRUE, se = FALSE, t = NULL){
   
+  # fix bindings check
+  est <- lcl <- ucl <- NULL
+  
   # define a structure for return
-  rc_struct <- tibble(
+  rc_struct <- tibble::tibble(
     ARM = "",
     type = "",
     variable = "",
     time = NaN,
     value = NaN) %>%
-    filter(1 == 2)
+    dplyr::filter(1 == 2)
   
   
   # check object is ok
@@ -223,7 +231,7 @@ tryFlexSurvPlusSummary <- function(object, type, newdata = NULL, ci = TRUE, se =
     
     # estimate
     rc <- rc.summ %>%
-      transmute(variable = "est",
+      dplyr::transmute(variable = "est",
                 value = est,
                 ARM = "",
                 time = NA) 
@@ -231,46 +239,46 @@ tryFlexSurvPlusSummary <- function(object, type, newdata = NULL, ci = TRUE, se =
     # cis requested
     if(ci){
       rc.lcl <- rc.summ %>%
-        transmute(ARM = "",
+        dplyr::transmute(ARM = "",
                   time = NA,
                   variable = "lcl",
                   value = lcl) 
       rc.ucl <- rc.summ %>%
-        transmute(ARM = "",
+        dplyr::transmute(ARM = "",
                   time = NA,
                   variable = "ucl",
                   value = ucl)
       rc <- rc %>%
-        bind_rows(rc.lcl, rc.ucl)
+        dplyr::bind_rows(rc.lcl, rc.ucl)
     }
     
     # se requested
     if(se){
       rc.se <- rc.summ %>%
-        transmute(ARM = "",
+        dplyr::transmute(ARM = "",
                   time = NA,
                   variable = "se",
                   value = se) 
       rc <- rc %>%
-        bind_rows(rc.se)
+        dplyr::bind_rows(rc.se)
     }
     
     
     if("ARM" %in% names(rc.summ)){
       rc <- rc %>%
-        mutate(ARM = rep(as.character(rc.summ$ARM), times = 1+2*ci+se))
+        dplyr::mutate(ARM = rep(as.character(rc.summ$ARM), times = 1+2*ci+se))
     }
     
     if("time" %in% names(rc.summ)){
       rc <- rc %>%
-        mutate(time = rep(rc.summ$time, times = 1+2*ci+se))
+        dplyr::mutate(time = rep(rc.summ$time, times = 1+2*ci+se))
     }
     
   }
   
   # fix the format
   rc <- rc_struct %>%
-    bind_rows(rc) 
+    dplyr::bind_rows(rc) 
   
   rc$type <- type
   

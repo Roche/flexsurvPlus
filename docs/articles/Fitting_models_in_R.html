@@ -106,7 +106,7 @@
       <h1 data-toc-skip>Fitting parametric survival models in R</h1>
                         <h4 class="author">Roche</h4>
             
-            <h4 class="date">2021-10-22</h4>
+            <h4 class="date">2021-12-21</h4>
       
       
       <div class="hidden name"><code>Fitting_models_in_R.Rmd</code></div>
@@ -165,11 +165,8 @@ pre { /* Code block - determines code spacing between lines */
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># Libraries</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">flexsurvPlus</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/chjackson/flexsurv-dev">flexsurv</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival">survival</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">boot</span><span class="op">)</span>
 
 <span class="co"># Non-scientific notation</span>
@@ -1121,7 +1118,7 @@ pre { /* Code block - determines code spacing between lines */
 
 
 <span class="co"># Example 3: reference arm, Generalized Gamma distribution, independent shape model</span>
-<span class="va">surv_indshp_gengamma_ref</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/pkg/flexsurv/man/GenGamma.html">pgengamma</a></span><span class="op">(</span><span class="va">landmark_times</span>,
+<span class="va">surv_indshp_gengamma_ref</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu">pgengamma</span><span class="op">(</span><span class="va">landmark_times</span>,
                                           mu <span class="op">=</span> <span class="va">psm_PFS_all</span><span class="op">$</span><span class="va">parameters_vector</span><span class="op">[</span><span class="st">"indshp.gengamma.mu.ref"</span><span class="op">]</span>,
                                           sigma <span class="op">=</span> <span class="va">psm_PFS_all</span><span class="op">$</span><span class="va">parameters_vector</span><span class="op">[</span><span class="st">"indshp.gengamma.sigma.ref"</span><span class="op">]</span>,
                                           Q <span class="op">=</span> <span class="va">psm_PFS_all</span><span class="op">$</span><span class="va">parameters_vector</span><span class="op">[</span><span class="st">"indshp.gengamma.Q.ref"</span><span class="op">]</span><span class="op">)</span>

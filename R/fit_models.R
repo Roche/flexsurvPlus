@@ -16,7 +16,7 @@
 #' @param data A data frame containing individual patient data for the relevant
 #'   time to event outcomes. This is passed to the \code{data} argument of the
 #'   \code{\link{fit_models}} function
-#' @param dist A vector string of distributions, see dist argument in
+#' @param distr A vector string of distributions, see dist argument in
 #'   \code{\link{flexsurvreg}}. This is passed to the \code{distr} argument of
 #'   the \code{\link{fit_models}} function
 #' @details Possible distributions include:

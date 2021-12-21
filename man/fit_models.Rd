@@ -23,13 +23,13 @@ effect of treatment
 fitted to data from a single treatment group
 }}
 
+\item{distr}{A vector string of distributions, see dist argument in
+\code{\link{flexsurvreg}}. This is passed to the \code{distr} argument of
+the \code{\link{fit_models}} function}
+
 \item{data}{A data frame containing individual patient data for the relevant
 time to event outcomes. This is passed to the \code{data} argument of the
 \code{\link{fit_models}} function}
-
-\item{dist}{A vector string of distributions, see dist argument in
-\code{\link{flexsurvreg}}. This is passed to the \code{distr} argument of
-the \code{\link{fit_models}} function}
 }
 \value{
 A list containing flexsurv objects.

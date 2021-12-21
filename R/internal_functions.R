@@ -4,8 +4,14 @@ Format_data_separate <- function(data, time_var, event_var, strata_var, int_name
   validate_standard_data(data = data, time_var = time_var, event_var = event_var, strata_var = strata_var, int_name = int_name, ref_name = ref_name)
   dat <- data[,c(time_var, event_var, strata_var)]
   colnames(dat) <- c("Time", "Event", "ARM")
-  dat.int <- dat %>% filter(ARM==int_name)
-  dat.ref <- dat %>% filter(ARM==ref_name)
+  
+  # fix bindings check
+  ARM <- NULL
+  
+  dat.int <- dat %>% 
+    dplyr::filter(ARM==int_name)
+  dat.ref <- dat %>% 
+    dplyr::filter(ARM==ref_name)
   return(list(dat.int=dat.int,dat.ref=dat.ref))
 }
 
@@ -14,6 +20,10 @@ Format_data_onearm <- function(data, time_var, event_var, int_name) {
   validate_standard_data_one_arm(data = data, time_var = time_var, event_var = event_var, int_name = int_name)
   dat <- data[,c(time_var, event_var)] 
   colnames(dat) <- c("Time", "Event")
+  
+  # fix bindings check
+  ARM <- NULL
+  
   dat.int <- dat %>%
     dplyr::mutate(ARM=int_name)
     return(dat.int)
@@ -26,11 +36,14 @@ Format_data <- function(data, time_var, event_var, strata_var, int_name, ref_nam
   dat <- data[,c(time_var, event_var, strata_var)]
   colnames(dat) <- c("Time", "Event", "ARM")
   
+  # fix bindings check
+  ARM <- NULL
+  
   dat <- dat %>%
-    filter(ARM %in% c(int_name, ref_name)) %>% 
-    mutate(ARM = ifelse(ARM==int_name, "Int", "Ref"),
-           ARM = factor(ARM, levels = c("Ref", "Int")),
-           ARM = relevel(ARM, ref = "Ref"))
+    dplyr::filter(ARM %in% c(int_name, ref_name)) %>% 
+    dplyr::mutate(ARM = ifelse(ARM==int_name, "Int", "Ref"),
+                  ARM = factor(ARM, levels = c("Ref", "Int")),
+                  ARM = stats::relevel(ARM, ref = "Ref"))
   
   return(dat)
 }
@@ -56,6 +69,9 @@ validate_standard_data <- function(data, time_var, event_var, strata_var, ref_na
     strata_var %in% names(data),
     msg = paste0("strata_var = ", strata_var, " is not found in data.")
   )
+  
+  # fix bindings check
+  ARM <- NULL
   
   dat <- data[,c(time_var, event_var, strata_var)] 
   colnames(dat) <- c("Time", "Event", "ARM")

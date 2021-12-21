@@ -56,6 +56,10 @@ sim_adtte(
 
 \item{enroll_start}{start of enrollment. Defaults to 0.}
 
+\item{enroll_end}{end of enrollment. Defaults to 1.}
+
+\item{admin_censor}{end of trial. Defaults to 2.}
+
 \item{os_gamma}{weibull shape - for OS. Defaults to 1.2.}
 
 \item{os_lambda}{weibull scale - for OS. Defaults to 0.3.}
@@ -63,10 +67,6 @@ sim_adtte(
 \item{ttp_gamma}{weibull shape - for TTP. Defaults to 1.5.}
 
 \item{ttp_lambda}{weibull scale - for TTP. Defaults to 2.}
-
-\item{enroll.end}{end of enrollment. Defaults to 1.}
-
-\item{admin.censor}{end of trial. Defaults to 2.}
 }
 \description{
 This function simulates survival data with correlated time to progression and

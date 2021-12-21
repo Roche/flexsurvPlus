@@ -109,7 +109,7 @@ runPSM <- function(data,
   #parameter for the treatment arm for each distribution
 
   models <- list()
-  model_summary <- tibble()
+  model_summary <- tibble::tibble()
   parameters_vector <- numeric()
   
   if('Common shape' %in% model.type){

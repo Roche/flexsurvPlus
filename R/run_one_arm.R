@@ -63,6 +63,9 @@ run_one_arm <- function(data,
     msg = "Only the following distributions are supported: 'exp', 'weibull', 'gompertz', 'lnorm', 'llogis', 'gengamma', 'gamma', 'genf' "
   )
 
+  # fix no binding checks
+  Model <- Dist <- Intervention_name <- Reference_name <- Status <- AIC <- BIC <- NULL
+  
   # standardise variable names
   data_standard=Format_data_onearm(data, time_var, event_var, int_name)
   model.formula.one.arm=Surv(Time, Event==1) ~ 1
@@ -81,7 +84,7 @@ run_one_arm <- function(data,
   
   
   #Extract parameter estimates
-  coef <- lapply(models.flexsurv, coef)
+  coef <- lapply(models.flexsurv, stats::coef)
   
   if(length(converged_models)>0){
   param_out <- t(unlist(coef)) %>% as.data.frame()
@@ -90,7 +93,7 @@ run_one_arm <- function(data,
   suppressWarnings(colnames(param_out)[colnames(param_out) == 'exp'] <- "exp.rate")
   suppressWarnings(colnames(param_out) <- paste0(colnames(param_out),".int"))
   } else
-  {param_out <- tibble()}
+  {param_out <- tibble::tibble()}
   
   
   # rename for output
@@ -170,7 +173,7 @@ run_one_arm <- function(data,
   col_names_final <- col_names[col_names %in%  names(params_all) ]
   
   params_all <- params_all %>%
-    select(col_names_final)
+    dplyr::select(col_names_final)
   
   # as a vector version with just numerics - needed for bootstrapping
   paramV <- as.numeric(params_all)

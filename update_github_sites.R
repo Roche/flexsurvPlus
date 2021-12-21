@@ -15,6 +15,11 @@ devtools::document()
 # 3) reinstall the updated package 
 devtools::install()
 
+# run checks
+covr::package_coverage()
+devtools::test()
+rcmdcheck::rcmdcheck()
+
 # 4) update the file _pkgdown.yml
 # 5) rebuild documentation using pkgdown
 pkgdown::build_site()

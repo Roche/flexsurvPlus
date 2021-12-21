@@ -98,11 +98,8 @@ The following packages are required to run this example:
 ```{r setup}
 # Libraries
 library(flexsurvPlus)
-library(flexsurv)
 library(tibble)
 library(dplyr)
-library(survival)
-library(tidyr)
 library(boot)
 
 # Non-scientific notation

@@ -154,7 +154,6 @@ understand which distribution might be the best fit to the data being modeled:
     
 
 ```{r distribution_properties, echo=FALSE}
-suppressWarnings(suppressMessages(library(kableExtra)))
 
 exponential <- c("Exponential",
                  "$1: \\ b$",

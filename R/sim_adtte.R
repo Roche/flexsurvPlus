@@ -20,8 +20,8 @@
 #' @param beta_pd treatment effect on progression (as log(HR)). Defaults to log(0.4).
 #' @param arm_n patients per arm. Defaults to 250.
 #' @param enroll_start start of enrollment. Defaults to 0.
-#' @param enroll.end end of enrollment. Defaults to 1.
-#' @param admin.censor end of trial. Defaults to 2.
+#' @param enroll_end end of enrollment. Defaults to 1.
+#' @param admin_censor end of trial. Defaults to 2.
 #' @param os_gamma weibull shape - for OS. Defaults to 1.2.
 #' @param os_lambda weibull scale - for OS. Defaults to 0.3.
 #' @param ttp_gamma weibull shape - for TTP. Defaults to 1.5.
@@ -69,9 +69,9 @@ sim_adtte <- function(
   # u2 and u3 are correlated uniform random variables used for OS and switch time
   # u4 used for censoring time (entry time)
   # u5 used for selecting switchers
-  u <- matrix(nrow = arm_n*2, ncol = 5,data = runif(arm_n*2*5,0,1))
+  u <- matrix(nrow = arm_n*2, ncol = 5,data = stats::runif(arm_n*2*5,0,1))
   # setup correlations using normal variables then convert back to uniform
-  u[,3] <- pnorm(rho* qnorm(u[,2],0,1) + ((1-rho^2)^0.5)*qnorm(u[,1],0,1),0,1)  
+  u[,3] <- stats::pnorm(rho* stats::qnorm(u[,2],0,1) + ((1-rho^2)^0.5)*stats::qnorm(u[,1],0,1),0,1)  
   # generate covariates
   x.trt    <- rep(c(0,1), each = arm_n)  
   # generate os without treatment
@@ -85,11 +85,11 @@ sim_adtte <- function(
   # generate pfs
   pfs.basis.t <- pmin(os.basis.t, ttp.basis.t)
   # generate entry time
-  t.entry <- enroll_start + runif(u[,4])*(enroll_end-enroll_start)
+  t.entry <- enroll_start + stats::runif(u[,4])*(enroll_end-enroll_start)
   # generate follow up time
   t.censor <- admin_censor - t.entry
   # define a time in trial after which switch happens
-  t.start.switch <- as.numeric(quantile(t.entry + pfs.basis.t, proppd))
+  t.start.switch <- as.numeric(stats::quantile(t.entry + pfs.basis.t, proppd))
   # who can switch - have ttp before os and censor
   can.switch <- as.numeric(
     ttp.basis.t < os.basis.t &
@@ -202,7 +202,7 @@ sim_adtte <- function(
   rc <- rbind(df_pfs, df_os)
   
   if (rc_origos == TRUE){
-    rc <- rbind(rc, df_so_exsw)
+    rc <- rbind(rc, df_os_exsw)
   }
   
   if (rc_siminfo == TRUE){

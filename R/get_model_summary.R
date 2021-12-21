@@ -34,11 +34,15 @@ get_model_summary <- function(models) {
     msg = "get_params expects a list of 'flexsurvreg' objects as input. At least one of your inputs is not a flexsurvreg object"
   )
   
+  
+  # fix bindings check
+  name <- value <- NULL
+  
   output <-   tibble::enframe(models.flexsurv) %>%
     dplyr::mutate(
       Dist = name,
-      AIC = sapply(models.flexsurv, AIC), #get AIC
-      BIC = sapply(models.flexsurv, BIC), #get BIC
+      AIC = sapply(models.flexsurv, stats::AIC), #get AIC
+      BIC = sapply(models.flexsurv, stats::BIC), #get BIC
       Status = "Converged"
     ) %>%
     dplyr::select(-value, -name) %>% 

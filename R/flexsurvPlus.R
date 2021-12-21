@@ -7,4 +7,5 @@
 #' @docType package
 #' @name flexsurvPlus
 #' @importFrom magrittr "%>%"
+#' @importFrom flexsurv flexsurvreg
 NULL

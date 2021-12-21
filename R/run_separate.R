@@ -71,9 +71,12 @@ run_separate <- function(data,
     msg = "Only the following distributions are supported: 'exp', 'weibull', 'gompertz', 'lnorm', 'llogis', 'gengamma', 'gamma', 'genf' "
   )
   
+  # fix no binding checks
+  Model <- Dist <- Intervention_name <- Reference_name <- Status <- AIC <- BIC <- NULL
+  
   # standardise variable names
   data_standard=Format_data_separate(data, time_var, event_var, strata_var, int_name, ref_name)
-  model.formula.sep=Surv(Time, Event==1) ~ 1
+  model.formula.sep=survival::Surv(Time, Event==1) ~ 1
   
   #Fit the models for seven standard distributions
   message("Fitting separate shape models - intervention arm") 
@@ -97,8 +100,8 @@ run_separate <- function(data,
   
   
   #Extract parameter estimates
-  coef.int <- lapply(models.flexsurv.int, coef)
-  coef.ref <- lapply(models.flexsurv.ref, coef)
+  coef.int <- lapply(models.flexsurv.int, stats::coef)
+  coef.ref <- lapply(models.flexsurv.ref, stats::coef)
 
   if(length(converged_models.int)>0){
   param_out.int <- t(unlist(coef.int)) %>% as.data.frame()
@@ -107,7 +110,7 @@ run_separate <- function(data,
   suppressWarnings(colnames(param_out.int)[colnames(param_out.int) == 'exp'] <- "exp.rate")
   suppressWarnings(colnames(param_out.int) <- paste0(colnames(param_out.int),".int"))
   } else
-  {param_out.int <- tibble()}
+  {param_out.int <- tibble::tibble()}
   
   
   if(length(converged_models.ref)>0){
@@ -117,7 +120,7 @@ run_separate <- function(data,
   suppressWarnings(colnames(param_out.ref)[colnames(param_out.ref) == 'exp'] <- "exp.rate")
   suppressWarnings(colnames(param_out.ref) <- paste0(colnames(param_out.ref),".ref"))
   } else
-  {param_out.ref <- tibble()}
+  {param_out.ref <- tibble::tibble()}
 
 
   
@@ -136,7 +139,7 @@ run_separate <- function(data,
       param_out <- cbind(param_out.int, param_out.ref)  %>%
     as.data.frame() 
   } else {
-    param_out <- param_out.ref <- tibble()
+    param_out <- param_out.ref <- tibble::tibble()
       }
   
   #######################################################
@@ -224,7 +227,7 @@ run_separate <- function(data,
   col_names_final <- col_names[col_names %in%  names(params_all) ]
 
   params_all <- params_all %>%
-    select(col_names_final)
+    dplyr::select(col_names_final)
   
   
   # as a vector version with just numerics - needed for bootstrapping

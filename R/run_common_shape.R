@@ -70,9 +70,21 @@ run_common_shape <- function(data,
     msg = "Only the following distributions are supported: 'exp', 'weibull', 'gompertz', 'lnorm', 'llogis', 'gengamma', 'gamma, 'genf' "
   )
   
+  # fix no binding checks
+  Model <- Dist <- Intervention_name <- Reference_name <- Status <- AIC <- BIC <- NULL
+  exp.rate <- exp.ARMInt <- NULL
+  weibull.scale <- weibull.ARMInt <- weibull.shape <- NULL
+  gompertz.rate <- gompertz.ARMInt <- gompertz.shape <- NULL
+  llogis.scale <- llogis.ARMInt <- llogis.shape <- NULL
+  gamma.rate <- gamma.ARMInt <- gamma.shape <- NULL
+  lnorm.meanlog <- lnorm.ARMInt <- lnorm.sdlog <- NULL
+  gengamma.mu <- gengamma.ARMInt <- gengamma.sigma <- gengamma.Q <- NULL
+  genf.mu <- genf.ARMInt <- genf.sigma <- genf.Q <- genf.P <- NULL
+  
+  
   # standardise variable names
   data_standard=Format_data(data, time_var, event_var, strata_var, int_name, ref_name)
-  model.formula=Surv(Time, Event==1) ~ ARM
+  model.formula=survival::Surv(Time, Event==1) ~ ARM
   
   #Fit the models for seven standard distributions
   message("Fitting common shape models")
@@ -88,11 +100,11 @@ run_common_shape <- function(data,
   
   
   #Extract parameter estimates
-  coef <- lapply(models.flexsurv, coef)
+  coef <- lapply(models.flexsurv, stats::coef)
   if(length(converged_models)>0){
   param_out <- t(unlist(coef)) %>% as.data.frame()
   } else
-  {param_out <- tibble()}
+  {param_out <- tibble::tibble()}
   
   
   if('exp' %in% converged_models){
@@ -114,7 +126,7 @@ run_common_shape <- function(data,
         weibull.shape.int = weibull.shape,
         weibull.shape.ref = weibull.shape,
         weibull.scale.TE = weibull.ARMInt) %>%
-      select(-weibull.scale, -weibull.shape, -weibull.ARMInt)
+      dplyr::select(-weibull.scale, -weibull.shape, -weibull.ARMInt)
     
   }
   
@@ -126,7 +138,7 @@ run_common_shape <- function(data,
         gompertz.shape.int = gompertz.shape,
         gompertz.shape.ref = gompertz.shape,
         gompertz.rate.TE = gompertz.ARMInt) %>%
-      select(-gompertz.rate, -gompertz.shape, -gompertz.ARMInt)
+      dplyr::select(-gompertz.rate, -gompertz.shape, -gompertz.ARMInt)
     
     
   }
@@ -139,7 +151,7 @@ run_common_shape <- function(data,
         llogis.shape.int = llogis.shape,
         llogis.shape.ref = llogis.shape,
         llogis.scale.TE = llogis.ARMInt) %>%
-      select(-llogis.scale, -llogis.shape, -llogis.ARMInt)
+      dplyr::select(-llogis.scale, -llogis.shape, -llogis.ARMInt)
     
   }
   
@@ -151,7 +163,7 @@ run_common_shape <- function(data,
         gamma.shape.int = gamma.shape,
         gamma.shape.ref = gamma.shape,
         gamma.rate.TE = gamma.ARMInt) %>%
-      select(-gamma.rate, -gamma.shape, -gamma.ARMInt)
+      dplyr::select(-gamma.rate, -gamma.shape, -gamma.ARMInt)
     
   }
   
@@ -163,7 +175,7 @@ run_common_shape <- function(data,
         lnorm.sdlog.int = lnorm.sdlog,
         lnorm.sdlog.ref = lnorm.sdlog,
         lnorm.meanlog.TE = lnorm.ARMInt) %>%
-      select(-lnorm.meanlog, -lnorm.sdlog, -lnorm.ARMInt)
+      dplyr::select(-lnorm.meanlog, -lnorm.sdlog, -lnorm.ARMInt)
     
   }
   
@@ -177,7 +189,7 @@ run_common_shape <- function(data,
         gengamma.Q.int = gengamma.Q,
         gengamma.Q.ref = gengamma.Q,
         gengamma.mu.TE = gengamma.ARMInt) %>%
-      select(-gengamma.mu, -gengamma.sigma, -gengamma.Q, -gengamma.ARMInt)
+      dplyr::select(-gengamma.mu, -gengamma.sigma, -gengamma.Q, -gengamma.ARMInt)
     
   }
   
@@ -193,7 +205,7 @@ run_common_shape <- function(data,
         genf.P.int = genf.P,
         genf.P.ref = genf.P,
         genf.mu.TE = genf.ARMInt) %>%
-      select(-genf.mu, -genf.sigma, -genf.Q, -genf.P, -genf.ARMInt)
+      dplyr::select(-genf.mu, -genf.sigma, -genf.Q, -genf.P, -genf.ARMInt)
     
   }
   
@@ -301,7 +313,7 @@ run_common_shape <- function(data,
   col_names_final <- col_names[col_names %in%  names(params_all) ]
   
   params_all <- params_all %>%
-    select(col_names_final)
+    dplyr::select(col_names_final)
   
   # as a vector version with just numerics - needed for bootstrapping
   paramV <- as.numeric(params_all)

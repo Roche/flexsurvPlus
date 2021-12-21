@@ -74,19 +74,30 @@ run_independent_shape <- function(data,
     msg = "Only the following distributions are supported: 'exp', weibull', 'gompertz', 'lnorm', 'llogis', 'gengamma', 'gamma', 'genf' "
   )
   
+  # fix no binding checks
+  Model <- Dist <- Intervention_name <- Reference_name <- Status <- AIC <- BIC <- NULL
+  exp.rate <- exp.ARMInt <- NULL
+  weibull.scale <- weibull.ARMInt <- weibull.shape <- `weibull.shape(ARMInt)` <- NULL
+  gompertz.rate <- gompertz.ARMInt <- gompertz.shape <- `gompertz.shape(ARMInt)` <- NULL
+  llogis.scale <- llogis.ARMInt <- llogis.shape <- `llogis.shape(ARMInt)` <- NULL
+  gamma.rate <- gamma.ARMInt <- gamma.shape <- `gamma.shape(ARMInt)` <- NULL
+  lnorm.meanlog <- lnorm.ARMInt <- lnorm.sdlog <- `lnorm.sdlog(ARMInt)` <- NULL
+  gengamma.mu <- gengamma.ARMInt <- gengamma.sigma <- gengamma.Q <- `gengamma.sigma(ARMInt)` <- `gengamma.Q(ARMInt)` <- NULL
+  genf.mu <- genf.ARMInt <- genf.sigma <- genf.Q <- genf.P <- `genf.sigma(ARMInt)` <- `genf.Q(ARMInt)` <- `genf.P(ARMInt)` <- NULL
+  
   # standardise variable names
   data_standard=Format_data(data, time_var, event_var, strata_var, int_name, ref_name)
   
   # Model formulas
-  model.formula.int = Surv(Time, Event==1) ~ ARM
-  model.formula.shape = Surv(Time, Event==1) ~ ARM + shape(ARM)
-  model.formula.sdlog = Surv(Time, Event==1) ~ ARM + sdlog(ARM)
-  model.formula.sigma_Q = Surv(Time, Event==1) ~ ARM + sigma(ARM) + Q(ARM)
-  model.formula.sigma_Q_P = Surv(Time, Event==1) ~ ARM + sigma(ARM) + Q(ARM) + P(ARM)
+  model.formula.int = survival::Surv(Time, Event==1) ~ ARM
+  model.formula.shape = survival::Surv(Time, Event==1) ~ ARM + shape(ARM)
+  model.formula.sdlog = survival::Surv(Time, Event==1) ~ ARM + sdlog(ARM)
+  model.formula.sigma_Q = survival::Surv(Time, Event==1) ~ ARM + sigma(ARM) + Q(ARM)
+  model.formula.sigma_Q_P = survival::Surv(Time, Event==1) ~ ARM + sigma(ARM) + Q(ARM) + P(ARM)
   
   models <- list()
-  model_summary <- tibble()
-  params_out <- tibble(.rows = 1)
+  model_summary <- tibble::tibble()
+  params_out <- tibble::tibble(.rows = 1)
   
   message("Fitting independant shape models")
   
@@ -96,7 +107,7 @@ run_independent_shape <- function(data,
     model_summary.exp$Dist <- "indshp.exp"
     model_summary <- dplyr::bind_rows(model_summary, model_summary.exp)
     if(class(models.exp$exp)=="flexsurvreg"){
-      coef.exp <- lapply(models.exp, coef)
+      coef.exp <- lapply(models.exp, stats::coef)
       param_out.exp <- t(unlist(coef.exp)) %>% as.data.frame() %>%
       dplyr::mutate(
         exp.rate.int = exp.rate + exp.ARMInt,
@@ -124,7 +135,7 @@ run_independent_shape <- function(data,
     model_summary.weib$Dist <- "indshp.weibull"
     model_summary <- dplyr::bind_rows(model_summary, model_summary.weib)
     if(class(models.weib$weibull)=="flexsurvreg"){
-      coef.weib <- lapply(models.weib, coef)
+      coef.weib <- lapply(models.weib, stats::coef)
       param_out.weib <- t(unlist(coef.weib)) %>% as.data.frame() %>%
         dplyr::mutate(
         weibull.scale.int = weibull.scale + weibull.ARMInt,
@@ -133,7 +144,7 @@ run_independent_shape <- function(data,
         weibull.shape.ref = weibull.shape,
         weibull.scale.TE = weibull.ARMInt,
         weibull.shape.TE = `weibull.shape(ARMInt)`) %>%
-      select(-weibull.scale, -weibull.shape, -weibull.ARMInt, -`weibull.shape(ARMInt)`)
+      dplyr::select(-weibull.scale, -weibull.shape, -weibull.ARMInt, -`weibull.shape(ARMInt)`)
       param_out.weib <- post_process_param_out(param_out.weib) 
     }
     else {
@@ -158,7 +169,7 @@ run_independent_shape <- function(data,
     model_summary.gomp$Dist <- "indshp.gompertz"
     model_summary <- dplyr::bind_rows(model_summary, model_summary.gomp)
     if(class(models.gomp$gompertz)=="flexsurvreg"){
-      coef.gomp <- lapply(models.gomp, coef)
+      coef.gomp <- lapply(models.gomp, stats::coef)
       param_out.gomp <- t(unlist(coef.gomp)) %>% as.data.frame() %>%
         dplyr::mutate(
         gompertz.rate.int = gompertz.rate + gompertz.ARMInt,
@@ -167,7 +178,7 @@ run_independent_shape <- function(data,
         gompertz.shape.ref = gompertz.shape,
         gompertz.rate.TE = gompertz.ARMInt,
         gompertz.shape.TE = `gompertz.shape(ARMInt)`) %>%
-      select(-gompertz.rate, -gompertz.shape, -gompertz.ARMInt,-`gompertz.shape(ARMInt)`)
+      dplyr::select(-gompertz.rate, -gompertz.shape, -gompertz.ARMInt,-`gompertz.shape(ARMInt)`)
       param_out.gomp <- post_process_param_out(param_out.gomp) 
     }
     else {
@@ -192,7 +203,7 @@ run_independent_shape <- function(data,
     model_summary.llogis$Dist <- "indshp.llogis"
     model_summary <- dplyr::bind_rows(model_summary, model_summary.llogis)
     if(class(models.llogis$llogis)=="flexsurvreg"){
-      coef.llogis <- lapply(models.llogis, coef)
+      coef.llogis <- lapply(models.llogis, stats::coef)
       param_out.llogis <- t(unlist(coef.llogis)) %>% as.data.frame() %>%
         dplyr::mutate(
         llogis.scale.int = llogis.scale + llogis.ARMInt,
@@ -201,7 +212,7 @@ run_independent_shape <- function(data,
         llogis.shape.ref = llogis.shape,
         llogis.scale.TE = llogis.ARMInt,
         llogis.shape.TE = `llogis.shape(ARMInt)`) %>%
-      select(-llogis.scale, -llogis.shape, -llogis.ARMInt, -`llogis.shape(ARMInt)`)
+      dplyr::select(-llogis.scale, -llogis.shape, -llogis.ARMInt, -`llogis.shape(ARMInt)`)
       param_out.llogis <- post_process_param_out(param_out.llogis) 
     }
     else {
@@ -226,7 +237,7 @@ run_independent_shape <- function(data,
     model_summary.gamma$Dist <- "indshp.gamma"
     model_summary <- dplyr::bind_rows(model_summary, model_summary.gamma)
     if(class(models.gamma$gamma)=="flexsurvreg"){
-      coef.gamma <- lapply(models.gamma, coef)
+      coef.gamma <- lapply(models.gamma, stats::coef)
       param_out.gamma <- t(unlist(coef.gamma)) %>% as.data.frame() %>%
         dplyr::mutate(
         gamma.rate.int = gamma.rate + gamma.ARMInt,
@@ -235,7 +246,7 @@ run_independent_shape <- function(data,
         gamma.shape.ref = gamma.shape,
         gamma.rate.TE = gamma.ARMInt,
         gamma.shape.TE = `gamma.shape(ARMInt)`) %>%
-      select(-gamma.rate, -gamma.shape, -gamma.ARMInt, -`gamma.shape(ARMInt)`)
+      dplyr::select(-gamma.rate, -gamma.shape, -gamma.ARMInt, -`gamma.shape(ARMInt)`)
       param_out.gamma <- post_process_param_out(param_out.gamma) 
     }
     else {
@@ -260,7 +271,7 @@ run_independent_shape <- function(data,
     model_summary.lnorm$Dist <- "indshp.lnorm"
     model_summary <- dplyr::bind_rows(model_summary, model_summary.lnorm)
     if(class(models.lnorm$lnorm)=="flexsurvreg"){
-      coef.lnorm <- lapply(models.lnorm, coef)
+      coef.lnorm <- lapply(models.lnorm, stats::coef)
       param_out.lnorm <- t(unlist(coef.lnorm)) %>% as.data.frame() %>%
         dplyr::mutate(
         lnorm.meanlog.int = lnorm.meanlog + lnorm.ARMInt,
@@ -269,7 +280,7 @@ run_independent_shape <- function(data,
         lnorm.sdlog.ref = lnorm.sdlog,
         lnorm.meanlog.TE = lnorm.ARMInt,
         lnorm.sdlog.TE = `lnorm.sdlog(ARMInt)`) %>%
-      select(-lnorm.meanlog, -lnorm.sdlog, -lnorm.ARMInt, -`lnorm.sdlog(ARMInt)`)
+      dplyr::select(-lnorm.meanlog, -lnorm.sdlog, -lnorm.ARMInt, -`lnorm.sdlog(ARMInt)`)
       param_out.lnorm <- post_process_param_out(param_out.lnorm) 
     }
     else {
@@ -294,7 +305,7 @@ run_independent_shape <- function(data,
     model_summary.gengamma$Dist <- "indshp.gengamma"
     model_summary <- dplyr::bind_rows(model_summary, model_summary.gengamma)
 if(class(models.gengamma$gengamma)=="flexsurvreg"){
-      coef.gengamma <- lapply(models.gengamma, coef)
+      coef.gengamma <- lapply(models.gengamma, stats::coef)
       param_out.gengamma <- t(unlist(coef.gengamma)) %>% as.data.frame() %>%
         dplyr::mutate(
         gengamma.mu.int = gengamma.mu + gengamma.ARMInt,
@@ -306,7 +317,7 @@ if(class(models.gengamma$gengamma)=="flexsurvreg"){
         gengamma.mu.TE = gengamma.ARMInt,
         gengamma.sigma.TE = `gengamma.sigma(ARMInt)`,
         gengamma.Q.TE = `gengamma.Q(ARMInt)`) %>%
-      select(-gengamma.mu, -gengamma.sigma, -gengamma.Q, -gengamma.ARMInt, -`gengamma.sigma(ARMInt)`, -`gengamma.Q(ARMInt)`)
+      dplyr::select(-gengamma.mu, -gengamma.sigma, -gengamma.Q, -gengamma.ARMInt, -`gengamma.sigma(ARMInt)`, -`gengamma.Q(ARMInt)`)
       param_out.gengamma <- post_process_param_out(param_out.gengamma) 
 }
     else {
@@ -334,7 +345,7 @@ if(class(models.gengamma$gengamma)=="flexsurvreg"){
     model_summary.genf$Dist <- "indshp.genf"
     model_summary <- dplyr::bind_rows(model_summary, model_summary.genf)
   if(class(models.genf$genf)=="flexsurvreg"){
-      coef.genf <- lapply(models.genf, coef)
+      coef.genf <- lapply(models.genf, stats::coef)
       param_out.genf <- t(unlist(coef.genf)) %>% as.data.frame() %>%
         dplyr::mutate(
         genf.mu.int = genf.mu + genf.ARMInt,
@@ -349,7 +360,7 @@ if(class(models.gengamma$gengamma)=="flexsurvreg"){
         genf.sigma.TE = `genf.sigma(ARMInt)`,
         genf.Q.TE = `genf.Q(ARMInt)`,
         genf.P.TE = `genf.P(ARMInt)`) %>%
-      select(-genf.mu, -genf.sigma, -genf.Q, -genf.P, -genf.ARMInt, -`genf.sigma(ARMInt)`, -`genf.Q(ARMInt)`, -`genf.P(ARMInt)`)
+      dplyr::select(-genf.mu, -genf.sigma, -genf.Q, -genf.P, -genf.ARMInt, -`genf.sigma(ARMInt)`, -`genf.Q(ARMInt)`, -`genf.P(ARMInt)`)
       param_out.genf <- post_process_param_out(param_out.genf) 
   }
     else {
@@ -399,7 +410,7 @@ if(class(models.gengamma$gengamma)=="flexsurvreg"){
   col_names_final <- col_names[col_names %in%  names(params_out) ]
   
   param_final <- params_out %>%
-    select(col_names_final)
+    dplyr::select(col_names_final)
   
   # as a vector version with just numerics - needed for bootstrapping
   paramV <- as.numeric(param_final)

@@ -56,7 +56,6 @@ The following packages are required to run this example:
 library(flexsurvPlus)
 library(tibble)
 library(dplyr)
-library(survival)
 library(boot)
 ```
 
