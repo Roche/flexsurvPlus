@@ -5,10 +5,15 @@ This package facilitates performing survival analysis to support the creation of
 ## installation code
 ```
 devtools::install_github(
-  "roche/flexsurvPlus"
+  "roche/flexsurvPlus",
+  ref = "main"
   )
 ```
 
 ## documentation
 
 https://roche.github.io/flexsurvPlus/index.html
+
+## roadmap of future updates
+
+https://github.com/Roche/flexsurvPlus/projects/1
