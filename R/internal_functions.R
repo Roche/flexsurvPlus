@@ -123,14 +123,16 @@ validate_standard_data_one_arm <- function(data, time_var, event_var, int_name){
     msg = paste0("event_var = ", event_var, " is not found in data.")
   )
   
-
+  dat <- data[,c(time_var, event_var)] 
+  colnames(dat) <- c("Time", "Event")
+  
   assertthat::assert_that(
-    all(data$Time > 0),
+    all(dat$Time > 0),
     msg = paste0("Invalid time values found. All values of time_var = ", time_var, " must be greater than 0")
   )
   
   assertthat::assert_that(
-    all(data$Event %in% c(0,1)),
+    all(dat$Event %in% c(0,1)),
     msg = paste0("Invalid event values found. All values of event_var = ", event_var, " must be 0 or 1 only. With 1 indicating event.")
   )
   

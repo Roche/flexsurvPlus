@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 csl: biomedicine.csl
 vignette: >
-  %\VignetteIndexEntry{STEM compatability}
+  %\VignetteIndexEntry{STEM compatibility}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -266,7 +266,7 @@ PFS_conv_all <- convSTEM(x = psm_PFS_all)
 ```
 ## Conversion of parameters
 
-Note in general independent shape models were not estimated by STEM macro so are converted for backwards compatability as if if they were estimated by separate models. This has implications for how AIC and BIC should be interpreted in these cases.
+Note in general independent shape models were not estimated by STEM macro so are converted for backwards compatibility as if if they were estimated by separate models. This has implications for how AIC and BIC should be interpreted in these cases.
 
 ### Conversion of Exponential models
 
@@ -277,15 +277,15 @@ The SAS STEM macro reports INTERCEPT and TX(INTERVENTION) which are converted as
 #### Seperate models
 
 * Reference arm 
-  * INTERCEPT = $-log(b_R)$ 
+  * INTERCEPT = $-\log(b_R)$ 
   
 * Intervention arm 
-  * INTERCEPT = $-log(b_I)$
+  * INTERCEPT = $-\log(b_I)$
 
 #### Common shape models
 
-* INTERCEPT = $-log(b_R)$ 
-* TX(INTERVENTION) = $-(log(b_I) - log(b_R))$
+* INTERCEPT = $-\log(b_R)$ 
+* TX(INTERVENTION) = $-(\log(b_I) - \log(b_R))$
 
 ### Conversion of Weibull models
 
@@ -296,16 +296,16 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are conve
 #### Seperate models
 
 * Reference arm
-  * INTERCEPT = $log(b_R)$ 
+  * INTERCEPT = $\log(b_R)$ 
   * SCALE = $\frac{1}{a_R}$
 * Intervention arm 
-  * INTERCEPT = $log(b_I)$ 
+  * INTERCEPT = $\log(b_I)$ 
   * SCALE = $\frac{1}{a_I}$
 
 #### Common shape models
 
-* INTERCEPT = $log(b_R)$ 
-* TX(INTERVENTION) = $log(b_I) - log(b_R)$
+* INTERCEPT = $\log(b_R)$ 
+* TX(INTERVENTION) = $\log(b_I) - \log(b_R)$
 * SCALE = $\frac{1}{a_R}$ 
 
 
@@ -318,16 +318,16 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are conve
 #### Seperate models
 
 * Reference arm
-  * INTERCEPT = $-log(b_R)$ 
+  * INTERCEPT = $-\log(b_R)$ 
   * SCALE = $a_R$
 * Intervention arm 
-  * INTERCEPT = $-log(b_I)$
+  * INTERCEPT = $-\log(b_I)$
   * SCALE = $a_I$
 
 #### Common shape models
 
-* INTERCEPT = $-log(b_R)$ 
-* TX(INTERVENTION) = $-(log(b_I) - log(b_R))$
+* INTERCEPT = $-\log(b_R)$ 
+* TX(INTERVENTION) = $-(\log(b_I) - \log(b_R))$
 * SCALE = $a_R$ 
 
 ### Conversion of Log-logistic models
@@ -339,16 +339,16 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are conve
 #### Seperate models
 
 * Reference arm
-  * INTERCEPT = $log(b_R)$ 
+  * INTERCEPT = $\log(b_R)$ 
   * SCALE = $\frac{1}{a_R}$
 * Intervention arm
-  * INTERCEPT = $log(b_I)$
+  * INTERCEPT = $\log(b_I)$
   * SCALE = $\frac{1}{a_I}$
 
 #### Common shape models
 
-* INTERCEPT = $-log(b_R)$ 
-* TX(INTERVENTION) = $log(b_I) - log(B_R)$
+* INTERCEPT = $-\log(b_R)$ 
+* TX(INTERVENTION) = $\log(b_I) - \log(B_R)$
 * SCALE = $\frac{1}{a_R}$ 
 
 ### Conversion of Log-normal models
@@ -396,6 +396,27 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION), SCALE and SHAPE which ar
 * SCALE = $\sigma_R$ 
 * SHAPE = $Q_R$ 
 
+
+### Conversion of Gamma models
+
+<tt>flexsurvPlus</tt> uses the parameters Shape ($a$) and Rate ($b$). For common shape, independent shape and separate models these can be denoted as $a_R, b_R$ for reference and $a_I, b_I$ for intervention. For common shape models $a_R=a_I$.
+
+The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are converted as shown below. This is equivalent to the parameters used for the Generalized Gamma when the constraint that $\sigma = Q$ or SCALE = SHAPE is applied.
+
+#### Seperate models
+
+* Reference arm
+  * INTERCEPT = $-\log(\frac{b_R}{a_R})$ 
+  * SCALE = $\frac{1}{\sqrt{a_R}}$
+* Intervention arm
+  * INTERCEPT = $-\log(\frac{b_I}{a_I})$ 
+  * SCALE = $\frac{1}{\sqrt{a_I}}$
+
+#### Common shape models
+
+* INTERCEPT = $-\log(\frac{b_R}{a_R})$ 
+* TX(INTERVENTION) =  $-(\log(b_I) - \log(b_R))$
+* SCALE = $\frac{1}{\sqrt{a_R}}$ 
 
 ## Conversion of AIC and BIC
 

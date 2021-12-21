@@ -434,7 +434,7 @@ pre { /* Code block - determines code spacing between lines */
 <div id="conversion-of-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#conversion-of-parameters" class="anchor"></a>Conversion of parameters</h2>
-<p>Note in general independent shape models were not estimated by STEM macro so are converted for backwards compatability as if if they were estimated by separate models. This has implications for how AIC and BIC should be interpreted in these cases.</p>
+<p>Note in general independent shape models were not estimated by STEM macro so are converted for backwards compatibility as if if they were estimated by separate models. This has implications for how AIC and BIC should be interpreted in these cases.</p>
 <div id="conversion-of-exponential-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#conversion-of-exponential-models" class="anchor"></a>Conversion of Exponential models</h3>
@@ -446,13 +446,13 @@ pre { /* Code block - determines code spacing between lines */
 <ul>
 <li>Reference arm
 <ul>
-<li>INTERCEPT = <span class="math inline">\(-log(b_R)\)</span>
+<li>INTERCEPT = <span class="math inline">\(-\log(b_R)\)</span>
 </li>
 </ul>
 </li>
 <li>Intervention arm
 <ul>
-<li>INTERCEPT = <span class="math inline">\(-log(b_I)\)</span>
+<li>INTERCEPT = <span class="math inline">\(-\log(b_I)\)</span>
 </li>
 </ul>
 </li>
@@ -462,9 +462,9 @@ pre { /* Code block - determines code spacing between lines */
 <h4 class="hasAnchor">
 <a href="#common-shape-models" class="anchor"></a>Common shape models</h4>
 <ul>
-<li>INTERCEPT = <span class="math inline">\(-log(b_R)\)</span>
+<li>INTERCEPT = <span class="math inline">\(-\log(b_R)\)</span>
 </li>
-<li>TX(INTERVENTION) = <span class="math inline">\(-(log(b_I) - log(b_R))\)</span>
+<li>TX(INTERVENTION) = <span class="math inline">\(-(\log(b_I) - \log(b_R))\)</span>
 </li>
 </ul>
 </div>
@@ -480,7 +480,7 @@ pre { /* Code block - determines code spacing between lines */
 <ul>
 <li>Reference arm
 <ul>
-<li>INTERCEPT = <span class="math inline">\(log(b_R)\)</span>
+<li>INTERCEPT = <span class="math inline">\(\log(b_R)\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(\frac{1}{a_R}\)</span>
 </li>
@@ -488,7 +488,7 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 <li>Intervention arm
 <ul>
-<li>INTERCEPT = <span class="math inline">\(log(b_I)\)</span>
+<li>INTERCEPT = <span class="math inline">\(\log(b_I)\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(\frac{1}{a_I}\)</span>
 </li>
@@ -500,9 +500,9 @@ pre { /* Code block - determines code spacing between lines */
 <h4 class="hasAnchor">
 <a href="#common-shape-models-1" class="anchor"></a>Common shape models</h4>
 <ul>
-<li>INTERCEPT = <span class="math inline">\(log(b_R)\)</span>
+<li>INTERCEPT = <span class="math inline">\(\log(b_R)\)</span>
 </li>
-<li>TX(INTERVENTION) = <span class="math inline">\(log(b_I) - log(b_R)\)</span>
+<li>TX(INTERVENTION) = <span class="math inline">\(\log(b_I) - \log(b_R)\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(\frac{1}{a_R}\)</span>
 </li>
@@ -520,7 +520,7 @@ pre { /* Code block - determines code spacing between lines */
 <ul>
 <li>Reference arm
 <ul>
-<li>INTERCEPT = <span class="math inline">\(-log(b_R)\)</span>
+<li>INTERCEPT = <span class="math inline">\(-\log(b_R)\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(a_R\)</span>
 </li>
@@ -528,7 +528,7 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 <li>Intervention arm
 <ul>
-<li>INTERCEPT = <span class="math inline">\(-log(b_I)\)</span>
+<li>INTERCEPT = <span class="math inline">\(-\log(b_I)\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(a_I\)</span>
 </li>
@@ -540,9 +540,9 @@ pre { /* Code block - determines code spacing between lines */
 <h4 class="hasAnchor">
 <a href="#common-shape-models-2" class="anchor"></a>Common shape models</h4>
 <ul>
-<li>INTERCEPT = <span class="math inline">\(-log(b_R)\)</span>
+<li>INTERCEPT = <span class="math inline">\(-\log(b_R)\)</span>
 </li>
-<li>TX(INTERVENTION) = <span class="math inline">\(-(log(b_I) - log(b_R))\)</span>
+<li>TX(INTERVENTION) = <span class="math inline">\(-(\log(b_I) - \log(b_R))\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(a_R\)</span>
 </li>
@@ -560,7 +560,7 @@ pre { /* Code block - determines code spacing between lines */
 <ul>
 <li>Reference arm
 <ul>
-<li>INTERCEPT = <span class="math inline">\(log(b_R)\)</span>
+<li>INTERCEPT = <span class="math inline">\(\log(b_R)\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(\frac{1}{a_R}\)</span>
 </li>
@@ -568,7 +568,7 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 <li>Intervention arm
 <ul>
-<li>INTERCEPT = <span class="math inline">\(log(b_I)\)</span>
+<li>INTERCEPT = <span class="math inline">\(\log(b_I)\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(\frac{1}{a_I}\)</span>
 </li>
@@ -580,9 +580,9 @@ pre { /* Code block - determines code spacing between lines */
 <h4 class="hasAnchor">
 <a href="#common-shape-models-3" class="anchor"></a>Common shape models</h4>
 <ul>
-<li>INTERCEPT = <span class="math inline">\(-log(b_R)\)</span>
+<li>INTERCEPT = <span class="math inline">\(-\log(b_R)\)</span>
 </li>
-<li>TX(INTERVENTION) = <span class="math inline">\(log(b_I) - log(B_R)\)</span>
+<li>TX(INTERVENTION) = <span class="math inline">\(\log(b_I) - \log(B_R)\)</span>
 </li>
 <li>SCALE = <span class="math inline">\(\frac{1}{a_R}\)</span>
 </li>
@@ -671,6 +671,46 @@ pre { /* Code block - determines code spacing between lines */
 <li>SCALE = <span class="math inline">\(\sigma_R\)</span>
 </li>
 <li>SHAPE = <span class="math inline">\(Q_R\)</span>
+</li>
+</ul>
+</div>
+</div>
+<div id="conversion-of-gamma-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#conversion-of-gamma-models" class="anchor"></a>Conversion of Gamma models</h3>
+<p><tt>flexsurvPlus</tt> uses the parameters Shape (<span class="math inline">\(a\)</span>) and Rate (<span class="math inline">\(b\)</span>). For common shape, independent shape and separate models these can be denoted as <span class="math inline">\(a_R, b_R\)</span> for reference and <span class="math inline">\(a_I, b_I\)</span> for intervention. For common shape models <span class="math inline">\(a_R=a_I\)</span>.</p>
+<p>The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are converted as shown below. This is equivalent to the parameters used for the Generalized Gamma when the constraint that <span class="math inline">\(\sigma = Q\)</span> or SCALE = SHAPE is applied.</p>
+<div id="seperate-models-6" class="section level4">
+<h4 class="hasAnchor">
+<a href="#seperate-models-6" class="anchor"></a>Seperate models</h4>
+<ul>
+<li>Reference arm
+<ul>
+<li>INTERCEPT = <span class="math inline">\(-\log(\frac{b_R}{a_R})\)</span>
+</li>
+<li>SCALE = <span class="math inline">\(\frac{1}{\sqrt{a_R}}\)</span>
+</li>
+</ul>
+</li>
+<li>Intervention arm
+<ul>
+<li>INTERCEPT = <span class="math inline">\(-\log(\frac{b_I}{a_I})\)</span>
+</li>
+<li>SCALE = <span class="math inline">\(\frac{1}{\sqrt{a_I}}\)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="common-shape-models-6" class="section level4">
+<h4 class="hasAnchor">
+<a href="#common-shape-models-6" class="anchor"></a>Common shape models</h4>
+<ul>
+<li>INTERCEPT = <span class="math inline">\(-\log(\frac{b_R}{a_R})\)</span>
+</li>
+<li>TX(INTERVENTION) = <span class="math inline">\(-(\log(b_I) - \log(b_R))\)</span>
+</li>
+<li>SCALE = <span class="math inline">\(\frac{1}{\sqrt{a_R}}\)</span>
 </li>
 </ul>
 </div>

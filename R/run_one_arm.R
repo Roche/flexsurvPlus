@@ -68,7 +68,7 @@ run_one_arm <- function(data,
   
   # standardise variable names
   data_standard=Format_data_onearm(data, time_var, event_var, int_name)
-  model.formula.one.arm=Surv(Time, Event==1) ~ 1
+  model.formula.one.arm=survival::Surv(Time, Event==1) ~ 1
 
   #Fit the models for seven standard distributions
   message("Fitting one arm models")

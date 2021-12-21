@@ -779,7 +779,7 @@ convSTEM <- function(x = NULL, samples = NULL){
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Common Shape", Dist = "Gamma",
              Param = "INTERCEPT",
-             Value = -log(ests$comshp.gamma.rate.ref)
+             Value = -log(ests$comshp.gamma.rate.ref / ests$comshp.gamma.shape.ref )
       ) %>%
       dplyr::bind_rows(rc)
     
@@ -793,7 +793,7 @@ convSTEM <- function(x = NULL, samples = NULL){
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Common Shape", Dist = "Gamma",
              Param = "SCALE",
-             Value = ests$comshp.gamma.shape.ref
+             Value = ests$comshp.gamma.shape.ref^-0.5
       ) %>%
       dplyr::bind_rows(rc)
   }
@@ -804,28 +804,28 @@ convSTEM <- function(x = NULL, samples = NULL){
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Separate - Reference", Dist = "Gamma",
              Param = "INTERCEPT",
-             Value = -log(ests$sep.gamma.rate.ref)
+             Value = -log(ests$sep.gamma.rate.ref  / ests$sep.gamma.shape.ref )
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Separate - Reference", Dist = "Gamma",
              Param = "SCALE",
-             Value = ests$sep.gamma.shape.ref
+             Value = ests$sep.gamma.shape.ref^-0.5
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Separate - Intervention", Dist = "Gamma",
              Param = "INTERCEPT",
-             Value = -log(ests$sep.gamma.rate.int)
+             Value = -log(ests$sep.gamma.rate.int / ests$sep.gamma.shape.int)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Separate - Intervention", Dist = "Gamma",
              Param = "SCALE",
-             Value = ests$sep.gamma.shape.int
+             Value = ests$sep.gamma.shape.int^-0.5
       ) %>%
       dplyr::bind_rows(rc)
   }
@@ -836,28 +836,28 @@ convSTEM <- function(x = NULL, samples = NULL){
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Gamma",
              Param = "INTERCEPT",
-             Value = -log(ests$indshp.gamma.rate.ref)
+             Value = -log(ests$indshp.gamma.rate.ref / ests$indshp.gamma.shape.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Gamma",
              Param = "SCALE",
-             Value = ests$indshp.gamma.shape.ref
+             Value = ests$indshp.gamma.shape.ref^-0.5
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Gamma",
              Param = "INTERCEPT",
-             Value = -log(ests$indshp.gamma.rate.int)
+             Value = -log(ests$indshp.gamma.rate.int / ests$indshp.gamma.shape.int)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
       dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Gamma",
              Param = "SCALE",
-             Value = ests$indshp.gamma.shape.int
+             Value = ests$indshp.gamma.shape.int^-0.5
       ) %>%
       dplyr::bind_rows(rc)
   }
@@ -868,14 +868,14 @@ convSTEM <- function(x = NULL, samples = NULL){
     rc <- rc_struct %>%
       dplyr::mutate(Model = "One arm - Intervention", Dist = "Gamma",
              Param = "INTERCEPT",
-             Value = -log(ests$onearm.gamma.rate.int)
+             Value = -log(ests$onearm.gamma.rate.int / ests$onearm.gamma.shape.int)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
       dplyr::mutate(Model = "One arm - Intervention", Dist = "Gamma",
              Param = "SCALE",
-             Value = ests$onearm.gamma.shape.int
+             Value = ests$onearm.gamma.shape.int^-0.5
       ) %>%
       dplyr::bind_rows(rc)
   }
