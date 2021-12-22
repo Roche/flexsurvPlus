@@ -1,9 +1,17 @@
 # Internal functions - Not exported ---------------------------------------
 # Format data for analysis
-Format_data_separate <- function(data, time_var, event_var, strata_var, int_name, ref_name) {
-  validate_standard_data(data = data, time_var = time_var, event_var = event_var, strata_var = strata_var, int_name = int_name, ref_name = ref_name)
+Format_data_separate <- function(data, time_var, event_var, weight_var,  strata_var, int_name, ref_name) {
+  validate_standard_data(data = data, time_var = time_var, event_var = event_var, weight_var = weight_var,
+                         strata_var = strata_var, int_name = int_name, ref_name = ref_name)
   dat <- data[,c(time_var, event_var, strata_var)]
   colnames(dat) <- c("Time", "Event", "ARM")
+  
+  # if weights specified include these
+  if (weight_var != ""){
+    dat_wts <- data[,weight_var]
+    colnames(dat_wts) <- "Weight"
+    dat <- cbind(dat, dat_wts)
+  }
   
   # fix bindings check
   ARM <- NULL
@@ -16,10 +24,18 @@ Format_data_separate <- function(data, time_var, event_var, strata_var, int_name
 }
 
 # Format data for analysis
-Format_data_onearm <- function(data, time_var, event_var, int_name) {
-  validate_standard_data_one_arm(data = data, time_var = time_var, event_var = event_var, int_name = int_name)
+Format_data_onearm <- function(data, time_var, event_var, weight_var, int_name) {
+  validate_standard_data_one_arm(data = data, time_var = time_var, event_var = event_var, weight_var = weight_var,
+                                 int_name = int_name)
   dat <- data[,c(time_var, event_var)] 
   colnames(dat) <- c("Time", "Event")
+  
+  # if weights specified include these
+  if (weight_var != ""){
+    dat_wts <- data[,weight_var]
+    colnames(dat_wts) <- "Weight"
+    dat <- cbind(dat, dat_wts)
+  }
   
   # fix bindings check
   ARM <- NULL
@@ -30,11 +46,19 @@ Format_data_onearm <- function(data, time_var, event_var, int_name) {
 }
 
 # with variable for ARM
-Format_data <- function(data, time_var, event_var, strata_var, int_name, ref_name) {
-  validate_standard_data(data = data, time_var = time_var, event_var = event_var, strata_var = strata_var, int_name = int_name, ref_name = ref_name)
+Format_data <- function(data, time_var, event_var, weight_var, strata_var, int_name, ref_name) {
+  validate_standard_data(data = data, time_var = time_var, event_var = event_var, weight_var = weight_var,
+                         strata_var = strata_var, int_name = int_name, ref_name = ref_name)
   
   dat <- data[,c(time_var, event_var, strata_var)]
   colnames(dat) <- c("Time", "Event", "ARM")
+  
+  # if weights specified include these
+  if (weight_var != ""){
+    dat_wts <- data[,weight_var]
+    colnames(dat_wts) <- "Weight"
+    dat <- cbind(dat, dat_wts)
+  }
   
   # fix bindings check
   ARM <- NULL
@@ -53,7 +77,7 @@ Format_data <- function(data, time_var, event_var, strata_var, int_name, ref_nam
 
 # validate the data 
 
-validate_standard_data <- function(data, time_var, event_var, strata_var, ref_name, int_name){
+validate_standard_data <- function(data, time_var, event_var, weight_var = weight_var, strata_var, ref_name, int_name){
   
   assertthat::assert_that(
     time_var %in% names(data),
@@ -63,6 +87,11 @@ validate_standard_data <- function(data, time_var, event_var, strata_var, ref_na
   assertthat::assert_that(
     event_var %in% names(data),
     msg = paste0("event_var = ", event_var, " is not found in data.")
+  )
+  
+  assertthat::assert_that(
+    weight_var %in% names(data) | weight_var == "",
+    msg = paste0("weight_var = ", weight_var, " is not found in data.")
   )
   
   assertthat::assert_that(
@@ -108,10 +137,17 @@ validate_standard_data <- function(data, time_var, event_var, strata_var, ref_na
     msg = paste0("Invalid event values found. All values of event_var = ", event_var, " must be 0 or 1 only. With 1 indicating event.")
   )
   
+  if (weight_var != ""){
+    assertthat::assert_that(
+      all(data[,weight_var] >= 0),
+      msg = paste0("Invalid weight values found. All values of weight_var = ", weight_var, " must be greater than or equal to 0")
+    )
+  }
+  
 }
 
 # validates data for one-arm models - doesn't need validation around the name
-validate_standard_data_one_arm <- function(data, time_var, event_var, int_name){
+validate_standard_data_one_arm <- function(data, time_var, event_var, weight_var = weight_var, int_name){
   
   assertthat::assert_that(
     time_var %in% names(data),
@@ -122,6 +158,12 @@ validate_standard_data_one_arm <- function(data, time_var, event_var, int_name){
     event_var %in% names(data),
     msg = paste0("event_var = ", event_var, " is not found in data.")
   )
+  
+  assertthat::assert_that(
+    weight_var %in% names(data) | weight_var == "",
+    msg = paste0("weight_var = ", weight_var, " is not found in data.")
+  )
+  
   
   dat <- data[,c(time_var, event_var)] 
   colnames(dat) <- c("Time", "Event")
@@ -135,6 +177,14 @@ validate_standard_data_one_arm <- function(data, time_var, event_var, int_name){
     all(dat$Event %in% c(0,1)),
     msg = paste0("Invalid event values found. All values of event_var = ", event_var, " must be 0 or 1 only. With 1 indicating event.")
   )
+  
+  if (weight_var != ""){
+    assertthat::assert_that(
+      all(data[,weight_var] >= 0),
+      msg = paste0("Invalid weight values found. All values of weight_var = ", weight_var, " must be greater than or equal to 0")
+    )
+  }
+  
   
 }
 

@@ -1,11 +1,11 @@
 #' Run complete parametric survival analysis for multiple models with multiple distributions
 #'
 #' @param data A data frame containing individual patient data for the relevant
-#'   time to event outcomes. This is passed to the \code{data} argument of the
-#'   \code{\link{fit_models}} function
+#'   time to event outcomes.  
 #' @param time_var Name of time variable in 'data'. Variable must be numerical and >0.
-#' @param  event_var Name of event variable in 'data'. Variable must be
+#' @param event_var Name of event variable in 'data'. Variable must be
 #'   numerical and contain 1's to indicate an event and 0 to indicate a censor.
+#' @param weight_var Optional name of a variable in "data" containing case weights.
 #' @param model.type Character vector indicating the types of model formula
 #'   provided. Permitted values are
 #' \itemize{
@@ -37,7 +37,7 @@
 #'  }
 #'  Default is c("Separate", "Common shape", "Independent shape").
 #' @param  strata_var Name of stratification variable in "data". This is usually
-#'   the treatment variable and must be categorical. Not required when model.type='One arm'.
+#'   the treatment variable and must be categorical. Not required when model.type='One arm'.   
 #' @param int_name Character to indicate the name of the treatment of interest,
 #'   must be a level of the "strata_var" column in "data", used for labelling
 #'   the parameters.
@@ -83,7 +83,7 @@
 #'      
 #' @export
 runPSM <- function(data,
-                   time_var, event_var,
+                   time_var, event_var, weight_var = "",
                    model.type = c("Separate", "Common shape", "Independent shape"),
                    distr = c('exp',
                              'weibull',
@@ -113,7 +113,7 @@ runPSM <- function(data,
   parameters_vector <- numeric()
   
   if('Common shape' %in% model.type){
-    output1 <- run_common_shape(data, time_var, event_var,distr,strata_var, int_name, ref_name)
+    output1 <- run_common_shape(data, time_var, event_var, weight_var, distr,strata_var, int_name, ref_name)
     models <- output1$models
     model_summary <- output1$model_summary
     parameters_vector <- output1$parameters_vector
@@ -123,7 +123,7 @@ runPSM <- function(data,
   # for each distribution
 
   if('Separate' %in% model.type){
-    output2 <- run_separate(data, time_var, event_var, distr, strata_var, int_name, ref_name)
+    output2 <- run_separate(data, time_var, event_var, weight_var, distr, strata_var, int_name, ref_name)
     models <- c(models, output2$models)
     model_summary <- dplyr::bind_rows(model_summary, output2$model_summary)
     parameters_vector <- c(parameters_vector, output2$parameters_vector)
@@ -132,14 +132,14 @@ runPSM <- function(data,
   #For models with independent shape calculate the scale and shape parameters for the
   #treatment arm for each distribution
   if('Independent shape' %in% model.type){
-    output3 <- run_independent_shape(data, time_var, event_var, distr, strata_var, int_name, ref_name)
+    output3 <- run_independent_shape(data, time_var, event_var, weight_var, distr, strata_var, int_name, ref_name)
     models <- c(models, output3$models)
     model_summary <- dplyr::bind_rows(model_summary, output3$model_summary)
     parameters_vector <- c(parameters_vector, output3$parameters_vector)
   }
   
   if('One arm' %in% model.type){
-    output4 <- run_one_arm(data, time_var, event_var, distr, int_name)
+    output4 <- run_one_arm(data, time_var, event_var, weight_var, distr, int_name)
     models <- c(models, output4$models)
     model_summary <- dplyr::bind_rows(model_summary, output4$model_summary)
     parameters_vector <- c(parameters_vector, output4$parameters_vector)

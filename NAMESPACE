@@ -2,7 +2,6 @@
 
 export(bootPSM)
 export(convSTEM)
-export(fit_models)
 export(runPSM)
 export(sim_adtte)
 export(summaryPSM)

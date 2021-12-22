@@ -9,6 +9,7 @@
 # @param time_var Name of time variable in 'data'. Variable must be numerical and >0.
 # @param  event_var Name of event variable in 'data'. Variable must be
 #   numerical and contain 1's to indicate an event and 0 to indicate a censor.
+# @param  weight_var Optional name of a variable in "data" containing case weights.
 # @param int_name Character to indicate the name of the treatment of interest,
 #   must be a level of the "strata_var" column in "data", used for labeling
 #   the parameters.
@@ -43,7 +44,7 @@
 #
 # @export
 run_one_arm <- function(data,
-                   time_var, event_var,
+                   time_var, event_var, weight_var,
                    distr = c('exp',
                              'weibull',
                              'gompertz',
@@ -56,7 +57,6 @@ run_one_arm <- function(data,
 
 
   #test that only valid distributions have been provided
-  #This is also tested within fit_models. Consider eliminating here to avoid redundancy
   allowed_dist <- c('exp', 'weibull', 'gompertz', 'lnorm', 'llogis', 'gengamma', 'gamma', 'genf')
   assertthat::assert_that(
     all(distr %in% allowed_dist),
@@ -67,7 +67,8 @@ run_one_arm <- function(data,
   Model <- Dist <- Intervention_name <- Reference_name <- Status <- AIC <- BIC <- NULL
   
   # standardise variable names
-  data_standard=Format_data_onearm(data, time_var, event_var, int_name)
+  data_standard=Format_data_onearm(data = data, time_var = time_var, event_var = event_var, weight_var = weight_var, 
+                                   int_name = int_name)
   model.formula.one.arm=survival::Surv(Time, Event==1) ~ 1
 
   #Fit the models for seven standard distributions

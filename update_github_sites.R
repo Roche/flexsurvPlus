@@ -30,5 +30,5 @@ pkgdown::build_site()
 pkgdown::build_home()
 pkgdown::build_reference()
 pkgdown::build_articles_index()
-
+pkgdown::build_article("STEM_compatibility")
 

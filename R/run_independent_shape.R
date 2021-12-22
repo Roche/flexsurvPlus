@@ -9,6 +9,7 @@
 #   \code{\link{fit_models}} function
 # @param time_var Name of time variable in 'data'. Variable must be numerical and >0.
 # @param  event_var Name of event variable in 'data'. Variable must be
+# @param  weight_var Optional name of a variable in "data" containing case weights.
 #   numerical and contain 1's to indicate an event and 0 to indicate a censor.
 # @param  strata_var Name of stratification variable in "data". This is usually
 #   the treatment variable and must be categorical.
@@ -54,7 +55,7 @@
 #
 # @export
 run_independent_shape <- function(data,
-                                  time_var, event_var,
+                                  time_var, event_var, weight_var,
                                   distr = c('exp',
                                             'weibull',
                                             'gompertz',
@@ -86,7 +87,8 @@ run_independent_shape <- function(data,
   genf.mu <- genf.ARMInt <- genf.sigma <- genf.Q <- genf.P <- `genf.sigma(ARMInt)` <- `genf.Q(ARMInt)` <- `genf.P(ARMInt)` <- NULL
   
   # standardise variable names
-  data_standard=Format_data(data, time_var, event_var, strata_var, int_name, ref_name)
+  data_standard=Format_data(data = data, time_var = time_var, event_var = event_var, weight_var = weight_var, 
+                            strata_var = strata_var, int_name = int_name, ref_name = ref_name)
   
   # Model formulas
   model.formula.int = survival::Surv(Time, Event==1) ~ ARM

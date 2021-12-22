@@ -177,8 +177,7 @@ legend(x = 500,
 # Fitting the models
 
 The <tt>runPSM</tt> function fits parametric survival models for multiple
-distributions using the <tt>flexsurv</tt> package (using the
-<tt>flexsurvPlus</tt> function <tt>fit_models</tt>),  manipulates the flexsurv
+distributions using the <tt>flexsurv</tt> package,  manipulates the flexsurv
 objects to get the parameter estimates and AIC and BIC value (using the
 <tt>flexsurvPlus</tt> function <tt>get_params</tt>) and rearranges the parameter
 estimates such that they can easily be output to excel to calculate survival for

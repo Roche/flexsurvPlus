@@ -8,6 +8,7 @@ runPSM(
   data,
   time_var,
   event_var,
+  weight_var = "",
   model.type = c("Separate", "Common shape", "Independent shape"),
   distr = c("exp", "weibull", "gompertz", "lnorm", "llogis", "gengamma", "gamma",
     "genf"),
@@ -18,13 +19,14 @@ runPSM(
 }
 \arguments{
 \item{data}{A data frame containing individual patient data for the relevant
-time to event outcomes. This is passed to the \code{data} argument of the
-\code{\link{fit_models}} function}
+time to event outcomes.}
 
 \item{time_var}{Name of time variable in 'data'. Variable must be numerical and >0.}
 
 \item{event_var}{Name of event variable in 'data'. Variable must be
 numerical and contain 1's to indicate an event and 0 to indicate a censor.}
+
+\item{weight_var}{Optional name of a variable in "data" containing case weights.}
 
 \item{model.type}{Character vector indicating the types of model formula
 provided. Permitted values are

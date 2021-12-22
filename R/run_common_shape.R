@@ -9,6 +9,7 @@
 # @param time_var Name of time variable in 'data'. Variable must be numerical and >0.
 # @param  event_var Name of event variable in 'data'. Variable must be
 #   numerical and contain 1's to indicate an event and 0 to indicate a censor.
+# @param  weight_var Optional name of a variable in "data" containing case weights.
 # @param  strata_var Name of stratification variable in "data". This is usually
 #   the treatment variable and must be categorical.
 # @param int_name Character to indicate the name of the treatment of interest,
@@ -49,7 +50,7 @@
 #   }
 # @export
 run_common_shape <- function(data,
-                             time_var, event_var,
+                             time_var, event_var, weight_var,
                              distr = c('exp',
                                        'weibull',
                                        'gompertz',
@@ -83,7 +84,8 @@ run_common_shape <- function(data,
   
   
   # standardise variable names
-  data_standard=Format_data(data, time_var, event_var, strata_var, int_name, ref_name)
+  data_standard=Format_data(data = data, time_var = time_var, event_var = event_var, weight_var = weight_var, 
+                            strata_var = strata_var, int_name = int_name, ref_name = ref_name)
   model.formula=survival::Surv(Time, Event==1) ~ ARM
   
   #Fit the models for seven standard distributions

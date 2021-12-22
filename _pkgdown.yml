@@ -42,7 +42,6 @@ reference:
     These functions are provided for convinience but are not part of core workflow
   contents:
   - sim_adtte
-  - fit_models
 - title: "STEM appendix"
   desc: >
     These functions are used to convert to parametrizations that were used in a prior SAS 
