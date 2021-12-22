@@ -263,6 +263,12 @@ psm_PFS_all <- runPSM(data=PFS_data,
 # only supplying x
 PFS_conv_all <- convSTEM(x = psm_PFS_all)
 
+# To see what the converted parameters are can look at stem_param
+PFS_conv_all$stem_param %>%
+  group_by(Model, Dist) %>%
+  summarise(Params = paste(Param, collapse = ", ")) %>%
+  knitr::kable()
+
 ```
 ## Conversion of parameters
 
@@ -287,6 +293,14 @@ The SAS STEM macro reports INTERCEPT and TX(INTERVENTION) which are converted as
 * INTERCEPT = $-\log(b_R)$ 
 * TX(INTERVENTION) = $-(\log(b_I) - \log(b_R))$
 
+#### Excel formula
+
+To derive survival in Excel the following formula are used:
+
+* `lambda = EXP(-INTERCEPT)` and/or
+* `lambda = EXP(-(INTERCEPT+TX(INTERVENTION)))` 
+* `Survival = EXP(-lambda*time)`
+
 ### Conversion of Weibull models
 
 <tt>flexsurvPlus</tt> uses the parameters scale ($b$) and shape ($a$). For common shape, independent shape and separate models these can be denoted as $b_R, a_R$ for reference and $b_I, a_I$ for intervention. For common shape models $a_R=a_I$.
@@ -308,6 +322,14 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are conve
 * TX(INTERVENTION) = $\log(b_I) - \log(b_R)$
 * SCALE = $\frac{1}{a_R}$ 
 
+#### Excel formula
+
+To derive survival in Excel the following formula are used:
+
+* `lambda = EXP(-INTERCEPT/SCALE)` and/or
+* `lambda = EXP(-(INTERCEPT+TX(INTERVENTION)/SCALE))`
+* `gamma = 1/SCALE`
+* `Survival = EXP(-lambda*time^gamma)`
 
 ### Conversion of Gompertz models
 
@@ -330,6 +352,15 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are conve
 * TX(INTERVENTION) = $-(\log(b_I) - \log(b_R))$
 * SCALE = $a_R$ 
 
+#### Excel formula
+
+To derive survival in Excel the following formula are used:
+
+* `lambda = EXP(-INTERCEPT/SCALE)` and/or
+* `lambda = EXP(-(INTERCEPT+TX(INTERVENTION)/SCALE))`
+* `gamma = 1/SCALE`
+* `Survival = EXP((lambda/gamma)*(1-EXP(gamma*time)))`
+
 ### Conversion of Log-logistic models
 
 <tt>flexsurvPlus</tt> uses the parameters scale ($b$) and shape ($a$). For common shape, independent shape and separate models these can be denoted as $b_R, a_R$ for reference and $b_I, a_I$ for intervention. For common shape models $a_R=a_I$.
@@ -351,6 +382,15 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are conve
 * TX(INTERVENTION) = $\log(b_I) - \log(B_R)$
 * SCALE = $\frac{1}{a_R}$ 
 
+#### Excel formula
+
+To derive survival in Excel the following formula are used:
+
+* `lambda = EXP(-INTERCEPT/SCALE)` and/or
+* `lambda = EXP(-(INTERCEPT+TX(INTERVENTION)/SCALE))`
+* `gamma = 1/SCALE`
+* `Survival = 1 / (1 + lambda*time^gamma)`
+
 ### Conversion of Log-normal models
 
 <tt>flexsurvPlus</tt> uses the parameters meanlog ($\mu$) and sdlog ($\sigma$). For common shape, independent shape and separate models these can be denoted as $\mu_R, \sigma_R$ for reference and $\mu_I, \sigma_I$ for intervention. For common shape models $\sigma_R=\sigma_I$.
@@ -371,6 +411,15 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are conve
 * INTERCEPT = $\mu_R$
 * TX(INTERVENTION) = $\mu_I - \mu_R$
 * SCALE = $\sigma_R$ 
+
+#### Excel formula
+
+To derive survival in Excel the following formula are used:
+
+* `lambda = INTERCEPT` and/or
+* `lambda = INTERCEPT+TX(INTERVENTION)`
+* `gamma = SCALE`
+* `Survival = 1-NORMDIST(((LN(time)-lambda)/gamma),0,1,TRUE)`
 
 ### Conversion of Generalized Gamma models
 
@@ -397,11 +446,21 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION), SCALE and SHAPE which ar
 * SHAPE = $Q_R$ 
 
 
+#### Excel formula
+
+To derive survival in Excel the following formula are used:
+
+* `lambda = (EXP(-INTERCEPT)^(SHAPE/SCALE))/(SHAPE^2)` and/or
+* `lambda = (EXP(-(INTERCEPT+TX(INTERVENTION))^(SHAPE/SCALE))/(SHAPE^2)`
+* `gamma = 1/(SHAPE^2)` 
+* `delta = SHAPE/SCALE` 
+* `Survival = IF(gamma>0, 1-GAMMADIST(lambda*$D12^(delta),gamma,1,TRUE), 1-( 1-GAMMADIST(lambda*time^(delta),gamma,1,TRUE)))`
+
 ### Conversion of Gamma models
 
 <tt>flexsurvPlus</tt> uses the parameters Shape ($a$) and Rate ($b$). For common shape, independent shape and separate models these can be denoted as $a_R, b_R$ for reference and $a_I, b_I$ for intervention. For common shape models $a_R=a_I$.
 
-The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are converted as shown below. This is equivalent to the parameters used for the Generalized Gamma when the constraint that $\sigma = Q$ or SCALE = SHAPE is applied.
+The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are converted as shown below. This is equivalent to the parameters used for the Generalized Gamma when the constraint that $\sigma = Q$ or identically that SCALE = SHAPE is applied.
 
 #### Seperate models
 
@@ -417,6 +476,15 @@ The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are conve
 * INTERCEPT = $-\log(\frac{b_R}{a_R})$ 
 * TX(INTERVENTION) =  $-(\log(b_I) - \log(b_R))$
 * SCALE = $\frac{1}{\sqrt{a_R}}$ 
+
+#### Excel formula
+
+To derive survival in Excel the following formula are used:
+
+* `lambda = (EXP(-INTERCEPT))/(SCALE^2)` and/or
+* `lambda = (EXP(-(INTERCEPT+TX(INTERVENTION)))/(SCALE^2)`
+* `gamma = 1/(SCALE^2)` 
+* `Survival = IF(gamma>0, 1-GAMMADIST(lambda*time,gamma,1,TRUE), 1- (1-GAMMADIST(lambda*time,gamma,1,TRUE)))`
 
 ## Conversion of AIC and BIC
 

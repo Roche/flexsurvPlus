@@ -106,7 +106,7 @@
       <h1 data-toc-skip>STEM compatibility</h1>
                         <h4 class="author">Roche</h4>
             
-            <h4 class="date">2021-12-21</h4>
+            <h4 class="date">2021-12-22</h4>
       
       
       <div class="hidden name"><code>STEM_compatibility.Rmd</code></div>
@@ -430,7 +430,197 @@ pre { /* Code block - determines code spacing between lines */
                      ref_name <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
 
 <span class="co"># only supplying x</span>
-<span class="va">PFS_conv_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/convSTEM.html">convSTEM</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">psm_PFS_all</span><span class="op">)</span></pre></div>
+<span class="va">PFS_conv_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/convSTEM.html">convSTEM</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">psm_PFS_all</span><span class="op">)</span>
+
+<span class="co"># To see what the converted parameters are can look at stem_param</span>
+<span class="va">PFS_conv_all</span><span class="op">$</span><span class="va">stem_param</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Model</span>, <span class="va">Dist</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>Params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">Param</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Model</th>
+<th align="left">Dist</th>
+<th align="left">Params</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Common Shape</td>
+<td align="left">Exponential</td>
+<td align="left">INTERCEPT, TX(Intervention)</td>
+</tr>
+<tr class="even">
+<td align="left">Common Shape</td>
+<td align="left">Gamma</td>
+<td align="left">INTERCEPT, TX(Intervention), SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Common Shape</td>
+<td align="left">Generalized Gamma</td>
+<td align="left">INTERCEPT, TX(Intervention), SCALE, SHAPE</td>
+</tr>
+<tr class="even">
+<td align="left">Common Shape</td>
+<td align="left">Gompertz</td>
+<td align="left">INTERCEPT, TX(Intervention), SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Common Shape</td>
+<td align="left">Log Logistic</td>
+<td align="left">INTERCEPT, TX(Intervention), SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Common Shape</td>
+<td align="left">Log Normal</td>
+<td align="left">INTERCEPT, TX(Intervention), SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Common Shape</td>
+<td align="left">Weibull</td>
+<td align="left">INTERCEPT, TX(Intervention), SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Independent Shape - Intervention</td>
+<td align="left">Exponential</td>
+<td align="left">INTERCEPT</td>
+</tr>
+<tr class="odd">
+<td align="left">Independent Shape - Intervention</td>
+<td align="left">Gamma</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Independent Shape - Intervention</td>
+<td align="left">Generalized Gamma</td>
+<td align="left">INTERCEPT, SCALE, SHAPE</td>
+</tr>
+<tr class="odd">
+<td align="left">Independent Shape - Intervention</td>
+<td align="left">Gompertz</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Independent Shape - Intervention</td>
+<td align="left">Log Logistic</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Independent Shape - Intervention</td>
+<td align="left">Log Normal</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Independent Shape - Intervention</td>
+<td align="left">Weibull</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Independent Shape - Reference</td>
+<td align="left">Exponential</td>
+<td align="left">INTERCEPT</td>
+</tr>
+<tr class="even">
+<td align="left">Independent Shape - Reference</td>
+<td align="left">Gamma</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Independent Shape - Reference</td>
+<td align="left">Generalized Gamma</td>
+<td align="left">INTERCEPT, SCALE, SHAPE</td>
+</tr>
+<tr class="even">
+<td align="left">Independent Shape - Reference</td>
+<td align="left">Gompertz</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Independent Shape - Reference</td>
+<td align="left">Log Logistic</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Independent Shape - Reference</td>
+<td align="left">Log Normal</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Independent Shape - Reference</td>
+<td align="left">Weibull</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Separate - Intervention</td>
+<td align="left">Exponential</td>
+<td align="left">INTERCEPT</td>
+</tr>
+<tr class="odd">
+<td align="left">Separate - Intervention</td>
+<td align="left">Gamma</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Separate - Intervention</td>
+<td align="left">Generalized Gamma</td>
+<td align="left">INTERCEPT, SCALE, SHAPE</td>
+</tr>
+<tr class="odd">
+<td align="left">Separate - Intervention</td>
+<td align="left">Gompertz</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Separate - Intervention</td>
+<td align="left">Log Logistic</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Separate - Intervention</td>
+<td align="left">Log Normal</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Separate - Intervention</td>
+<td align="left">Weibull</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Separate - Reference</td>
+<td align="left">Exponential</td>
+<td align="left">INTERCEPT</td>
+</tr>
+<tr class="even">
+<td align="left">Separate - Reference</td>
+<td align="left">Gamma</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Separate - Reference</td>
+<td align="left">Generalized Gamma</td>
+<td align="left">INTERCEPT, SCALE, SHAPE</td>
+</tr>
+<tr class="even">
+<td align="left">Separate - Reference</td>
+<td align="left">Gompertz</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Separate - Reference</td>
+<td align="left">Log Logistic</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="even">
+<td align="left">Separate - Reference</td>
+<td align="left">Log Normal</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Separate - Reference</td>
+<td align="left">Weibull</td>
+<td align="left">INTERCEPT, SCALE</td>
+</tr>
+</tbody>
+</table>
 <div id="conversion-of-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#conversion-of-parameters" class="anchor"></a>Conversion of parameters</h2>
@@ -466,6 +656,17 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 <li>TX(INTERVENTION) = <span class="math inline">\(-(\log(b_I) - \log(b_R))\)</span>
 </li>
+</ul>
+</div>
+<div id="excel-formula" class="section level4">
+<h4 class="hasAnchor">
+<a href="#excel-formula" class="anchor"></a>Excel formula</h4>
+<p>To derive survival in Excel the following formula are used:</p>
+<ul>
+<li>
+<code>lambda = EXP(-INTERCEPT)</code> and/or</li>
+<li><code>lambda = EXP(-(INTERCEPT+TX(INTERVENTION)))</code></li>
+<li><code>Survival = EXP(-lambda*time)</code></li>
 </ul>
 </div>
 </div>
@@ -508,6 +709,18 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 </ul>
 </div>
+<div id="excel-formula-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#excel-formula-1" class="anchor"></a>Excel formula</h4>
+<p>To derive survival in Excel the following formula are used:</p>
+<ul>
+<li>
+<code>lambda = EXP(-INTERCEPT/SCALE)</code> and/or</li>
+<li><code>lambda = EXP(-(INTERCEPT+TX(INTERVENTION)/SCALE))</code></li>
+<li><code>gamma = 1/SCALE</code></li>
+<li><code>Survival = EXP(-lambda*time^gamma)</code></li>
+</ul>
+</div>
 </div>
 <div id="conversion-of-gompertz-models" class="section level3">
 <h3 class="hasAnchor">
@@ -546,6 +759,18 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 <li>SCALE = <span class="math inline">\(a_R\)</span>
 </li>
+</ul>
+</div>
+<div id="excel-formula-2" class="section level4">
+<h4 class="hasAnchor">
+<a href="#excel-formula-2" class="anchor"></a>Excel formula</h4>
+<p>To derive survival in Excel the following formula are used:</p>
+<ul>
+<li>
+<code>lambda = EXP(-INTERCEPT/SCALE)</code> and/or</li>
+<li><code>lambda = EXP(-(INTERCEPT+TX(INTERVENTION)/SCALE))</code></li>
+<li><code>gamma = 1/SCALE</code></li>
+<li><code>Survival = EXP((lambda/gamma)*(1-EXP(gamma*time)))</code></li>
 </ul>
 </div>
 </div>
@@ -588,6 +813,18 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 </ul>
 </div>
+<div id="excel-formula-3" class="section level4">
+<h4 class="hasAnchor">
+<a href="#excel-formula-3" class="anchor"></a>Excel formula</h4>
+<p>To derive survival in Excel the following formula are used:</p>
+<ul>
+<li>
+<code>lambda = EXP(-INTERCEPT/SCALE)</code> and/or</li>
+<li><code>lambda = EXP(-(INTERCEPT+TX(INTERVENTION)/SCALE))</code></li>
+<li><code>gamma = 1/SCALE</code></li>
+<li><code>Survival = 1 / (1 + lambda*time^gamma)</code></li>
+</ul>
+</div>
 </div>
 <div id="conversion-of-log-normal-models" class="section level3">
 <h3 class="hasAnchor">
@@ -626,6 +863,18 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 <li>SCALE = <span class="math inline">\(\sigma_R\)</span>
 </li>
+</ul>
+</div>
+<div id="excel-formula-4" class="section level4">
+<h4 class="hasAnchor">
+<a href="#excel-formula-4" class="anchor"></a>Excel formula</h4>
+<p>To derive survival in Excel the following formula are used:</p>
+<ul>
+<li>
+<code>lambda = INTERCEPT</code> and/or</li>
+<li><code>lambda = INTERCEPT+TX(INTERVENTION)</code></li>
+<li><code>gamma = SCALE</code></li>
+<li><code>Survival = 1-NORMDIST(((LN(time)-lambda)/gamma),0,1,TRUE)</code></li>
 </ul>
 </div>
 </div>
@@ -674,12 +923,25 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 </ul>
 </div>
+<div id="excel-formula-5" class="section level4">
+<h4 class="hasAnchor">
+<a href="#excel-formula-5" class="anchor"></a>Excel formula</h4>
+<p>To derive survival in Excel the following formula are used:</p>
+<ul>
+<li>
+<code>lambda = (EXP(-INTERCEPT)^(SHAPE/SCALE))/(SHAPE^2)</code> and/or</li>
+<li><code>lambda = (EXP(-(INTERCEPT+TX(INTERVENTION))^(SHAPE/SCALE))/(SHAPE^2)</code></li>
+<li><code>gamma = 1/(SHAPE^2)</code></li>
+<li><code>delta = SHAPE/SCALE</code></li>
+<li><code>Survival = IF(gamma&gt;0, 1-GAMMADIST(lambda*$D12^(delta),gamma,1,TRUE), 1-( 1-GAMMADIST(lambda*time^(delta),gamma,1,TRUE)))</code></li>
+</ul>
+</div>
 </div>
 <div id="conversion-of-gamma-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#conversion-of-gamma-models" class="anchor"></a>Conversion of Gamma models</h3>
 <p><tt>flexsurvPlus</tt> uses the parameters Shape (<span class="math inline">\(a\)</span>) and Rate (<span class="math inline">\(b\)</span>). For common shape, independent shape and separate models these can be denoted as <span class="math inline">\(a_R, b_R\)</span> for reference and <span class="math inline">\(a_I, b_I\)</span> for intervention. For common shape models <span class="math inline">\(a_R=a_I\)</span>.</p>
-<p>The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are converted as shown below. This is equivalent to the parameters used for the Generalized Gamma when the constraint that <span class="math inline">\(\sigma = Q\)</span> or SCALE = SHAPE is applied.</p>
+<p>The SAS STEM macro reports INTERCEPT, TX(INTERVENTION) and SCALE which are converted as shown below. This is equivalent to the parameters used for the Generalized Gamma when the constraint that <span class="math inline">\(\sigma = Q\)</span> or identically that SCALE = SHAPE is applied.</p>
 <div id="seperate-models-6" class="section level4">
 <h4 class="hasAnchor">
 <a href="#seperate-models-6" class="anchor"></a>Seperate models</h4>
@@ -712,6 +974,18 @@ pre { /* Code block - determines code spacing between lines */
 </li>
 <li>SCALE = <span class="math inline">\(\frac{1}{\sqrt{a_R}}\)</span>
 </li>
+</ul>
+</div>
+<div id="excel-formula-6" class="section level4">
+<h4 class="hasAnchor">
+<a href="#excel-formula-6" class="anchor"></a>Excel formula</h4>
+<p>To derive survival in Excel the following formula are used:</p>
+<ul>
+<li>
+<code>lambda = (EXP(-INTERCEPT))/(SCALE^2)</code> and/or</li>
+<li><code>lambda = (EXP(-(INTERCEPT+TX(INTERVENTION)))/(SCALE^2)</code></li>
+<li><code>gamma = 1/(SCALE^2)</code></li>
+<li><code>Survival = IF(gamma&gt;0, 1-GAMMADIST(lambda*time,gamma,1,TRUE), 1- (1-GAMMADIST(lambda*time,gamma,1,TRUE)))</code></li>
 </ul>
 </div>
 </div>
