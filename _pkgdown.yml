@@ -37,6 +37,7 @@ reference:
   - runPSM
   - bootPSM
   - summaryPSM
+  - summaryKM
 - title: "Supporting functions"
   desc: >
     These functions are provided for convinience but are not part of core workflow
