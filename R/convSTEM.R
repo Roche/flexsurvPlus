@@ -1017,7 +1017,7 @@ convSTEM <- function(x = NULL, samples = NULL){
                     "Independent Shape",
                     "One arm - Intervention")
   
-  Dist.levels <- c("Exponential", "Weibull", "Log Normal", "Generalized Gamma", "Log Logistic", "Gompertz")
+  Dist.levels <- c("Exponential", "Weibull", "Log Normal", "Gamma", "Generalized Gamma", "Log Logistic", "Gompertz")
   
   Param.levels <-  c("INTERCEPT", "TX(Intervention)", "SCALE", "SHAPE")
   
