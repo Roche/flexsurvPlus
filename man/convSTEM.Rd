@@ -4,12 +4,16 @@
 \alias{convSTEM}
 \title{Convert survival parameters to SAS/STEM parametric forms}
 \usage{
-convSTEM(x = NULL, samples = NULL)
+convSTEM(x = NULL, samples = NULL, use = "everything")
 }
 \arguments{
 \item{x}{An object created by calling \code{\link{runPSM}}}
 
-\item{samples}{An object created by calling \code{\link{boot}} with \code{\link{bootPSM}}
+\item{samples}{An object created by calling \code{\link{boot}} with \code{\link{bootPSM}}}
+
+\item{use}{an optional character string giving a method for computing covariances in the presence of missing values. See  \code{\link{cov}}
+for details. Option "complete.obs" maybe needed when some bootstrap samples do not converge to estimate covariance only using
+those that do.
 
 This function primarily exists for backward compatibility with older excel models where parametric extrapolation was
 performed with SAS and alternative parametric forms were used for distributions. As such only a subset of models are supported.

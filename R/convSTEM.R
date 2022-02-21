@@ -2,6 +2,9 @@
 #'
 #' @param x An object created by calling \code{\link{runPSM}}
 #' @param samples An object created by calling \code{\link{boot}} with \code{\link{bootPSM}}
+#' @param use an optional character string giving a method for computing covariances in the presence of missing values. See  \code{\link{cov}} 
+#'            for details. Option "complete.obs" maybe needed when some bootstrap samples do not converge to estimate covariance only using
+#'            those that do. 
 #'
 #' This function primarily exists for backward compatibility with older excel models where parametric extrapolation was
 #' performed with SAS and alternative parametric forms were used for distributions. As such only a subset of models are supported.
@@ -28,7 +31,7 @@
 #'   \item stem_boot Converted bootstrap samples (if \code{samples} provided)
 #'   }
 #' @export
-convSTEM <- function(x = NULL, samples = NULL){
+convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   
   #check that at least one object is provided
   assertthat::assert_that(
@@ -907,7 +910,7 @@ convSTEM <- function(x = NULL, samples = NULL){
         dplyr::transmute(bootid, Param, Value) %>%
         stats::reshape(direction = "wide", idvar = "bootid", timevar = "Param", v.names = "Value") %>%
         dplyr::select(-bootid) %>%
-        stats::cov()
+        stats::cov(use = use)
       
       # test code for matrix dimensioning
       # this.model.cov <- matrix(data = c(1,2,3,4,5,6), ncol = 2)
