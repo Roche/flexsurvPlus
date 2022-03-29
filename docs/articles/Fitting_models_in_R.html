@@ -56,7 +56,7 @@
   <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Other Packages
      
     <span class="caret"></span>
@@ -100,13 +100,13 @@
 
       
 
-      </header><script src="Fitting_models_in_R_files/header-attrs-2.11/header-attrs.js"></script><script src="Fitting_models_in_R_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="Fitting_models_in_R_files/header-attrs-2.13/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Fitting parametric survival models in R</h1>
                         <h4 class="author">Roche</h4>
             
-            <h4 class="date">2022-01-07</h4>
+            <h4 class="date">2022-03-29</h4>
       
       
       <div class="hidden name"><code>Fitting_models_in_R.Rmd</code></div>
@@ -168,6 +168,7 @@ pre { /* Code block - determines code spacing between lines */
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">boot</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="co"># Non-scientific notation</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen<span class="op">=</span><span class="fl">999</span><span class="op">)</span> 
@@ -232,7 +233,7 @@ pre { /* Code block - determines code spacing between lines */
 <div class="sourceCode" id="cb3"><pre class="downlit">
 
 <span class="co"># Create survfit object</span>
-<span class="va">km.est.PFS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html">survfit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">PFS_days</span>, <span class="va">PFS_event</span><span class="op">)</span> <span class="op">~</span> <span class="va">ARMCD</span>, 
+<span class="va">km.est.PFS</span> <span class="op">&lt;-</span> <span class="fu">survfit</span><span class="op">(</span><span class="fu">Surv</span><span class="op">(</span><span class="va">PFS_days</span>, <span class="va">PFS_event</span><span class="op">)</span> <span class="op">~</span> <span class="va">ARMCD</span>, 
                       data <span class="op">=</span> <span class="va">PFS_data</span>, 
                       conf.type <span class="op">=</span> <span class="st">'plain'</span><span class="op">)</span>
 
@@ -281,9 +282,9 @@ pre { /* Code block - determines code spacing between lines */
 <p>The inputs to the <tt>runPSM</tt> function are:</p>
 <ul>
 <li><p><tt>data</tt> - A data frame containing individual patient data for the relevant time to event outcomes</p></li>
-<li><p><tt>time_var</tt> - Name of time variable in ‘data’. Variable must be numerical and &gt;0.</p></li>
-<li><p><tt>event_var</tt> - Name of event variable in ‘data’. Variable must be numerical and contain 1’s to indicate an event and 0 to indicate a censor.</p></li>
-<li><p><tt>model.type</tt> - Character vector indicating the types of model formula provided. Permitted values are ‘Common shape’, ‘Independent shape’ or ‘Separate’ as per the models explained above.</p></li>
+<li><p><tt>time_var</tt> - Name of time variable in ‘data.’ Variable must be numerical and &gt;0.</p></li>
+<li><p><tt>event_var</tt> - Name of event variable in ‘data.’ Variable must be numerical and contain 1’s to indicate an event and 0 to indicate a censor.</p></li>
+<li><p><tt>model.type</tt> - Character vector indicating the types of model formula provided. Permitted values are ‘Common shape,’ ‘Independent shape’ or ‘Separate’ as per the models explained above.</p></li>
 <li>
 <p><tt>distr</tt> - Each type of model can be fitted with multiple distributions. The distributions available for this package are:</p>
 <ul>
@@ -297,9 +298,9 @@ pre { /* Code block - determines code spacing between lines */
 <li><p>Generalized F (‘genf’)</p></li>
 </ul>
 </li>
-<li><p><tt>strata_var</tt> - Name of stratification variable in “data”. This is usually the treatment variable and must be categorical. Not required when model.type=‘One arm’.</p></li>
-<li><p><tt>int_name</tt> - Character to indicate the name of the treatment of interest, must be a level of the “strata_var” column in “data”, used for labelling the parameters.</p></li>
-<li><p><tt>ref_name </tt> - Character to indicate the name of the reference treatment, must be a level of the “strata_var” column in “data”, used for labelling the parameters. Not required when model.type=‘One arm’.</p></li>
+<li><p><tt>strata_var</tt> - Name of stratification variable in “data.” This is usually the treatment variable and must be categorical. Not required when model.type=‘One arm.’</p></li>
+<li><p><tt>int_name</tt> - Character to indicate the name of the treatment of interest, must be a level of the “strata_var” column in “data,” used for labelling the parameters.</p></li>
+<li><p><tt>ref_name </tt> - Character to indicate the name of the reference treatment, must be a level of the “strata_var” column in “data,” used for labelling the parameters. Not required when model.type=‘One arm.’</p></li>
 </ul>
 <p>More information about each function can be used by running the code <tt>?runPSM</tt>.</p>
 <p>Example code to fit all two arm models is presented below.</p>
@@ -1124,8 +1125,31 @@ pre { /* Code block - determines code spacing between lines */
                                           Q <span class="op">=</span> <span class="va">psm_PFS_all</span><span class="op">$</span><span class="va">parameters_vector</span><span class="op">[</span><span class="st">"indshp.gengamma.Q.ref"</span><span class="op">]</span><span class="op">)</span>
 <span class="va">surv_indshp_gengamma_ref</span>
 <span class="co">#&gt; [1] 1.0000000 0.8790137 0.7164446 0.5563410</span></pre></div>
-<p>The same functions can be used to generate the data required to plot the survival curves, overlaid on top of the KM plot. The time argument should reflect how long you want to the extrapolate for and the unit of time is the same as the input data (in this example, days).</p>
+<p>To simplify these actions a helper function is included in the <code>flexsurvPlus</code> package that will extract these values directly. This will calculate the same values as above.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
+
+<span class="co"># repeat the prior example for landmark times</span>
+
+<span class="va">landmarks_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summaryPSM.html">summaryPSM</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">psm_PFS_all</span>,
+                        types <span class="op">=</span> <span class="st">"survival"</span>,
+                        t <span class="op">=</span> <span class="va">landmark_times</span>
+                        <span class="op">)</span>
+
+<span class="va">landmarks_df</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">==</span> <span class="st">"Common shape"</span>, <span class="va">Dist</span> <span class="op">==</span> <span class="st">"weibull"</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 8 × 8</span>
+<span class="co">#&gt;   Model        Dist    Strata       StrataName type     variable  time value</span>
+<span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Common shape weibull Intervention A          survival est          0 1    </span>
+<span class="co">#&gt; 2 Common shape weibull Intervention A          survival est        100 0.723</span>
+<span class="co">#&gt; 3 Common shape weibull Intervention A          survival est        200 0.429</span>
+<span class="co">#&gt; 4 Common shape weibull Intervention A          survival est        300 0.226</span>
+<span class="co">#&gt; 5 Common shape weibull Reference    B          survival est          0 1    </span>
+<span class="co">#&gt; 6 Common shape weibull Reference    B          survival est        100 0.879</span>
+<span class="co">#&gt; 7 Common shape weibull Reference    B          survival est        200 0.713</span>
+<span class="co">#&gt; 8 Common shape weibull Reference    B          survival est        300 0.553</span></pre></div>
+<p>The same functions can be used to generate the data required to plot the survival curves, overlaid on top of the KM plot. The time argument should reflect how long you want to the extrapolate for and the unit of time is the same as the input data (in this example, days).</p>
+<div class="sourceCode" id="cb7"><pre class="downlit">
 
 <span class="co"># Plot the common shape models (Weibull distribution) with the Kaplan-Meier</span>
 
@@ -1169,7 +1193,41 @@ pre { /* Code block - determines code spacing between lines */
 <span class="co"># Add model estimates</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">surv_comshp_weibull_int_times</span><span class="op">$</span><span class="va">Time</span>, y <span class="op">=</span> <span class="va">surv_comshp_weibull_int_times</span><span class="op">$</span><span class="va">Surv</span>, col <span class="op">=</span> <span class="va">blue</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">surv_comshp_weibull_ref_times</span><span class="op">$</span><span class="va">Time</span>, y <span class="op">=</span> <span class="va">surv_comshp_weibull_ref_times</span><span class="op">$</span><span class="va">Surv</span>, col <span class="op">=</span> <span class="va">pink</span><span class="op">)</span></pre></div>
-<p><img src="Fitting_models_in_R_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="Fitting_models_in_R_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<p>The same helper function can also be used to generate plots.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+
+<span class="co"># repeat the prior example for plot data</span>
+
+<span class="va">plot_esurv_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summaryPSM.html">summaryPSM</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">psm_PFS_all</span>,
+                            types <span class="op">=</span> <span class="st">"survival"</span>,
+                            t <span class="op">=</span> <span class="va">times</span>
+                            <span class="op">)</span>
+
+<span class="co"># a similar function will estimate the values needed for KM estimates</span>
+
+<span class="va">plot_km_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summaryKM.html">summaryKM</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">PFS_data</span>,
+                        time_var<span class="op">=</span><span class="st">"PFS_days"</span>,
+                        event_var<span class="op">=</span><span class="st">"PFS_event"</span>,
+                        strata_var <span class="op">=</span> <span class="st">"ARMCD"</span>,
+                        int_name<span class="op">=</span><span class="st">"A"</span>,
+                        ref_name <span class="op">=</span> <span class="st">"B"</span>,
+                        types <span class="op">=</span> <span class="st">"survival"</span>
+                        <span class="op">)</span>
+                      
+
+<span class="co"># can then combine these to plot</span>
+
+<span class="va">plot_esurv_df</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">==</span> <span class="st">"Common shape"</span>,
+                          <span class="va">Dist</span> <span class="op">==</span> <span class="st">"weibull"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">plot_km_df</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">type</span> <span class="op">==</span> <span class="st">"survival"</span>, <span class="va">variable</span> <span class="op">==</span> <span class="st">"est"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Model_Dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">Model</span>, <span class="va">Dist</span>, sep <span class="op">=</span> <span class="st">" - "</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>, y <span class="op">=</span> <span class="va">value</span>, color <span class="op">=</span> <span class="va">StrataName</span>, linetype <span class="op">=</span> <span class="va">Model_Dist</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step</a></span><span class="op">(</span>data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">Model</span> <span class="op">==</span> <span class="st">"Kaplan Meier"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">Model</span> <span class="op">!=</span> <span class="st">"Kaplan Meier"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span> </pre></div>
+<p><img src="Fitting_models_in_R_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 </div>
 <div id="adressing-uncertainty---bootstrapping" class="section level1">
 <h1 class="hasAnchor">
@@ -1187,7 +1245,7 @@ pre { /* Code block - determines code spacing between lines */
 <tt>i</tt> - Index used to select a sample within <tt>boot</tt>
 </li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2358</span><span class="op">)</span>
 <span class="co"># For speed and illustration only 4 models are selected for bootstrapping - all could be included. </span>
 <span class="co"># To minimize vignette computation time only 100 bootstrap samples are taken. In general more samples should be used.</span>
@@ -1206,7 +1264,7 @@ pre { /* Code block - determines code spacing between lines */
   ref_name <span class="op">=</span> <span class="st">"A"</span>
 <span class="op">)</span></pre></div>
 <p>To use the result of these samples it is helpful to do some post processing to make the resulting samples easier to interpret.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="co"># first extract the bootstrapped parameters into a tibble</span>
 <span class="va">PFS_bootsamples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">PSM_bootstraps_PFS</span><span class="op">$</span><span class="va">t</span><span class="op">)</span>
 <span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span>
@@ -1219,11 +1277,11 @@ pre { /* Code block - determines code spacing between lines */
 <span class="co"># show the first 3 samples</span>
 <span class="va">PFS_bootsamples</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">]</span>
 <span class="co">#&gt; # A tibble: 3 × 18</span>
-<span class="co">#&gt;   comshp.weibull.scale.int comshp.weibull.s… comshp.weibull.s… comshp.weibull.s…</span>
-<span class="co">#&gt;                      &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;</span>
-<span class="co">#&gt; 1                     454.              230.              1.41              1.41</span>
-<span class="co">#&gt; 2                     453.              252.              1.29              1.29</span>
-<span class="co">#&gt; 3                     425.              224.              1.42              1.42</span>
+<span class="co">#&gt;   comshp.weibull.scale.int comshp.weibull.sca… comshp.weibull.… comshp.weibull.…</span>
+<span class="co">#&gt;                      &lt;dbl&gt;               &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span>
+<span class="co">#&gt; 1                     454.                230.             1.41             1.41</span>
+<span class="co">#&gt; 2                     453.                252.             1.29             1.29</span>
+<span class="co">#&gt; 3                     425.                224.             1.42             1.42</span>
 <span class="co">#&gt; # … with 14 more variables: comshp.weibull.scale.TE &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   comshp.gamma.rate.int &lt;dbl&gt;, comshp.gamma.rate.ref &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   comshp.gamma.shape.int &lt;dbl&gt;, comshp.gamma.shape.ref &lt;dbl&gt;,</span>
@@ -1236,7 +1294,7 @@ pre { /* Code block - determines code spacing between lines */
 <h1 class="hasAnchor">
 <a href="#estimating-quantities-from-the-sample" class="anchor"></a>Estimating quantities from the sample</h1>
 <p>As the <tt>flexsurv</tt> parameterisations are used any quantity of interest can be simply calculated for all models and samples through use of the flexsurv functions such as the extrapolated means via flexsurv::mean_weibull. For this example we assume we have decided that separate models for reference and intervention are most appropriate and that for the reference arm a gamma model is preferred while for the intervention arm a weibull model is best.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="co"># we can now calculate the mean PFS for the selected models for each bootstrap sample</span>
 <span class="co"># using weibull for the reference</span>
 <span class="va">PFS_ref_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">PFS_bootsamples</span>, <span class="fu">flexsurv</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/flexsurv/man/means.html">mean_gamma</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="va">sep.gamma.shape.ref</span>, rate <span class="op">=</span> <span class="va">sep.gamma.rate.ref</span><span class="op">)</span><span class="op">)</span>
@@ -1257,14 +1315,14 @@ pre { /* Code block - determines code spacing between lines */
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">density</span>, 
      lwd <span class="op">=</span> <span class="fl">2</span>, 
      main <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span></pre></div>
-<p><img src="Fitting_models_in_R_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="Fitting_models_in_R_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </div>
 <div id="outputing-parameters-to-excel" class="section level1">
 <h1 class="hasAnchor">
 <a href="#outputing-parameters-to-excel" class="anchor"></a>Outputing parameters to excel</h1>
 <p>The primary use of the bootstrap samples is to be used in probabilistic sensitivity analyses in economic models.</p>
 <p>Once all the models have been fit and bootstrap samples estimated they can be output to excel. By selecting the “Main Estimates” the estimates for the original data are returned. To run PSA in excel only a random number between 1 and the number of samples needs to be generated and the associated Bootstrap sample selected.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 
 <span class="co"># combine the estimates from the main analysis with the bootstrap samples</span>
 <span class="co"># and add meta data to include details of analysis</span>
@@ -1292,15 +1350,18 @@ pre { /* Code block - determines code spacing between lines */
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<div id="refs" class="references">
-<div id="ref-latimer2011nice">
-<p>[1] Latimer N. NICE dsu technical support document 14: Survival analysis for economic evaluations alongside clinical trials-extrapolation with patient-level data. Sheffield: Report by the Decision Support Unit 2011;2013.</p>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-latimer2011nice" class="csl-entry">
+<div class="csl-left-margin">[1] </div>
+<div class="csl-right-inline">Latimer N. NICE DSU technical support document 14: Survival analysis for economic evaluations alongside clinical trials-extrapolation with patient-level data. Sheffield: Report by the Decision Support Unit 2011;2013.</div>
 </div>
-<div id="ref-rutherford2020nice">
-<p>[2] Rutherford MJ, Lambert PC, Sweeting MJ, Pennington B, Crowther MJ, Abrams KR, et al. NICE dsu technical support document 21: Flexible methods for survival analysis 2020.</p>
+<div id="ref-rutherford2020nice" class="csl-entry">
+<div class="csl-left-margin">[2] </div>
+<div class="csl-right-inline">Rutherford MJ, Lambert PC, Sweeting MJ, Pennington B, Crowther MJ, Abrams KR, et al. NICE DSU TECHNICAL SUPPORT DOCUMENT 21: Flexible methods for survival analysis 2020.</div>
 </div>
-<div id="ref-cadth2020">
-<p>[3] CADTH. Procedures for cadth drug reimbursement reviews 2020.</p>
+<div id="ref-cadth2020" class="csl-entry">
+<div class="csl-left-margin">[3] </div>
+<div class="csl-right-inline">CADTH. Procedures for CADTH drug reimbursement reviews 2020.</div>
 </div>
 </div>
 </div>

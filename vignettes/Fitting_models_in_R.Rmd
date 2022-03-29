@@ -101,6 +101,7 @@ library(flexsurvPlus)
 library(tibble)
 library(dplyr)
 library(boot)
+library(ggplot2)
 
 # Non-scientific notation
 options(scipen=999) 
@@ -346,7 +347,22 @@ surv_indshp_gengamma_ref
 
 ```
 
+To simplify these actions a helper function is included in the `flexsurvPlus` package 
+that will extract these values directly. This will calculate the same values as above.
 
+```{r}
+
+# repeat the prior example for landmark times
+
+landmarks_df <- summaryPSM(x = psm_PFS_all,
+                        types = "survival",
+                        t = landmark_times
+                        )
+
+landmarks_df %>%
+  filter(Model == "Common shape", Dist == "weibull")
+
+```
 
 The same functions can be used to generate the data required to plot the
 survival curves, overlaid on top of the KM plot. The time argument should
@@ -400,6 +416,46 @@ lines(x = surv_comshp_weibull_int_times$Time, y = surv_comshp_weibull_int_times$
 lines(x = surv_comshp_weibull_ref_times$Time, y = surv_comshp_weibull_ref_times$Surv, col = pink)
 
 ```
+
+The same helper function can also be used to generate plots.
+
+```{r}
+
+# repeat the prior example for plot data
+
+plot_esurv_df <- summaryPSM(x = psm_PFS_all,
+                            types = "survival",
+                            t = times
+                            )
+
+# a similar function will estimate the values needed for KM estimates
+
+plot_km_df <- summaryKM(data = PFS_data,
+                        time_var="PFS_days",
+                        event_var="PFS_event",
+                        strata_var = "ARMCD",
+                        int_name="A",
+                        ref_name = "B",
+                        types = "survival"
+                        )
+                      
+
+# can then combine these to plot
+
+plot_esurv_df %>%
+  dplyr::filter(Model == "Common shape",
+                          Dist == "weibull") %>%
+  dplyr::bind_rows(plot_km_df) %>%
+  dplyr::filter(type == "survival", variable == "est") %>%
+  dplyr::mutate(Model_Dist = paste(Model, Dist, sep = " - ")) %>%
+  ggplot(aes(x = time, y = value, color = StrataName, linetype = Model_Dist)) +
+  geom_step(data = function(x){dplyr::filter(x, Model == "Kaplan Meier") }) +
+  geom_line(data = function(x){dplyr::filter(x, Model != "Kaplan Meier") }) 
+
+
+```
+
+
 
 
 # Adressing uncertainty - Bootstrapping

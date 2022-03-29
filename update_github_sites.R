@@ -30,5 +30,7 @@ pkgdown::build_site()
 pkgdown::build_home()
 pkgdown::build_reference()
 pkgdown::build_articles_index()
+pkgdown::build_article("Fitting_models_in_R")
+pkgdown::build_article("Fitting_models_in_R_bootstrap")
+pkgdown::build_article("Survival_analysis_theory")
 pkgdown::build_article("STEM_compatibility")
-
