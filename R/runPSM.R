@@ -62,8 +62,8 @@
 #' For more details and examples see the package vignettes:
 #' \itemize{
 #'   \item \code{vignette("Fitting_models_in_R", package = "flexsurvPlus")}
-#'   \item \code{vignette("Fitting_models_in_R_bootstrap", package = "flexsurvPlus")}
-#'   \item \code{vignette("Survival_analysis_theory", package = "flexsurvPlus")}
+#'   \item \code{vignette("Bootstrap_models_in_R", package = "flexsurvPlus")}
+#'   \item \code{vignette("Model_theory", package = "flexsurvPlus")}
 #'   }
 #' 
 #' @return A list containing 'models' (models fit using flexsurvreg), 'model_summary' (a tibble containing AIC, BIC and convergence information) and
@@ -145,9 +145,67 @@ runPSM <- function(data,
     parameters_vector <- c(parameters_vector, output4$parameters_vector)
   }
 
+  # fix no visible binding issues
+  mdl1 <- mdl2 <- mdl3 <- ARM <- Intervention_name <- NULL
+  Status <- AIC <- BIC <- flexsurvfit <- Strata <- Model <- Dist <- NULL
+  
+  # standardise the model summary output to match other outputs
+  s1 <- strsplit(model_summary$Dist, split = ".", fixed = TRUE)
+  Reference_name <- NA
+  
+ 
+  temp_model_summary <- model_summary %>%
+    dplyr::transmute(
+      mdl1 = sapply(s1, function(x){x[1]}),
+      mdl2 = sapply(s1, function(x){x[2]}),
+      mdl3 = sapply(s1, function(x){x[3]}),
+      flexsurvfit = Dist,
+      model.type = mdl1,
+      distr = ifelse(mdl1 == "onearm", mdl3, mdl2),
+      ARM = ifelse(mdl1 == "sep", mdl3, ifelse(mdl1 == "onearm", mdl2, NA)),
+      Strata = ifelse(!is.na(ARM),
+                      ifelse(ARM == "int", "Intervention", "Reference"),
+                      NA),
+      Intervention_name,
+      Reference_name = ifelse(mdl1 == "onearm", NA, Reference_name),
+      Status,
+      AIC,
+      BIC
+      )
+  
+  # define factors for models
+  Model.levels <- c("Kaplan Meier",
+                    "Common shape", "Independent shape",
+                    "Separate - Reference", "Separate - Intervention",
+                    "One arm - Intervention")
+  
+  Dist.orig <- c("exp", "weibull", "lnorm", "gamma", "gengamma", 
+                 "genf", "llogis", "gompertz", "Kaplan Meier")
+  Dist.levels <- c("Exponential", "Weibull", "Log Normal", "Gamma", "Generalized Gamma", 
+                   "Generalized F", "Log Logistic", "Gompertz", "Kaplan Meier")
+  
+  final_model_summary <- temp_model_summary %>%
+    dplyr::transmute(
+      flexsurvfit,
+      Model = ifelse(model.type == "indshp","Independent shape",
+                     ifelse(model.type == "comshp", "Common shape", 
+                            paste0(ifelse(model.type == "sep", "Separate", "One arm"), " - ", Strata))),
+      ModelF = factor(Model, levels = Model.levels, ordered = TRUE),
+      Dist = as.character(factor(distr, levels=Dist.orig, labels = Dist.levels)),
+      DistF = factor(Dist, levels = Dist.levels, ordered = TRUE),
+      distr,
+      Intervention_name,
+      Reference_name,
+      Status,
+      AIC,
+      BIC
+    )
+  
+  
+  
   # combine the outputs
   output <- list(models = models,
-                 model_summary = model_summary,
+                 model_summary = final_model_summary,
                  parameters_vector = parameters_vector
                  )
   

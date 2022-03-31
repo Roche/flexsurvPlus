@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flexsurvPlus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.04</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.05</span>
       </span>
     </div>
 
@@ -56,7 +56,7 @@
   <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Other Packages
      
     <span class="caret"></span>
@@ -100,13 +100,13 @@
 
       
 
-      </header><script src="STEM_compatibility_files/header-attrs-2.11/header-attrs.js"></script><script src="STEM_compatibility_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="STEM_compatibility_files/header-attrs-2.13/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>STEM compatibility</h1>
                         <h4 class="author">Roche</h4>
             
-            <h4 class="date">2022-01-07</h4>
+            <h4 class="date">2022-03-31</h4>
       
       
       <div class="hidden name"><code>STEM_compatibility.Rmd</code></div>
@@ -256,11 +256,11 @@ pre { /* Code block - determines code spacing between lines */
 <span class="va">PFS_conv_x</span><span class="op">$</span><span class="va">stem_param</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span><span class="va">Model</span>, <span class="va">Dist</span>, <span class="va">Param</span>, <span class="va">Estimate</span><span class="op">)</span> 
 <span class="co">#&gt;                      Model        Dist            Param   Estimate</span>
-<span class="co">#&gt; 1             Common Shape Exponential        INTERCEPT  6.1145985</span>
-<span class="co">#&gt; 2             Common Shape Exponential TX(Intervention) -0.7675910</span>
-<span class="co">#&gt; 3             Common Shape     Weibull        INTERCEPT  6.0800704</span>
-<span class="co">#&gt; 4             Common Shape     Weibull TX(Intervention) -0.6623183</span>
-<span class="co">#&gt; 5             Common Shape     Weibull            SCALE  0.7204249</span>
+<span class="co">#&gt; 1             Common shape Exponential        INTERCEPT  6.1145985</span>
+<span class="co">#&gt; 2             Common shape Exponential TX(Intervention) -0.7675910</span>
+<span class="co">#&gt; 3             Common shape     Weibull        INTERCEPT  6.0800704</span>
+<span class="co">#&gt; 4             Common shape     Weibull TX(Intervention) -0.6623183</span>
+<span class="co">#&gt; 5             Common shape     Weibull            SCALE  0.7204249</span>
 <span class="co">#&gt; 6     Separate - Reference Exponential        INTERCEPT  6.1145985</span>
 <span class="co">#&gt; 7     Separate - Reference     Weibull        INTERCEPT  6.0798340</span>
 <span class="co">#&gt; 8     Separate - Reference     Weibull            SCALE  0.7171585</span>
@@ -271,11 +271,11 @@ pre { /* Code block - determines code spacing between lines */
 <span class="va">PFS_conv_samples</span><span class="op">$</span><span class="va">stem_param</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span><span class="va">Model</span>, <span class="va">Dist</span>, <span class="va">Param</span>, <span class="va">Estimate</span><span class="op">)</span> 
 <span class="co">#&gt;                      Model        Dist            Param   Estimate</span>
-<span class="co">#&gt; 1             Common Shape Exponential        INTERCEPT  6.1145985</span>
-<span class="co">#&gt; 2             Common Shape Exponential TX(Intervention) -0.7675910</span>
-<span class="co">#&gt; 3             Common Shape     Weibull        INTERCEPT  6.0800704</span>
-<span class="co">#&gt; 4             Common Shape     Weibull TX(Intervention) -0.6623183</span>
-<span class="co">#&gt; 5             Common Shape     Weibull            SCALE  0.7204249</span>
+<span class="co">#&gt; 1             Common shape Exponential        INTERCEPT  6.1145985</span>
+<span class="co">#&gt; 2             Common shape Exponential TX(Intervention) -0.7675910</span>
+<span class="co">#&gt; 3             Common shape     Weibull        INTERCEPT  6.0800704</span>
+<span class="co">#&gt; 4             Common shape     Weibull TX(Intervention) -0.6623183</span>
+<span class="co">#&gt; 5             Common shape     Weibull            SCALE  0.7204249</span>
 <span class="co">#&gt; 6     Separate - Reference Exponential        INTERCEPT  6.1145985</span>
 <span class="co">#&gt; 7     Separate - Reference     Weibull        INTERCEPT  6.0798340</span>
 <span class="co">#&gt; 8     Separate - Reference     Weibull            SCALE  0.7171585</span>
@@ -302,23 +302,23 @@ pre { /* Code block - determines code spacing between lines */
 <span class="co">#&gt; # A tibble: 23 × 7</span>
 <span class="co">#&gt;    Model        Dist        rowParam         colParam     rowNum colNum   CovEst</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Common Shape Exponential INTERCEPT        INTERCEPT         1      1  4.54e-3</span>
-<span class="co">#&gt;  2 Common Shape Exponential INTERCEPT        TX(Interven…      1      2 -4.86e-3</span>
-<span class="co">#&gt;  3 Common Shape Exponential TX(Intervention) INTERCEPT         2      1 -4.86e-3</span>
-<span class="co">#&gt;  4 Common Shape Exponential TX(Intervention) TX(Interven…      2      2  7.93e-3</span>
-<span class="co">#&gt;  5 Common Shape Weibull     INTERCEPT        INTERCEPT         1      1  2.98e-3</span>
-<span class="co">#&gt;  6 Common Shape Weibull     INTERCEPT        TX(Interven…      1      2 -3.18e-3</span>
-<span class="co">#&gt;  7 Common Shape Weibull     INTERCEPT        SCALE             1      3  8.86e-5</span>
-<span class="co">#&gt;  8 Common Shape Weibull     TX(Intervention) INTERCEPT         2      1 -3.18e-3</span>
-<span class="co">#&gt;  9 Common Shape Weibull     TX(Intervention) TX(Interven…      2      2  5.80e-3</span>
-<span class="co">#&gt; 10 Common Shape Weibull     TX(Intervention) SCALE             2      3 -7.51e-5</span>
+<span class="co">#&gt;  1 Common shape Exponential INTERCEPT        INTERCEPT         1      1  4.54e-3</span>
+<span class="co">#&gt;  2 Common shape Exponential INTERCEPT        TX(Interven…      1      2 -4.86e-3</span>
+<span class="co">#&gt;  3 Common shape Exponential TX(Intervention) INTERCEPT         2      1 -4.86e-3</span>
+<span class="co">#&gt;  4 Common shape Exponential TX(Intervention) TX(Interven…      2      2  7.93e-3</span>
+<span class="co">#&gt;  5 Common shape Weibull     INTERCEPT        INTERCEPT         1      1  2.98e-3</span>
+<span class="co">#&gt;  6 Common shape Weibull     INTERCEPT        TX(Interven…      1      2 -3.18e-3</span>
+<span class="co">#&gt;  7 Common shape Weibull     INTERCEPT        SCALE             1      3  8.86e-5</span>
+<span class="co">#&gt;  8 Common shape Weibull     TX(Intervention) INTERCEPT         2      1 -3.18e-3</span>
+<span class="co">#&gt;  9 Common shape Weibull     TX(Intervention) TX(Interven…      2      2  5.80e-3</span>
+<span class="co">#&gt; 10 Common shape Weibull     TX(Intervention) SCALE             2      3 -7.51e-5</span>
 <span class="co">#&gt; # … with 13 more rows</span></pre></div>
 <p>The matrix is described by row and column numbers so can be back converted to a matrix if desired.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 
 <span class="co"># select a single model from the data frame</span>
 <span class="va">weibull_common_data</span> <span class="op">&lt;-</span> <span class="va">PFS_conv_samples</span><span class="op">$</span><span class="va">stem_cov</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">==</span> <span class="st">"Common Shape"</span>, <span class="va">Dist</span> <span class="op">==</span> <span class="st">"Weibull"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">==</span> <span class="st">"Common shape"</span>, <span class="va">Dist</span> <span class="op">==</span> <span class="st">"Weibull"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span><span class="va">rowParam</span>, <span class="va">colParam</span>, <span class="va">rowNum</span>, <span class="va">colNum</span>, <span class="va">CovEst</span><span class="op">)</span>
 
 <span class="va">weibull_common_data</span>
@@ -366,8 +366,8 @@ pre { /* Code block - determines code spacing between lines */
 <span class="va">PFS_conv_x</span><span class="op">$</span><span class="va">stem_modsum</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span><span class="va">Model</span>, <span class="va">Dist</span>, <span class="va">Status</span>, <span class="va">AIC</span>, <span class="va">AIC_SAS</span>, <span class="va">BIC</span>, <span class="va">BIC_SAS</span><span class="op">)</span> 
 <span class="co">#&gt;                     Model        Dist    Status      AIC   AIC_SAS      BIC</span>
-<span class="co">#&gt; 1            Common Shape Exponential Converged 5600.660 1326.3479 5609.089</span>
-<span class="co">#&gt; 2            Common Shape     Weibull Converged 5545.222 1270.9094 5557.866</span>
+<span class="co">#&gt; 1            Common shape Exponential Converged 5600.660 1326.3479 5609.089</span>
+<span class="co">#&gt; 2            Common shape     Weibull Converged 5545.222 1270.9094 5557.866</span>
 <span class="co">#&gt; 3 Separate - Intervention Exponential Converged 3023.176  671.5601 3026.697</span>
 <span class="co">#&gt; 4 Separate - Intervention     Weibull Converged 2990.943  639.3272 2997.986</span>
 <span class="co">#&gt; 5    Separate - Reference Exponential Converged 2577.485  654.7878 2581.006</span>
@@ -398,12 +398,12 @@ pre { /* Code block - determines code spacing between lines */
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span><span class="va">Model</span>, <span class="va">Dist</span>, <span class="va">BootSample</span>, <span class="va">Param</span>, <span class="va">Estimate</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;          Model        Dist BootSample            Param   Estimate</span>
-<span class="co">#&gt; 1 Common Shape Exponential          1        INTERCEPT  6.1289156</span>
-<span class="co">#&gt; 2 Common Shape Exponential          1 TX(Intervention) -0.7908096</span>
-<span class="co">#&gt; 3 Common Shape Exponential          2        INTERCEPT  6.0663108</span>
-<span class="co">#&gt; 4 Common Shape Exponential          2 TX(Intervention) -0.6928566</span>
-<span class="co">#&gt; 5 Common Shape Exponential          3        INTERCEPT  6.0120960</span>
-<span class="co">#&gt; 6 Common Shape Exponential          3 TX(Intervention) -0.6119670</span></pre></div>
+<span class="co">#&gt; 1 Common shape Exponential          1        INTERCEPT  6.1289156</span>
+<span class="co">#&gt; 2 Common shape Exponential          1 TX(Intervention) -0.7908096</span>
+<span class="co">#&gt; 3 Common shape Exponential          2        INTERCEPT  6.0663108</span>
+<span class="co">#&gt; 4 Common shape Exponential          2 TX(Intervention) -0.6928566</span>
+<span class="co">#&gt; 5 Common shape Exponential          3        INTERCEPT  6.0120960</span>
+<span class="co">#&gt; 6 Common shape Exponential          3 TX(Intervention) -0.6119670</span></pre></div>
 </div>
 </div>
 <div id="details-on-conversions" class="section level1">
@@ -445,107 +445,107 @@ pre { /* Code block - determines code spacing between lines */
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Common Shape</td>
+<td align="left">Common shape</td>
 <td align="left">Exponential</td>
 <td align="left">INTERCEPT, TX(Intervention)</td>
 </tr>
 <tr class="even">
-<td align="left">Common Shape</td>
+<td align="left">Common shape</td>
 <td align="left">Gamma</td>
 <td align="left">INTERCEPT, TX(Intervention), SCALE</td>
 </tr>
 <tr class="odd">
-<td align="left">Common Shape</td>
+<td align="left">Common shape</td>
 <td align="left">Generalized Gamma</td>
 <td align="left">INTERCEPT, TX(Intervention), SCALE, SHAPE</td>
 </tr>
 <tr class="even">
-<td align="left">Common Shape</td>
+<td align="left">Common shape</td>
 <td align="left">Gompertz</td>
 <td align="left">INTERCEPT, TX(Intervention), SCALE</td>
 </tr>
 <tr class="odd">
-<td align="left">Common Shape</td>
+<td align="left">Common shape</td>
 <td align="left">Log Logistic</td>
 <td align="left">INTERCEPT, TX(Intervention), SCALE</td>
 </tr>
 <tr class="even">
-<td align="left">Common Shape</td>
+<td align="left">Common shape</td>
 <td align="left">Log Normal</td>
 <td align="left">INTERCEPT, TX(Intervention), SCALE</td>
 </tr>
 <tr class="odd">
-<td align="left">Common Shape</td>
+<td align="left">Common shape</td>
 <td align="left">Weibull</td>
 <td align="left">INTERCEPT, TX(Intervention), SCALE</td>
 </tr>
 <tr class="even">
-<td align="left">Independent Shape - Intervention</td>
+<td align="left">Independent shape - Intervention</td>
 <td align="left">Exponential</td>
 <td align="left">INTERCEPT</td>
 </tr>
 <tr class="odd">
-<td align="left">Independent Shape - Intervention</td>
+<td align="left">Independent shape - Intervention</td>
 <td align="left">Gamma</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="even">
-<td align="left">Independent Shape - Intervention</td>
+<td align="left">Independent shape - Intervention</td>
 <td align="left">Generalized Gamma</td>
 <td align="left">INTERCEPT, SCALE, SHAPE</td>
 </tr>
 <tr class="odd">
-<td align="left">Independent Shape - Intervention</td>
+<td align="left">Independent shape - Intervention</td>
 <td align="left">Gompertz</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="even">
-<td align="left">Independent Shape - Intervention</td>
+<td align="left">Independent shape - Intervention</td>
 <td align="left">Log Logistic</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="odd">
-<td align="left">Independent Shape - Intervention</td>
+<td align="left">Independent shape - Intervention</td>
 <td align="left">Log Normal</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="even">
-<td align="left">Independent Shape - Intervention</td>
+<td align="left">Independent shape - Intervention</td>
 <td align="left">Weibull</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="odd">
-<td align="left">Independent Shape - Reference</td>
+<td align="left">Independent shape - Reference</td>
 <td align="left">Exponential</td>
 <td align="left">INTERCEPT</td>
 </tr>
 <tr class="even">
-<td align="left">Independent Shape - Reference</td>
+<td align="left">Independent shape - Reference</td>
 <td align="left">Gamma</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="odd">
-<td align="left">Independent Shape - Reference</td>
+<td align="left">Independent shape - Reference</td>
 <td align="left">Generalized Gamma</td>
 <td align="left">INTERCEPT, SCALE, SHAPE</td>
 </tr>
 <tr class="even">
-<td align="left">Independent Shape - Reference</td>
+<td align="left">Independent shape - Reference</td>
 <td align="left">Gompertz</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="odd">
-<td align="left">Independent Shape - Reference</td>
+<td align="left">Independent shape - Reference</td>
 <td align="left">Log Logistic</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="even">
-<td align="left">Independent Shape - Reference</td>
+<td align="left">Independent shape - Reference</td>
 <td align="left">Log Normal</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
 <tr class="odd">
-<td align="left">Independent Shape - Reference</td>
+<td align="left">Independent shape - Reference</td>
 <td align="left">Weibull</td>
 <td align="left">INTERCEPT, SCALE</td>
 </tr>
@@ -1017,13 +1017,13 @@ pre { /* Code block - determines code spacing between lines */
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>delta_AIC <span class="op">=</span> <span class="va">AIC</span> <span class="op">-</span> <span class="va">AIC_SAS</span>,
          delta_BIC <span class="op">=</span> <span class="va">AIC</span> <span class="op">-</span> <span class="va">AIC_SAS</span><span class="op">)</span>
 <span class="co">#&gt;                      Model              Dist      AIC   AIC_SAS      BIC</span>
-<span class="co">#&gt; 1             Common Shape       Exponential 5600.660 1326.3479 5609.089</span>
-<span class="co">#&gt; 2             Common Shape           Weibull 5545.222 1270.9094 5557.866</span>
-<span class="co">#&gt; 3             Common Shape          Gompertz 5564.003 1289.6905 5576.647</span>
-<span class="co">#&gt; 4             Common Shape        Log Normal 5606.451 1332.1382 5619.094</span>
-<span class="co">#&gt; 5             Common Shape      Log Logistic 5566.512 1292.1995 5579.156</span>
-<span class="co">#&gt; 6             Common Shape Generalized Gamma 5546.841 1272.5287 5563.699</span>
-<span class="co">#&gt; 7             Common Shape             Gamma 5546.203 1271.8911 5558.847</span>
+<span class="co">#&gt; 1             Common shape       Exponential 5600.660 1326.3479 5609.089</span>
+<span class="co">#&gt; 2             Common shape           Weibull 5545.222 1270.9094 5557.866</span>
+<span class="co">#&gt; 3             Common shape          Gompertz 5564.003 1289.6905 5576.647</span>
+<span class="co">#&gt; 4             Common shape        Log Normal 5606.451 1332.1382 5619.094</span>
+<span class="co">#&gt; 5             Common shape      Log Logistic 5566.512 1292.1995 5579.156</span>
+<span class="co">#&gt; 6             Common shape Generalized Gamma 5546.841 1272.5287 5563.699</span>
+<span class="co">#&gt; 7             Common shape             Gamma 5546.203 1271.8911 5558.847</span>
 <span class="co">#&gt; 8  Separate - Intervention       Exponential 3023.176  671.5601 3026.697</span>
 <span class="co">#&gt; 9  Separate - Intervention           Weibull 2990.943  639.3272 2997.986</span>
 <span class="co">#&gt; 10 Separate - Intervention          Gompertz 3005.220  653.6042 3012.263</span>
@@ -1038,13 +1038,13 @@ pre { /* Code block - determines code spacing between lines */
 <span class="co">#&gt; 19    Separate - Reference      Log Logistic 2563.469  640.7722 2570.512</span>
 <span class="co">#&gt; 20    Separate - Reference Generalized Gamma 2558.162  635.4655 2568.727</span>
 <span class="co">#&gt; 21    Separate - Reference             Gamma 2557.768  635.0706 2564.810</span>
-<span class="co">#&gt; 22       Independent Shape       Exponential 5600.660 1326.3479 5609.089</span>
-<span class="co">#&gt; 23       Independent Shape           Weibull 5547.214 1272.9013 5564.072</span>
-<span class="co">#&gt; 24       Independent Shape          Gompertz 5565.974 1291.6621 5582.833</span>
-<span class="co">#&gt; 25       Independent Shape      Log Logistic 5566.202 1291.8894 5583.060</span>
-<span class="co">#&gt; 26       Independent Shape             Gamma 5547.919 1273.6069 5564.778</span>
-<span class="co">#&gt; 27       Independent Shape        Log Normal 5604.382 1330.0698 5621.241</span>
-<span class="co">#&gt; 28       Independent Shape Generalized Gamma 5550.112 1275.8001 5575.400</span>
+<span class="co">#&gt; 22       Independent shape       Exponential 5600.660 1326.3479 5609.089</span>
+<span class="co">#&gt; 23       Independent shape           Weibull 5547.214 1272.9013 5564.072</span>
+<span class="co">#&gt; 24       Independent shape          Gompertz 5565.974 1291.6621 5582.833</span>
+<span class="co">#&gt; 25       Independent shape      Log Logistic 5566.202 1291.8894 5583.060</span>
+<span class="co">#&gt; 26       Independent shape             Gamma 5547.919 1273.6069 5564.778</span>
+<span class="co">#&gt; 27       Independent shape        Log Normal 5604.382 1330.0698 5621.241</span>
+<span class="co">#&gt; 28       Independent shape Generalized Gamma 5550.112 1275.8001 5575.400</span>
 <span class="co">#&gt;      BIC_SAS delta_AIC delta_BIC</span>
 <span class="co">#&gt; 1  1334.7771  4274.312  4274.312</span>
 <span class="co">#&gt; 2  1283.5533  4274.312  4274.312</span>

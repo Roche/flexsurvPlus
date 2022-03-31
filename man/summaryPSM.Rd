@@ -26,8 +26,11 @@ summaryPSM(
 \value{
 A data frame containing the following values
 \itemize{
-\item Model - as specified in \code{\link{runPSM}} model.type
-\item Dist - as specified in \code{\link{runPSM}} distr
+\item Model - The Model as specified in \code{\link{runPSM}} model.type
+\item ModelF - an ordered factor of Model
+\item Dist - The distribution
+\item DistF - an ordered factor of Dist
+\item distr - as specified in \code{\link{runPSM}} distr
 \item Strata - Either Intervention or Reference
 \item StrataName - As specified by int_name and ref_name respectively in \code{\link{runPSM}}
 \item type - as defined by the types parameter see \code{\link{summary.flexsurvreg}} for details
@@ -61,7 +64,7 @@ psm_pfs <- runPSM(
   ref_name = "B")
 
 summaryPSM(psm_pfs, types = c("mean","rmst"), t = c(100,2000)) \%>\%
-   filter(Dist == "gengamma", Strata == "Intervention")
+   filter(Dist == "Generalized Gamma", Strata == "Intervention")
 
 summaryPSM(psm_pfs, types = "survival", t = seq(0,2000,100)) \%>\%
   ggplot(aes(x=time, y = value, color = StrataName, linetype = Model)) +

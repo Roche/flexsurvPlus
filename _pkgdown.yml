@@ -58,13 +58,13 @@ articles:
     for inclusion into Excel based economic models.
   contents: 
   - Fitting_models_in_R
-  - Fitting_models_in_R_bootstrap
+  - Bootstrap_models_in_R
 - title: "Methods appendix"
   desc: >
     These vignettes provide more details on the methods used and formulas for parametric forms
     and related surival and hazard functions.
   contents:
-  - Survival_analysis_theory
+  - Model_theory
 - title: "STEM appendix"
   desc: >
     These vignettes describe how to convert to parametrizations that were used in a prior SAS 

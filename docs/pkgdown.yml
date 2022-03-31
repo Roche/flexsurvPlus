@@ -1,10 +1,10 @@
-pandoc: 2.9.2
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  Bootstrap_models_in_R: Bootstrap_models_in_R.html
   Fitting_models_in_R: Fitting_models_in_R.html
-  Fitting_models_in_R_bootstrap: Fitting_models_in_R_bootstrap.html
+  Model_theory: Model_theory.html
   STEM_compatibility: STEM_compatibility.html
-  Survival_analysis_theory: Survival_analysis_theory.html
-last_built: 2022-01-07T16:41Z
+last_built: 2022-03-31T11:00Z
 

@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flexsurvPlus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.04</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.05</span>
       </span>
     </div>
 
@@ -56,7 +56,7 @@
   <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Other Packages
      
     <span class="caret"></span>
@@ -100,16 +100,16 @@
 
       
 
-      </header><script src="Fitting_models_in_R_bootstrap_files/header-attrs-2.11/header-attrs.js"></script><script src="Fitting_models_in_R_bootstrap_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="Bootstrap_models_in_R_files/header-attrs-2.13/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>PSA and correlated endpoints (bootstrap approach)</h1>
                         <h4 class="author">Roche</h4>
             
-            <h4 class="date">2022-01-07</h4>
+            <h4 class="date">2022-03-31</h4>
       
       
-      <div class="hidden name"><code>Fitting_models_in_R_bootstrap.Rmd</code></div>
+      <div class="hidden name"><code>Bootstrap_models_in_R.Rmd</code></div>
 
     </div>
 
@@ -214,7 +214,7 @@ pre { /* Code block - determines code spacing between lines */
      xlab <span class="op">=</span> <span class="st">"Time (Days)"</span>, <span class="co"># x-axis label</span>
      ylab <span class="op">=</span> <span class="st">"Overall survival"</span>, <span class="co"># y-axis label</span>
      xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">800</span><span class="op">)</span><span class="op">)</span> </pre></div>
-<p><img src="Fitting_models_in_R_bootstrap_files/figure-html/unnamed-chunk-4-1.png" width="864"></p>
+<p><img src="Bootstrap_models_in_R_files/figure-html/unnamed-chunk-4-1.png" width="864"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></pre></div>
@@ -371,7 +371,7 @@ pre { /* Code block - determines code spacing between lines */
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Mean (weibull) PFS days"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Mean (gamma) OS days"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Each point is a bootstrap sample"</span><span class="op">)</span></pre></div>
-<p><img src="Fitting_models_in_R_bootstrap_files/figure-html/unnamed-chunk-10-1.png" width="864"></p>
+<p><img src="Bootstrap_models_in_R_files/figure-html/unnamed-chunk-10-1.png" width="864"></p>
 </div>
 </div>
   </div>

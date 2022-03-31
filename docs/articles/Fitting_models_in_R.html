@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flexsurvPlus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.04</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.05</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@
       <h1 data-toc-skip>Fitting parametric survival models in R</h1>
                         <h4 class="author">Roche</h4>
             
-            <h4 class="date">2022-03-29</h4>
+            <h4 class="date">2022-03-31</h4>
       
       
       <div class="hidden name"><code>Fitting_models_in_R.Rmd</code></div>
@@ -233,7 +233,7 @@ pre { /* Code block - determines code spacing between lines */
 <div class="sourceCode" id="cb3"><pre class="downlit">
 
 <span class="co"># Create survfit object</span>
-<span class="va">km.est.PFS</span> <span class="op">&lt;-</span> <span class="fu">survfit</span><span class="op">(</span><span class="fu">Surv</span><span class="op">(</span><span class="va">PFS_days</span>, <span class="va">PFS_event</span><span class="op">)</span> <span class="op">~</span> <span class="va">ARMCD</span>, 
+<span class="va">km.est.PFS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html">survfit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">PFS_days</span>, <span class="va">PFS_event</span><span class="op">)</span> <span class="op">~</span> <span class="va">ARMCD</span>, 
                       data <span class="op">=</span> <span class="va">PFS_data</span>, 
                       conf.type <span class="op">=</span> <span class="st">'plain'</span><span class="op">)</span>
 
@@ -918,72 +918,105 @@ pre { /* Code block - determines code spacing between lines */
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $model_summary</span>
-<span class="co">#&gt;                Model             Dist Intervention_name Reference_name</span>
-<span class="co">#&gt; 1       Common shape       comshp.exp                 A              B</span>
-<span class="co">#&gt; 2       Common shape   comshp.weibull                 A              B</span>
-<span class="co">#&gt; 3       Common shape  comshp.gompertz                 A              B</span>
-<span class="co">#&gt; 4       Common shape     comshp.lnorm                 A              B</span>
-<span class="co">#&gt; 5       Common shape    comshp.llogis                 A              B</span>
-<span class="co">#&gt; 6       Common shape  comshp.gengamma                 A              B</span>
-<span class="co">#&gt; 7       Common shape     comshp.gamma                 A              B</span>
-<span class="co">#&gt; 8       Common shape      comshp.genf                 A              B</span>
-<span class="co">#&gt; 9           Seperate      sep.exp.int                 A              B</span>
-<span class="co">#&gt; 10          Seperate  sep.weibull.int                 A              B</span>
-<span class="co">#&gt; 11          Seperate sep.gompertz.int                 A              B</span>
-<span class="co">#&gt; 12          Seperate    sep.lnorm.int                 A              B</span>
-<span class="co">#&gt; 13          Seperate   sep.llogis.int                 A              B</span>
-<span class="co">#&gt; 14          Seperate sep.gengamma.int                 A              B</span>
-<span class="co">#&gt; 15          Seperate    sep.gamma.int                 A              B</span>
-<span class="co">#&gt; 16          Seperate     sep.genf.int                 A              B</span>
-<span class="co">#&gt; 17          Seperate      sep.exp.ref                 A              B</span>
-<span class="co">#&gt; 18          Seperate  sep.weibull.ref                 A              B</span>
-<span class="co">#&gt; 19          Seperate sep.gompertz.ref                 A              B</span>
-<span class="co">#&gt; 20          Seperate    sep.lnorm.ref                 A              B</span>
-<span class="co">#&gt; 21          Seperate   sep.llogis.ref                 A              B</span>
-<span class="co">#&gt; 22          Seperate sep.gengamma.ref                 A              B</span>
-<span class="co">#&gt; 23          Seperate    sep.gamma.ref                 A              B</span>
-<span class="co">#&gt; 24          Seperate     sep.genf.ref                 A              B</span>
-<span class="co">#&gt; 25 Independent shape       indshp.exp                 A              B</span>
-<span class="co">#&gt; 26 Independent shape   indshp.weibull                 A              B</span>
-<span class="co">#&gt; 27 Independent shape  indshp.gompertz                 A              B</span>
-<span class="co">#&gt; 28 Independent shape    indshp.llogis                 A              B</span>
-<span class="co">#&gt; 29 Independent shape     indshp.gamma                 A              B</span>
-<span class="co">#&gt; 30 Independent shape     indshp.lnorm                 A              B</span>
-<span class="co">#&gt; 31 Independent shape  indshp.gengamma                 A              B</span>
-<span class="co">#&gt; 32 Independent shape      indshp.genf                 A              B</span>
-<span class="co">#&gt;       Status      AIC      BIC</span>
-<span class="co">#&gt; 1  Converged 5600.660 5609.089</span>
-<span class="co">#&gt; 2  Converged 5545.222 5557.866</span>
-<span class="co">#&gt; 3  Converged 5564.003 5576.647</span>
-<span class="co">#&gt; 4  Converged 5606.451 5619.094</span>
-<span class="co">#&gt; 5  Converged 5566.512 5579.156</span>
-<span class="co">#&gt; 6  Converged 5546.841 5563.699</span>
-<span class="co">#&gt; 7  Converged 5546.203 5558.847</span>
-<span class="co">#&gt; 8  Converged 5546.640 5567.713</span>
-<span class="co">#&gt; 9  Converged 3023.176 3026.697</span>
-<span class="co">#&gt; 10 Converged 2990.943 2997.986</span>
-<span class="co">#&gt; 11 Converged 3005.220 3012.263</span>
-<span class="co">#&gt; 12 Converged 3021.443 3028.486</span>
-<span class="co">#&gt; 13 Converged 3002.733 3009.776</span>
-<span class="co">#&gt; 14 Converged 2991.950 3002.514</span>
-<span class="co">#&gt; 15 Converged 2990.152 2997.195</span>
-<span class="co">#&gt; 16 Converged 2992.766 3006.852</span>
-<span class="co">#&gt; 17 Converged 2577.485 2581.006</span>
-<span class="co">#&gt; 18 Converged 2556.271 2563.314</span>
-<span class="co">#&gt; 19 Converged 2560.755 2567.798</span>
-<span class="co">#&gt; 20 Converged 2582.939 2589.982</span>
-<span class="co">#&gt; 21 Converged 2563.469 2570.512</span>
-<span class="co">#&gt; 22 Converged 2558.162 2568.727</span>
-<span class="co">#&gt; 23 Converged 2557.768 2564.810</span>
-<span class="co">#&gt; 24 Converged 2559.427 2573.512</span>
-<span class="co">#&gt; 25 Converged 5600.660 5609.089</span>
-<span class="co">#&gt; 26 Converged 5547.214 5564.072</span>
-<span class="co">#&gt; 27 Converged 5565.974 5582.833</span>
-<span class="co">#&gt; 28 Converged 5566.202 5583.060</span>
-<span class="co">#&gt; 29 Converged 5547.919 5564.778</span>
-<span class="co">#&gt; 30 Converged 5604.382 5621.241</span>
-<span class="co">#&gt; 31 Converged 5550.112 5575.400</span>
-<span class="co">#&gt; 32 Converged 5552.193 5585.910</span>
+<span class="co">#&gt;         flexsurvfit                   Model                  ModelF</span>
+<span class="co">#&gt; 1        comshp.exp            Common shape            Common shape</span>
+<span class="co">#&gt; 2    comshp.weibull            Common shape            Common shape</span>
+<span class="co">#&gt; 3   comshp.gompertz            Common shape            Common shape</span>
+<span class="co">#&gt; 4      comshp.lnorm            Common shape            Common shape</span>
+<span class="co">#&gt; 5     comshp.llogis            Common shape            Common shape</span>
+<span class="co">#&gt; 6   comshp.gengamma            Common shape            Common shape</span>
+<span class="co">#&gt; 7      comshp.gamma            Common shape            Common shape</span>
+<span class="co">#&gt; 8       comshp.genf            Common shape            Common shape</span>
+<span class="co">#&gt; 9       sep.exp.int Separate - Intervention Separate - Intervention</span>
+<span class="co">#&gt; 10  sep.weibull.int Separate - Intervention Separate - Intervention</span>
+<span class="co">#&gt; 11 sep.gompertz.int Separate - Intervention Separate - Intervention</span>
+<span class="co">#&gt; 12    sep.lnorm.int Separate - Intervention Separate - Intervention</span>
+<span class="co">#&gt; 13   sep.llogis.int Separate - Intervention Separate - Intervention</span>
+<span class="co">#&gt; 14 sep.gengamma.int Separate - Intervention Separate - Intervention</span>
+<span class="co">#&gt; 15    sep.gamma.int Separate - Intervention Separate - Intervention</span>
+<span class="co">#&gt; 16     sep.genf.int Separate - Intervention Separate - Intervention</span>
+<span class="co">#&gt; 17      sep.exp.ref    Separate - Reference    Separate - Reference</span>
+<span class="co">#&gt; 18  sep.weibull.ref    Separate - Reference    Separate - Reference</span>
+<span class="co">#&gt; 19 sep.gompertz.ref    Separate - Reference    Separate - Reference</span>
+<span class="co">#&gt; 20    sep.lnorm.ref    Separate - Reference    Separate - Reference</span>
+<span class="co">#&gt; 21   sep.llogis.ref    Separate - Reference    Separate - Reference</span>
+<span class="co">#&gt; 22 sep.gengamma.ref    Separate - Reference    Separate - Reference</span>
+<span class="co">#&gt; 23    sep.gamma.ref    Separate - Reference    Separate - Reference</span>
+<span class="co">#&gt; 24     sep.genf.ref    Separate - Reference    Separate - Reference</span>
+<span class="co">#&gt; 25       indshp.exp       Independent shape       Independent shape</span>
+<span class="co">#&gt; 26   indshp.weibull       Independent shape       Independent shape</span>
+<span class="co">#&gt; 27  indshp.gompertz       Independent shape       Independent shape</span>
+<span class="co">#&gt; 28    indshp.llogis       Independent shape       Independent shape</span>
+<span class="co">#&gt; 29     indshp.gamma       Independent shape       Independent shape</span>
+<span class="co">#&gt; 30     indshp.lnorm       Independent shape       Independent shape</span>
+<span class="co">#&gt; 31  indshp.gengamma       Independent shape       Independent shape</span>
+<span class="co">#&gt; 32      indshp.genf       Independent shape       Independent shape</span>
+<span class="co">#&gt;                 Dist             DistF    distr Intervention_name</span>
+<span class="co">#&gt; 1        Exponential       Exponential      exp                 A</span>
+<span class="co">#&gt; 2            Weibull           Weibull  weibull                 A</span>
+<span class="co">#&gt; 3           Gompertz          Gompertz gompertz                 A</span>
+<span class="co">#&gt; 4         Log Normal        Log Normal    lnorm                 A</span>
+<span class="co">#&gt; 5       Log Logistic      Log Logistic   llogis                 A</span>
+<span class="co">#&gt; 6  Generalized Gamma Generalized Gamma gengamma                 A</span>
+<span class="co">#&gt; 7              Gamma             Gamma    gamma                 A</span>
+<span class="co">#&gt; 8      Generalized F     Generalized F     genf                 A</span>
+<span class="co">#&gt; 9        Exponential       Exponential      exp                 A</span>
+<span class="co">#&gt; 10           Weibull           Weibull  weibull                 A</span>
+<span class="co">#&gt; 11          Gompertz          Gompertz gompertz                 A</span>
+<span class="co">#&gt; 12        Log Normal        Log Normal    lnorm                 A</span>
+<span class="co">#&gt; 13      Log Logistic      Log Logistic   llogis                 A</span>
+<span class="co">#&gt; 14 Generalized Gamma Generalized Gamma gengamma                 A</span>
+<span class="co">#&gt; 15             Gamma             Gamma    gamma                 A</span>
+<span class="co">#&gt; 16     Generalized F     Generalized F     genf                 A</span>
+<span class="co">#&gt; 17       Exponential       Exponential      exp                 A</span>
+<span class="co">#&gt; 18           Weibull           Weibull  weibull                 A</span>
+<span class="co">#&gt; 19          Gompertz          Gompertz gompertz                 A</span>
+<span class="co">#&gt; 20        Log Normal        Log Normal    lnorm                 A</span>
+<span class="co">#&gt; 21      Log Logistic      Log Logistic   llogis                 A</span>
+<span class="co">#&gt; 22 Generalized Gamma Generalized Gamma gengamma                 A</span>
+<span class="co">#&gt; 23             Gamma             Gamma    gamma                 A</span>
+<span class="co">#&gt; 24     Generalized F     Generalized F     genf                 A</span>
+<span class="co">#&gt; 25       Exponential       Exponential      exp                 A</span>
+<span class="co">#&gt; 26           Weibull           Weibull  weibull                 A</span>
+<span class="co">#&gt; 27          Gompertz          Gompertz gompertz                 A</span>
+<span class="co">#&gt; 28      Log Logistic      Log Logistic   llogis                 A</span>
+<span class="co">#&gt; 29             Gamma             Gamma    gamma                 A</span>
+<span class="co">#&gt; 30        Log Normal        Log Normal    lnorm                 A</span>
+<span class="co">#&gt; 31 Generalized Gamma Generalized Gamma gengamma                 A</span>
+<span class="co">#&gt; 32     Generalized F     Generalized F     genf                 A</span>
+<span class="co">#&gt;    Reference_name    Status      AIC      BIC</span>
+<span class="co">#&gt; 1               B Converged 5600.660 5609.089</span>
+<span class="co">#&gt; 2               B Converged 5545.222 5557.866</span>
+<span class="co">#&gt; 3               B Converged 5564.003 5576.647</span>
+<span class="co">#&gt; 4               B Converged 5606.451 5619.094</span>
+<span class="co">#&gt; 5               B Converged 5566.512 5579.156</span>
+<span class="co">#&gt; 6               B Converged 5546.841 5563.699</span>
+<span class="co">#&gt; 7               B Converged 5546.203 5558.847</span>
+<span class="co">#&gt; 8               B Converged 5546.640 5567.713</span>
+<span class="co">#&gt; 9               B Converged 3023.176 3026.697</span>
+<span class="co">#&gt; 10              B Converged 2990.943 2997.986</span>
+<span class="co">#&gt; 11              B Converged 3005.220 3012.263</span>
+<span class="co">#&gt; 12              B Converged 3021.443 3028.486</span>
+<span class="co">#&gt; 13              B Converged 3002.733 3009.776</span>
+<span class="co">#&gt; 14              B Converged 2991.950 3002.514</span>
+<span class="co">#&gt; 15              B Converged 2990.152 2997.195</span>
+<span class="co">#&gt; 16              B Converged 2992.766 3006.852</span>
+<span class="co">#&gt; 17              B Converged 2577.485 2581.006</span>
+<span class="co">#&gt; 18              B Converged 2556.271 2563.314</span>
+<span class="co">#&gt; 19              B Converged 2560.755 2567.798</span>
+<span class="co">#&gt; 20              B Converged 2582.939 2589.982</span>
+<span class="co">#&gt; 21              B Converged 2563.469 2570.512</span>
+<span class="co">#&gt; 22              B Converged 2558.162 2568.727</span>
+<span class="co">#&gt; 23              B Converged 2557.768 2564.810</span>
+<span class="co">#&gt; 24              B Converged 2559.427 2573.512</span>
+<span class="co">#&gt; 25              B Converged 5600.660 5609.089</span>
+<span class="co">#&gt; 26              B Converged 5547.214 5564.072</span>
+<span class="co">#&gt; 27              B Converged 5565.974 5582.833</span>
+<span class="co">#&gt; 28              B Converged 5566.202 5583.060</span>
+<span class="co">#&gt; 29              B Converged 5547.919 5564.778</span>
+<span class="co">#&gt; 30              B Converged 5604.382 5621.241</span>
+<span class="co">#&gt; 31              B Converged 5550.112 5575.400</span>
+<span class="co">#&gt; 32              B Converged 5552.193 5585.910</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $parameters_vector</span>
 <span class="co">#&gt;       comshp.exp.rate.int       comshp.exp.rate.ref        comshp.exp.rate.TE </span>
@@ -1136,18 +1169,18 @@ pre { /* Code block - determines code spacing between lines */
                         <span class="op">)</span>
 
 <span class="va">landmarks_df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">==</span> <span class="st">"Common shape"</span>, <span class="va">Dist</span> <span class="op">==</span> <span class="st">"weibull"</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 8 × 8</span>
-<span class="co">#&gt;   Model        Dist    Strata       StrataName type     variable  time value</span>
-<span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Common shape weibull Intervention A          survival est          0 1    </span>
-<span class="co">#&gt; 2 Common shape weibull Intervention A          survival est        100 0.723</span>
-<span class="co">#&gt; 3 Common shape weibull Intervention A          survival est        200 0.429</span>
-<span class="co">#&gt; 4 Common shape weibull Intervention A          survival est        300 0.226</span>
-<span class="co">#&gt; 5 Common shape weibull Reference    B          survival est          0 1    </span>
-<span class="co">#&gt; 6 Common shape weibull Reference    B          survival est        100 0.879</span>
-<span class="co">#&gt; 7 Common shape weibull Reference    B          survival est        200 0.713</span>
-<span class="co">#&gt; 8 Common shape weibull Reference    B          survival est        300 0.553</span></pre></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">==</span> <span class="st">"Common shape"</span>, <span class="va">Dist</span> <span class="op">==</span> <span class="st">"Weibull"</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 8 × 11</span>
+<span class="co">#&gt;   Model    ModelF Dist  DistF distr Strata StrataName type  variable  time value</span>
+<span class="co">#&gt;   &lt;chr&gt;    &lt;ord&gt;  &lt;chr&gt; &lt;ord&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Common … Commo… Weib… Weib… weib… Inter… A          surv… est          0 1    </span>
+<span class="co">#&gt; 2 Common … Commo… Weib… Weib… weib… Inter… A          surv… est        100 0.723</span>
+<span class="co">#&gt; 3 Common … Commo… Weib… Weib… weib… Inter… A          surv… est        200 0.429</span>
+<span class="co">#&gt; 4 Common … Commo… Weib… Weib… weib… Inter… A          surv… est        300 0.226</span>
+<span class="co">#&gt; 5 Common … Commo… Weib… Weib… weib… Refer… B          surv… est          0 1    </span>
+<span class="co">#&gt; 6 Common … Commo… Weib… Weib… weib… Refer… B          surv… est        100 0.879</span>
+<span class="co">#&gt; 7 Common … Commo… Weib… Weib… weib… Refer… B          surv… est        200 0.713</span>
+<span class="co">#&gt; 8 Common … Commo… Weib… Weib… weib… Refer… B          surv… est        300 0.553</span></pre></div>
 <p>The same functions can be used to generate the data required to plot the survival curves, overlaid on top of the KM plot. The time argument should reflect how long you want to the extrapolate for and the unit of time is the same as the input data (in this example, days).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 

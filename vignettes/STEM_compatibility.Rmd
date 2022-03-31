@@ -190,7 +190,7 @@ The matrix is described by row and column numbers so can be back converted to a 
 
 # select a single model from the data frame
 weibull_common_data <- PFS_conv_samples$stem_cov %>%
-  filter(Model == "Common Shape", Dist == "Weibull") %>%
+  filter(Model == "Common shape", Dist == "Weibull") %>%
   transmute(rowParam, colParam, rowNum, colNum, CovEst)
 
 weibull_common_data

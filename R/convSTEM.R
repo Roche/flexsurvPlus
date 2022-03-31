@@ -113,13 +113,13 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("comshp.exp.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Exponential",
+      dplyr::mutate(Model = "Common shape", Dist = "Exponential",
                     Param = "INTERCEPT", Value = -log(ests$comshp.exp.rate.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Exponential",
+      dplyr::mutate(Model = "Common shape", Dist = "Exponential",
                     Param = "TX(Intervention)", Value = -(log(ests$comshp.exp.rate.int) - log(ests$comshp.exp.rate.ref))
       ) %>%
       dplyr::bind_rows(rc)
@@ -145,13 +145,13 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("indshp.exp.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Exponential",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Exponential",
                     Param = "INTERCEPT", Value = -log(ests$indshp.exp.rate.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Exponential",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Exponential",
                     Param = "INTERCEPT", Value = -log(ests$indshp.exp.rate.int)
       ) %>%
       dplyr::bind_rows(rc)
@@ -176,21 +176,21 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("comshp.weibull.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Weibull",
+      dplyr::mutate(Model = "Common shape", Dist = "Weibull",
                     Param = "INTERCEPT",
                     Value = log(ests$comshp.weibull.scale.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Weibull",
+      dplyr::mutate(Model = "Common shape", Dist = "Weibull",
                     Param = "TX(Intervention)",
                     Value = log(ests$comshp.weibull.scale.int) - log(ests$comshp.weibull.scale.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Weibull",
+      dplyr::mutate(Model = "Common shape", Dist = "Weibull",
                     Param = "SCALE",
                     Value = 1/ests$comshp.weibull.shape.ref
       ) %>%
@@ -233,28 +233,28 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("indshp.weibull.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Weibull",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Weibull",
                     Param = "INTERCEPT",
                     Value = log(ests$indshp.weibull.scale.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Weibull",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Weibull",
                     Param = "SCALE",
                     Value = 1/ests$indshp.weibull.shape.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Weibull",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Weibull",
                     Param = "INTERCEPT",
                     Value = log(ests$indshp.weibull.scale.int)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Weibull",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Weibull",
                     Param = "SCALE",
                     Value = 1/ests$indshp.weibull.shape.int
       ) %>%
@@ -287,21 +287,21 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("comshp.lnorm.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Log Normal",
+      dplyr::mutate(Model = "Common shape", Dist = "Log Normal",
                     Param = "INTERCEPT",
                     Value = ests$comshp.lnorm.meanlog.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Log Normal",
+      dplyr::mutate(Model = "Common shape", Dist = "Log Normal",
                     Param = "TX(Intervention)",
                     Value = ests$comshp.lnorm.meanlog.int - ests$comshp.lnorm.meanlog.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Log Normal",
+      dplyr::mutate(Model = "Common shape", Dist = "Log Normal",
                     Param = "SCALE",
                     Value = ests$comshp.lnorm.sdlog.ref
       ) %>%
@@ -346,7 +346,7 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
     
     rc <- rc_struct %>%
       dplyr::mutate(
-        Model = "Independent Shape - Reference", Dist = "Log Normal",
+        Model = "Independent shape - Reference", Dist = "Log Normal",
         Param = "INTERCEPT",
         Value = ests$indshp.lnorm.meanlog.ref
       ) %>%
@@ -354,7 +354,7 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
     
     rc <- rc_struct %>%
       dplyr::mutate(
-        Model = "Independent Shape - Reference", Dist = "Log Normal",
+        Model = "Independent shape - Reference", Dist = "Log Normal",
         Param = "SCALE",
         Value = ests$indshp.lnorm.sdlog.ref
       ) %>%
@@ -363,7 +363,7 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
     
     rc <- rc_struct %>%
       dplyr::mutate(
-        Model = "Independent Shape - Intervention", Dist = "Log Normal",
+        Model = "Independent shape - Intervention", Dist = "Log Normal",
         Param = "INTERCEPT",
         Value = ests$indshp.lnorm.meanlog.int
       ) %>%
@@ -371,7 +371,7 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
     
     rc <- rc_struct %>%
       dplyr::mutate(
-        Model = "Independent Shape - Intervention", Dist = "Log Normal",
+        Model = "Independent shape - Intervention", Dist = "Log Normal",
         Param = "SCALE",
         Value = ests$indshp.lnorm.sdlog.int
       ) %>%
@@ -405,21 +405,21 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("comshp.llogis.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Log Logistic",
+      dplyr::mutate(Model = "Common shape", Dist = "Log Logistic",
              Param = "INTERCEPT",
              Value = log(ests$comshp.llogis.scale.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Log Logistic",
+      dplyr::mutate(Model = "Common shape", Dist = "Log Logistic",
              Param = "TX(Intervention)",
              Value = log(ests$comshp.llogis.scale.int) - log(ests$comshp.llogis.scale.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Log Logistic",
+      dplyr::mutate(Model = "Common shape", Dist = "Log Logistic",
              Param = "SCALE",
              Value = 1/ests$comshp.llogis.shape.ref
       ) %>%
@@ -462,28 +462,28 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("indshp.llogis.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Log Logistic",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Log Logistic",
              Param = "INTERCEPT",
              Value = log(ests$indshp.llogis.scale.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Log Logistic",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Log Logistic",
              Param = "SCALE",
              Value = 1/ests$indshp.llogis.shape.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Log Logistic",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Log Logistic",
              Param = "INTERCEPT",
              Value = log(ests$indshp.llogis.scale.int)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Log Logistic",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Log Logistic",
              Param = "SCALE",
              Value = 1/ests$indshp.llogis.shape.int
       ) %>%
@@ -516,28 +516,28 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("comshp.gengamma.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Common shape", Dist = "Generalized Gamma",
              Param = "INTERCEPT",
              Value = ests$comshp.gengamma.mu.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Common shape", Dist = "Generalized Gamma",
              Param = "TX(Intervention)",
              Value = ests$comshp.gengamma.mu.int - ests$comshp.gengamma.mu.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Common shape", Dist = "Generalized Gamma",
              Param = "SCALE",
              Value = ests$comshp.gengamma.sigma.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Common shape", Dist = "Generalized Gamma",
              Param = "SHAPE",
              Value = ests$comshp.gengamma.Q.ref
       ) %>%
@@ -594,42 +594,42 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("indshp.gengamma.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Generalized Gamma",
              Param = "INTERCEPT",
              Value = ests$indshp.gengamma.mu.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Generalized Gamma",
              Param = "SCALE",
              Value = ests$indshp.gengamma.sigma.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Generalized Gamma",
              Param = "SHAPE",
              Value = ests$indshp.gengamma.Q.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Generalized Gamma",
              Param = "INTERCEPT",
              Value = ests$indshp.gengamma.mu.int
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Generalized Gamma",
              Param = "SCALE",
              Value = ests$indshp.gengamma.sigma.int
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Generalized Gamma",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Generalized Gamma",
              Param = "SHAPE",
              Value = ests$indshp.gengamma.Q.int
       ) %>%
@@ -669,21 +669,21 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("comshp.gompertz.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Gompertz",
+      dplyr::mutate(Model = "Common shape", Dist = "Gompertz",
              Param = "INTERCEPT",
              Value = -log(ests$comshp.gompertz.rate.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Gompertz",
+      dplyr::mutate(Model = "Common shape", Dist = "Gompertz",
              Param = "TX(Intervention)",
              Value = -(log(ests$comshp.gompertz.rate.int) - log(ests$comshp.gompertz.rate.ref))
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Gompertz",
+      dplyr::mutate(Model = "Common shape", Dist = "Gompertz",
              Param = "SCALE",
              Value = ests$comshp.gompertz.shape.ref
       ) %>%
@@ -726,28 +726,28 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("indshp.gompertz.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Gompertz",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Gompertz",
              Param = "INTERCEPT",
              Value = -log(ests$indshp.gompertz.rate.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Gompertz",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Gompertz",
              Param = "SCALE",
              Value = ests$indshp.gompertz.shape.ref
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Gompertz",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Gompertz",
              Param = "INTERCEPT",
              Value = -log(ests$indshp.gompertz.rate.int)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Gompertz",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Gompertz",
              Param = "SCALE",
              Value = ests$indshp.gompertz.shape.int
       ) %>%
@@ -780,21 +780,21 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("comshp.gamma.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Gamma",
+      dplyr::mutate(Model = "Common shape", Dist = "Gamma",
              Param = "INTERCEPT",
              Value = -log(ests$comshp.gamma.rate.ref / ests$comshp.gamma.shape.ref )
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Gamma",
+      dplyr::mutate(Model = "Common shape", Dist = "Gamma",
              Param = "TX(Intervention)",
              Value = -(log(ests$comshp.gamma.rate.int) - log(ests$comshp.gamma.rate.ref))
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Common Shape", Dist = "Gamma",
+      dplyr::mutate(Model = "Common shape", Dist = "Gamma",
              Param = "SCALE",
              Value = ests$comshp.gamma.shape.ref^-0.5
       ) %>%
@@ -837,28 +837,28 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   if (any(grepl("indshp.gamma.", names(ests)))){
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Gamma",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Gamma",
              Param = "INTERCEPT",
              Value = -log(ests$indshp.gamma.rate.ref / ests$indshp.gamma.shape.ref)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Reference", Dist = "Gamma",
+      dplyr::mutate(Model = "Independent shape - Reference", Dist = "Gamma",
              Param = "SCALE",
              Value = ests$indshp.gamma.shape.ref^-0.5
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Gamma",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Gamma",
              Param = "INTERCEPT",
              Value = -log(ests$indshp.gamma.rate.int / ests$indshp.gamma.shape.int)
       ) %>%
       dplyr::bind_rows(rc)
     
     rc <- rc_struct %>%
-      dplyr::mutate(Model = "Independent Shape - Intervention", Dist = "Gamma",
+      dplyr::mutate(Model = "Independent shape - Intervention", Dist = "Gamma",
              Param = "SCALE",
              Value = ests$indshp.gamma.shape.int^-0.5
       ) %>%
@@ -961,7 +961,7 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
     
     
     for (i in 1:nrow(rc.modsum)){
-      this.mdl <- rc.modsum$Dist[i]
+      this.mdl <- rc.modsum$flexsurvfit[i]
       mdl <- x$models[[this.mdl]]
       
       # convert the AIC & BIC to match SAS formulations
@@ -976,36 +976,6 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
       rc.modsum$BIC_SAS[i] <- stats::BIC(mdl) - 2 * sum_log_event_time
     }
     
-    # tidy up the naming to match
-    
-    oDist <- rc.modsum$Dist
-    oModel <- rc.modsum$Model
-    
-    for (i in 1:nrow(rc.modsum)){
-      this.oDist <- oDist[i]
-      this.oModel <- oModel[i]
-      if(this.oModel %in% c("Common shape", "Independent shape", "One arm")){
-        this.Model <- ifelse(this.oModel == "Common shape", "Common Shape",
-                             ifelse(this.oModel == "Independent shape", "Independent Shape",
-                                    "One arm - Intervention"))
-      }
-      if(this.oModel == "Seperate"){
-        this.Model = ifelse(grepl(".ref", this.oDist, fixed = TRUE), "Separate - Reference", "Separate - Intervention")
-      }
-      
-      this.Dist <- ifelse(grepl(".gamma", this.oDist, fixed = TRUE), "Gamma", NA)
-      this.Dist <- ifelse(grepl(".gengamma", this.oDist, fixed = TRUE), "Generalized Gamma", this.Dist)
-      this.Dist <- ifelse(grepl(".gompertz", this.oDist, fixed = TRUE), "Gompertz", this.Dist)
-      this.Dist <- ifelse(grepl(".llogis", this.oDist, fixed = TRUE), "Log Logistic", this.Dist)
-      this.Dist <- ifelse(grepl(".lnorm", this.oDist, fixed = TRUE), "Log Normal", this.Dist)
-      this.Dist <- ifelse(grepl(".exp", this.oDist, fixed = TRUE), "Exponential", this.Dist)
-      this.Dist <- ifelse(grepl(".weibull", this.oDist, fixed = TRUE), "Weibull", this.Dist)
-      
-      rc.modsum$Model[i] <- this.Model
-      rc.modsum$Dist[i] <- this.Dist
-      
-    }
-    
   } else {
     rc.modsum <- tibble::tibble(Model = "", Dist = "", Status = "", AIC = NaN, AIC_SAS = NaN, BIC = NaN, BIC_SAS = NaN) %>%
       dplyr::filter(1==2)
@@ -1015,29 +985,29 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   # Add factors for easy sort
   ####################################################################################
   
-  Model.levels <- c("Common Shape", "Separate - Reference", "Separate - Intervention",
-                    "Independent Shape - Reference", "Independent Shape - Intervention",
-                    "Independent Shape",
+  STEMModel.levels <- c("Common shape", "Separate - Reference", "Separate - Intervention",
+                    "Independent shape - Reference", "Independent shape - Intervention",
+                    "Independent shape",
                     "One arm - Intervention")
   
-  Dist.levels <- c("Exponential", "Weibull", "Log Normal", "Gamma", "Generalized Gamma", "Log Logistic", "Gompertz")
+  STEMDist.levels <- c("Exponential", "Weibull", "Log Normal", "Gamma", "Generalized Gamma", "Log Logistic", "Gompertz")
   
-  Param.levels <-  c("INTERCEPT", "TX(Intervention)", "SCALE", "SHAPE")
+  STEMParam.levels <-  c("INTERCEPT", "TX(Intervention)", "SCALE", "SHAPE")
   
   stem_param <- rc.est.df %>%
-    dplyr::transmute(Model, ModelF = factor(Model, levels = Model.levels, ordered = TRUE),
-              Dist, DistF = factor(Dist, levels = Dist.levels, ordered = TRUE),
-              Param, ParamF = factor(Param, levels = Param.levels, ordered = TRUE),
+    dplyr::transmute(Model, ModelF = factor(Model, levels = STEMModel.levels, ordered = TRUE),
+              Dist, DistF = factor(Dist, levels = STEMDist.levels, ordered = TRUE),
+              Param, ParamF = factor(Param, levels = STEMParam.levels, ordered = TRUE),
               Estimate
     ) %>%
     dplyr::arrange(ModelF, DistF, ParamF)
   
   stem_cov <- rc.cov.df %>%
-    dplyr::transmute(Model, ModelF = factor(Model, levels = Model.levels, ordered = TRUE),
-              Dist, DistF = factor(Dist, levels = Dist.levels, ordered = TRUE),
+    dplyr::transmute(Model, ModelF = factor(Model, levels = STEMModel.levels, ordered = TRUE),
+              Dist, DistF = factor(Dist, levels = STEMDist.levels, ordered = TRUE),
               rowParam, colParam,
-              rowParamF = factor(rowParam, levels = Param.levels, ordered = TRUE),
-              colParamF = factor(colParam, levels = Param.levels, ordered = TRUE),
+              rowParamF = factor(rowParam, levels = STEMParam.levels, ordered = TRUE),
+              colParamF = factor(colParam, levels = STEMParam.levels, ordered = TRUE),
               rowNum = as.numeric(rowParamF),
               colNum = as.numeric(colParamF),
               CovEst = Value
@@ -1045,8 +1015,8 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
     dplyr::arrange(ModelF, DistF, rowParamF, colParamF)
   
   stem_modsum <- rc.modsum %>%
-    dplyr::transmute(Model, ModelF = factor(Model, levels = Model.levels, ordered = TRUE),
-              Dist, DistF = factor(Dist, levels = Dist.levels, ordered = TRUE),
+    dplyr::transmute(Model, ModelF = factor(Model, levels = STEMModel.levels, ordered = TRUE),
+              Dist, DistF = factor(Dist, levels = STEMDist.levels, ordered = TRUE),
               Status,
               AIC, AIC_SAS,
               BIC, BIC_SAS) %>%
@@ -1055,10 +1025,10 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   
   stem_boot <- stemParamDF %>%
     dplyr::filter(Estimate == "Bootstrap") %>%
-    dplyr::transmute(Model, ModelF = factor(Model, levels = Model.levels, ordered = TRUE),
-              Dist, DistF = factor(Dist, levels = Dist.levels, ordered = TRUE),
+    dplyr::transmute(Model, ModelF = factor(Model, levels = STEMModel.levels, ordered = TRUE),
+              Dist, DistF = factor(Dist, levels = STEMDist.levels, ordered = TRUE),
               BootSample = bootid,
-              Param, ParamF = factor(Param, levels = Param.levels, ordered = TRUE),
+              Param, ParamF = factor(Param, levels = STEMParam.levels, ordered = TRUE),
               Estimate = Value) %>%
     dplyr::arrange(ModelF, DistF, BootSample, ParamF)
   

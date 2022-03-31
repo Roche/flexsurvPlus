@@ -28,7 +28,10 @@
 #' @return A data frame containing the following values and similar to that returned by \code{\link{summaryPSM}}
 #' \itemize{
 #'   \item Model - returned as "Kaplan Meier"
-#'   \item Dist - returned as "NA"
+#'   \item ModelF - an ordered factor of Model
+#'   \item Dist - returned as "Kaplan Meier"
+#'   \item DistF - an ordered factor of Dist
+#'   \item distr - returned as "km"
 #'   \item Strata - Either Intervention or Reference
 #'   \item StrataName - As specified by int_name and ref_name respectively.
 #'   \item type - as defined by the types parameter.
@@ -161,6 +164,7 @@ summaryKM <- function(data,
   # fix for binding checks
   Weight <- Strata <- variable <- value <- type <- ARM <- time <- NULL
   v2 <- maxtime <- survival <- lag_time <- lag_surv <- area <- cum_area <- NULL
+  Model <- Dist <- NULL
   
   # get a survfit object 
   # check if a Weight  was specified
@@ -408,10 +412,25 @@ summaryKM <- function(data,
   # decode the strata names and return dataset
   ##################################################
   
+  # define factors for models (consistent with other functions)
+  Model.levels <- c("Kaplan Meier",
+                    "Common shape", "Independent shape",
+                    "Separate - Reference", "Separate - Intervention",
+                    "One arm - Intervention")
+  
+  Dist.orig <- c("exp", "weibull", "lnorm", "gamma", "gengamma", 
+                 "genf", "llogis", "gompertz", "Kaplan Meier")
+  Dist.levels <- c("Exponential", "Weibull", "Log Normal", "Gamma", "Generalized Gamma", 
+                   "Generalized F", "Log Logistic", "Gompertz", "Kaplan Meier")
+  
+  
   rc <- rc %>%
     dplyr::transmute(
       Model = "Kaplan Meier",
-      Dist = "",
+      ModelF = factor(Model, levels = Model.levels, ordered = TRUE),
+      Dist = "Kaplan Meier",
+      DistF = factor(Dist, levels = Dist.levels, ordered = TRUE),
+      distr = "km",
       Strata = ifelse(ARM=="Int", "Intervention", "Reference"),
       StrataName = ifelse(Strata == "Intervention", int_name, ref_name),
       type,

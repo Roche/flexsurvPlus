@@ -58,7 +58,10 @@ analysis.}
 A data frame containing the following values and similar to that returned by \code{\link{summaryPSM}}
 \itemize{
 \item Model - returned as "Kaplan Meier"
-\item Dist - returned as "NA"
+\item ModelF - an ordered factor of Model
+\item Dist - returned as "Kaplan Meier"
+\item DistF - an ordered factor of Dist
+\item distr - returned as "km"
 \item Strata - Either Intervention or Reference
 \item StrataName - As specified by int_name and ref_name respectively.
 \item type - as defined by the types parameter.

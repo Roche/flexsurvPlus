@@ -34,8 +34,8 @@ By re-using random seeds for each bootstrap sample it is possible to maintain co
 For more details and examples see the package vignettes:
 \itemize{
 \item \code{vignette("Fitting_models_in_R", package = "flexsurvPlus")}
-\item \code{vignette("Fitting_models_in_R_bootstrap", package = "flexsurvPlus")}
-\item \code{vignette("Survival_analysis_theory", package = "flexsurvPlus")}
+\item \code{vignette("Bootstrap_models_in_R", package = "flexsurvPlus")}
+\item \code{vignette("Model_theory", package = "flexsurvPlus")}
 }
 
 This function is intended to be used in conjunction with the

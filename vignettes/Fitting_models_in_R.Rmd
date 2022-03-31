@@ -360,7 +360,7 @@ landmarks_df <- summaryPSM(x = psm_PFS_all,
                         )
 
 landmarks_df %>%
-  filter(Model == "Common shape", Dist == "weibull")
+  filter(Model == "Common shape", Dist == "Weibull")
 
 ```
 

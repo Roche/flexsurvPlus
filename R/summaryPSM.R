@@ -9,8 +9,11 @@
 #' 
 #' @return A data frame containing the following values
 #' \itemize{
-#'   \item Model - as specified in \code{\link{runPSM}} model.type
-#'   \item Dist - as specified in \code{\link{runPSM}} distr
+#'   \item Model - The Model as specified in \code{\link{runPSM}} model.type
+#'   \item ModelF - an ordered factor of Model
+#'   \item Dist - The distribution
+#'   \item DistF - an ordered factor of Dist
+#'   \item distr - as specified in \code{\link{runPSM}} distr
 #'   \item Strata - Either Intervention or Reference
 #'   \item StrataName - As specified by int_name and ref_name respectively in \code{\link{runPSM}}
 #'   \item type - as defined by the types parameter see \code{\link{summary.flexsurvreg}} for details
@@ -41,7 +44,7 @@
 #'   ref_name = "B")
 #' 
 #' summaryPSM(psm_pfs, types = c("mean","rmst"), t = c(100,2000)) %>%
-#'    filter(Dist == "gengamma", Strata == "Intervention")
+#'    filter(Dist == "Generalized Gamma", Strata == "Intervention")
 #' 
 #' summaryPSM(psm_pfs, types = "survival", t = seq(0,2000,100)) %>%
 #'   ggplot(aes(x=time, y = value, color = StrataName, linetype = Model)) +
@@ -76,7 +79,7 @@ summaryPSM <- function(x,
   
   # fix bindings check
   mdl1 <- mdl2 <- mdl3 <- ARM <- ARM2 <- NULL
-  Model <- Dist <- Strata <- type <- variable <- time <- value <- NULL
+  model.type <- distr <-  Model <- Dist <- Strata <- type <- variable <- time <- value <- NULL
   
   
   # impute t if not provided
@@ -148,8 +151,8 @@ summaryPSM <- function(x,
       mdl1 = sapply(s1, function(x){x[1]}),
       mdl2 = sapply(s1, function(x){x[2]}),
       mdl3 = sapply(s1, function(x){x[3]}),
-      Model = mdl1,
-      Dist = ifelse(mdl1 == "onearm", mdl3, mdl2),
+      model.type = mdl1,
+      distr = ifelse(mdl1 == "onearm", mdl3, mdl2),
       ARM2 = ifelse(mdl1 == "onearm", mdl2, mdl3),
       # decodes
       Strata = ifelse(is.na(ARM2), 
@@ -159,12 +162,31 @@ summaryPSM <- function(x,
     )
   
   
+  
+  ####################################################################################
+  # Add factors for easy sort
+  ####################################################################################
+  
+  # define factors for models
+  Model.levels <- c("Kaplan Meier",
+                    "Common shape", "Independent shape",
+                    "Separate - Reference", "Separate - Intervention",
+                    "One arm - Intervention")
+  
+  Dist.orig <- c("exp", "weibull", "lnorm", "gamma", "gengamma", 
+                 "genf", "llogis", "gompertz", "Kaplan Meier")
+  Dist.levels <- c("Exponential", "Weibull", "Log Normal", "Gamma", "Generalized Gamma", 
+                   "Generalized F", "Log Logistic", "Gompertz", "Kaplan Meier")
+  
   rc <- final.df %>%
     dplyr::transmute(
-      Model = ifelse(Model == "sep","Separate",
-                     ifelse(Model == "comshp", "Common shape", 
-                            ifelse(Model == "indshp", "Independent shape", "One arm"))),
-      Dist,
+      Model = ifelse(model.type == "indshp","Independent shape",
+                     ifelse(model.type == "comshp", "Common shape", 
+                            paste0(ifelse(model.type == "sep", "Separate", "One arm"), " - ", Strata))),
+      ModelF = factor(Model, levels = Model.levels, ordered = TRUE),
+      Dist = as.character(factor(distr, levels=Dist.orig, labels = Dist.levels)),
+      DistF = factor(Dist, levels = Dist.levels, ordered = TRUE),
+      distr,
       Strata,
       StrataName = ifelse(Strata == "Intervention", int_name, ref_name),
       type,

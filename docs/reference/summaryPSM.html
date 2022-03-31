@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flexsurvPlus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.04</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.05</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@
   <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Other Packages
      
     <span class="caret"></span>
@@ -193,8 +193,11 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame containing the following values</p><ul>
-<li><p>Model - as specified in <code><a href='runPSM.html'>runPSM</a></code> model.type</p></li>
-<li><p>Dist - as specified in <code><a href='runPSM.html'>runPSM</a></code> distr</p></li>
+<li><p>Model - The Model as specified in <code><a href='runPSM.html'>runPSM</a></code> model.type</p></li>
+<li><p>ModelF - an ordered factor of Model</p></li>
+<li><p>Dist - The distribution</p></li>
+<li><p>DistF - an ordered factor of Dist</p></li>
+<li><p>distr - as specified in <code><a href='runPSM.html'>runPSM</a></code> distr</p></li>
 <li><p>Strata - Either Intervention or Reference</p></li>
 <li><p>StrataName - As specified by int_name and ref_name respectively in <code><a href='runPSM.html'>runPSM</a></code></p></li>
 <li><p>type - as defined by the types parameter see <code>summary.flexsurvreg</code> for details</p></li>
@@ -226,19 +229,19 @@
   ref_name <span class='op'>=</span> <span class='st'>"B"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Fitting common shape models</span></div><div class='output co'>#&gt; <span class='message'>Fitting model exp</span></div><div class='output co'>#&gt; <span class='message'>Fitting model weibull</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gompertz</span></div><div class='output co'>#&gt; <span class='message'>Fitting model lnorm</span></div><div class='output co'>#&gt; <span class='message'>Fitting model llogis</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gengamma</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gamma</span></div><div class='output co'>#&gt; <span class='message'>Fitting model genf</span></div><div class='output co'>#&gt; <span class='message'>Fitting separate shape models - intervention arm</span></div><div class='output co'>#&gt; <span class='message'>Fitting model exp</span></div><div class='output co'>#&gt; <span class='message'>Fitting model weibull</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gompertz</span></div><div class='output co'>#&gt; <span class='message'>Fitting model lnorm</span></div><div class='output co'>#&gt; <span class='message'>Fitting model llogis</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gengamma</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gamma</span></div><div class='output co'>#&gt; <span class='message'>Fitting model genf</span></div><div class='output co'>#&gt; <span class='message'>Fitting separate shape models - reference arm</span></div><div class='output co'>#&gt; <span class='message'>Fitting model exp</span></div><div class='output co'>#&gt; <span class='message'>Fitting model weibull</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gompertz</span></div><div class='output co'>#&gt; <span class='message'>Fitting model lnorm</span></div><div class='output co'>#&gt; <span class='message'>Fitting model llogis</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gengamma</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gamma</span></div><div class='output co'>#&gt; <span class='message'>Fitting model genf</span></div><div class='output co'>#&gt; <span class='message'>Fitting independant shape models</span></div><div class='output co'>#&gt; <span class='message'>Fitting model exp</span></div><div class='output co'>#&gt; <span class='message'>Fitting model weibull</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gompertz</span></div><div class='output co'>#&gt; <span class='message'>Fitting model llogis</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gamma</span></div><div class='output co'>#&gt; <span class='message'>Fitting model lnorm</span></div><div class='output co'>#&gt; <span class='message'>Fitting model gengamma</span></div><div class='output co'>#&gt; <span class='message'>Fitting model genf</span></div><div class='input'>
 <span class='fu'>summaryPSM</span><span class='op'>(</span><span class='va'>psm_pfs</span>, types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mean"</span>,<span class='st'>"rmst"</span><span class='op'>)</span>, t <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>,<span class='fl'>2000</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Dist</span> <span class='op'>==</span> <span class='st'>"gengamma"</span>, <span class='va'>Strata</span> <span class='op'>==</span> <span class='st'>"Intervention"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 × 8</span>
-#&gt;   Model             Dist     Strata       StrataName type  variable  time value
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> Separate          gengamma Intervention A          mean  est         <span style='color: #BB0000;'>NA</span> 206. 
-#&gt; <span style='color: #BCBCBC;'>2</span> Common shape      gengamma Intervention A          mean  est         <span style='color: #BB0000;'>NA</span> 206. 
-#&gt; <span style='color: #BCBCBC;'>3</span> Independent shape gengamma Intervention A          mean  est         <span style='color: #BB0000;'>NA</span> 206. 
-#&gt; <span style='color: #BCBCBC;'>4</span> Separate          gengamma Intervention A          rmst  est        100  88.0
-#&gt; <span style='color: #BCBCBC;'>5</span> Separate          gengamma Intervention A          rmst  est       <span style='text-decoration: underline;'>2</span>000 206. 
-#&gt; <span style='color: #BCBCBC;'>6</span> Common shape      gengamma Intervention A          rmst  est        100  87.8
-#&gt; <span style='color: #BCBCBC;'>7</span> Common shape      gengamma Intervention A          rmst  est       <span style='text-decoration: underline;'>2</span>000 206. 
-#&gt; <span style='color: #BCBCBC;'>8</span> Independent shape gengamma Intervention A          rmst  est        100  88.0
-#&gt; <span style='color: #BCBCBC;'>9</span> Independent shape gengamma Intervention A          rmst  est       <span style='text-decoration: underline;'>2</span>000 206. </div><div class='input'>
+   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Dist</span> <span class='op'>==</span> <span class='st'>"Generalized Gamma"</span>, <span class='va'>Strata</span> <span class='op'>==</span> <span class='st'>"Intervention"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 × 11</span>
+#&gt;   Model    ModelF Dist  DistF distr Strata StrataName type  variable  time value
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;ord&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;ord&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> Separat… Separ… Gene… Gene… geng… Inter… A          mean  est         <span style='color: #BB0000;'>NA</span> 206. 
+#&gt; <span style='color: #BCBCBC;'>2</span> Common … Commo… Gene… Gene… geng… Inter… A          mean  est         <span style='color: #BB0000;'>NA</span> 206. 
+#&gt; <span style='color: #BCBCBC;'>3</span> Indepen… Indep… Gene… Gene… geng… Inter… A          mean  est         <span style='color: #BB0000;'>NA</span> 206. 
+#&gt; <span style='color: #BCBCBC;'>4</span> Separat… Separ… Gene… Gene… geng… Inter… A          rmst  est        100  88.0
+#&gt; <span style='color: #BCBCBC;'>5</span> Separat… Separ… Gene… Gene… geng… Inter… A          rmst  est       <span style='text-decoration: underline;'>2</span>000 206. 
+#&gt; <span style='color: #BCBCBC;'>6</span> Common … Commo… Gene… Gene… geng… Inter… A          rmst  est        100  87.8
+#&gt; <span style='color: #BCBCBC;'>7</span> Common … Commo… Gene… Gene… geng… Inter… A          rmst  est       <span style='text-decoration: underline;'>2</span>000 206. 
+#&gt; <span style='color: #BCBCBC;'>8</span> Indepen… Indep… Gene… Gene… geng… Inter… A          rmst  est        100  88.0
+#&gt; <span style='color: #BCBCBC;'>9</span> Indepen… Indep… Gene… Gene… geng… Inter… A          rmst  est       <span style='text-decoration: underline;'>2</span>000 206. </div><div class='input'>
 <span class='fu'>summaryPSM</span><span class='op'>(</span><span class='va'>psm_pfs</span>, types <span class='op'>=</span> <span class='st'>"survival"</span>, t <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2000</span>,<span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>time</span>, y <span class='op'>=</span> <span class='va'>value</span>, color <span class='op'>=</span> <span class='va'>StrataName</span>, linetype <span class='op'>=</span> <span class='va'>Model</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span>
