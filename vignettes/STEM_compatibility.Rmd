@@ -114,18 +114,7 @@ psm_PFS_expweib <- runPSM(data = PFS_data,
 # Apply bootstrapping for illustration 100 samples are taken
 # In practice a larger number maybe preferable.
 
-psm_boot_PFS_expweib  <- boot(statistic = bootPSM, # bootstrap function
-                              R = 100, # number of bootstrap samples
-                              data = PFS_data, # the dataset
-                              time_var = "AVAL", # the time variable
-                              event_var = "event", # the event variable coded as 1 for event
-                              model.type = c("Common shape", 
-                                             "Separate"), 
-                              distr = c('exp', 'weibull'),
-                              int_name = "A",
-                              ref_name = "B",
-                              strata_var = "ARMCD"
-)
+psm_boot_PFS_expweib  <- do.call(boot, args = c(psm_PFS_expweib$config, statistic = bootPSM, R = 100))
 
 ```
 

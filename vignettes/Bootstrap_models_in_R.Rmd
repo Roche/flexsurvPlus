@@ -137,10 +137,35 @@ par(mfrow=c(1,1))
 
 ```
 
-
 # Bootstrapping the endpoints
 
-We can use the bootPSM function with the boot package to generate bootstrap samples. In this example we have used OS and PFS. For speed of execution and illustration of concept we only fit a weibull model for PFS and a gamma models for OS here but all models discussed in <tt>runPSM</tt> could be specified with a single call.
+## Fitting the models to the original data
+
+Before bootstrapping we can estimate the models using the original data. In this example we have used OS and PFS. For speed of execution and illustration of concept we only fit a weibull model for PFS and a gamma models for OS here but all models discussed in <tt>runPSM</tt> could be specified with a single call.
+
+```{r}
+
+psm_PFS <- runPSM(
+  data = analysis_data, # the dataset
+  time_var = "PFS_days", # the time variable
+  event_var = "PFS_event", # the event variable coded as 1 for event
+  model.type = "One arm", 
+  distr = "weibull", # for speed we only fit a single model but multiple could be specified,
+  int_name = "A"  # needed for one arm even as essential meta data
+)
+
+psm_OS <- runPSM(
+  data = analysis_data, # the dataset
+  time_var = "OS_days",  # the time variable
+  event_var = "OS_event", # the event variable coded as 1 for event
+  model.type = "One arm", # again for speed only a single model is specified
+  distr = "gamma", 
+  int_name = "A"  # needed for one arm even as essential meta data
+)
+
+```
+
+We can use the bootPSM function with the boot package to generate bootstrap samples. 
 
 ## Ignoring correlation between endpoints
 
@@ -156,27 +181,9 @@ set.seed(2358)
 # In practice a larger number is preferable.
 n.sim <- 100
 
-PSM_bootstraps_PFS <- boot(
-  statistic = bootPSM, # bootstrap function
-  R=n.sim, # number of bootstrap samples
-  data=analysis_data, # the dataset
-  time_var="PFS_days", # the time variable
-  event_var="PFS_event", # the event variable coded as 1 for event
-  model.type= "One arm", 
-  distr = "weibull", # for speed we only fit a single model but multiple could be specified,
-  int_name = "A"  # needed for one arm even as essential meta data
-)
+PSM_bootstraps_PFS <- do.call(boot, args = c(psm_PFS$config, statistic = bootPSM, R = n.sim))
 
-PSM_bootstraps_OS <- boot(
-  statistic = bootPSM, # bootstrap function
-  R=n.sim, # number of bootstrap samples
-  data=analysis_data, # the dataset
-  time_var="OS_days",  # the time variable
-  event_var="OS_event", # the event variable coded as 1 for event
-  model.type="One arm", # again for speed only a single model is specified
-  distr = "gamma", 
-  int_name = "A"  # needed for one arm even as essential meta data
-)
+PSM_bootstraps_OS <- do.call(boot, args = c(psm_OS$config, statistic = bootPSM, R = n.sim))
 
 
 ```
@@ -206,31 +213,12 @@ n.sim <- 100
 # define a seed that will affect the random numbers used by boot for sampling 
 set.seed(2020)
 
-PSM_bootstraps_PFScor <- boot(
-  statistic = bootPSM, # bootstrap function
-  R=n.sim, # number of bootstrap samples
-  data=analysis_data, # the dataset
-  time_var="PFS_days", # the time variable
-  event_var="PFS_event", # the event variable coded as 1 for event
-  model.type= "One arm", 
-  distr = "weibull", # for speed we only fit a single model but multiple could be specified,
-  int_name = "A"  # needed for one arm even as essential meta data
-)
+PSM_bootstraps_PFScor <- do.call(boot, args = c(psm_PFS$config, statistic = bootPSM, R = n.sim))
 
 # reuse the same seed that will affect the random numbers used by boot for sampling 
 set.seed(2020)
 
-PSM_bootstraps_OScor <- boot(
-  statistic = bootPSM, # bootstrap function
-  R=n.sim, # number of bootstrap samples
-  data=analysis_data, # the dataset
-  time_var="OS_days",  # the time variable
-  event_var="OS_event", # the event variable coded as 1 for event
-  model.type="One arm", # again for speed only a single model is specified
-  distr = "gamma", 
-  int_name = "A"  # needed for one arm even as essential meta data
-)
-
+PSM_bootstraps_OScor <- do.call(boot, args = c(psm_OS$config, statistic = bootPSM, R = n.sim))
 ```
 
 We can check these are indeed using the same bootstrap samples by comparing the indexes selected. This means the associated bootstrap distributions for PFS and OS should remain correlated.

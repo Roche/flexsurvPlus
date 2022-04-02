@@ -66,8 +66,9 @@
 #'   \item \code{vignette("Model_theory", package = "flexsurvPlus")}
 #'   }
 #' 
-#' @return A list containing 'models' (models fit using flexsurvreg), 'model_summary' (a tibble containing AIC, BIC and convergence information) and
-#'   'parameters_vector', a vector containing the coefficients of each flexsurv model.
+#' @return A list containing 'models' (models fit using flexsurvreg), 'model_summary' (a tibble containing AIC, BIC and convergence information),
+#'   'parameters_vector' (a vector containing the coefficients of each flexsurv model), and 'config' (a list containing 
+#'   information on the function call).
 #' \itemize{
 #'   \item 'models' is a list of flexsurv objects for each distribution specified
 #'   \item 'model_summary' is a tibble object containing the fitted model objects, the parameter
@@ -95,9 +96,8 @@ runPSM <- function(data,
                              'genf'
                              ),
                    strata_var,
-                   int_name, ref_name){
-
-
+                   int_name, 
+                   ref_name){
 
   #test that a legitimate value for model type has been provided
   assertthat::assert_that(
@@ -105,6 +105,25 @@ runPSM <- function(data,
     msg = "Only the following model types are supported are supported: 'Common shape', 'Independent shape', 'Separate', 'One arm' "
   )
 
+  # store the passed information 
+  config = list(data = data,
+                time_var = time_var, 
+                event_var = event_var, 
+                weight_var = weight_var,
+                model.type = model.type,
+                distr = distr,
+                int_name = int_name)
+
+  # these parameters are optional depending on the model 
+  # fit so only store if used
+  
+  if(!missing(strata_var)){
+    config$strata_var = strata_var
+  }
+  if(!missing(ref_name)){
+    config$ref_name = ref_name
+  }
+  
   #For models with common shape, calculate the location
   #parameter for the treatment arm for each distribution
 
@@ -200,13 +219,13 @@ runPSM <- function(data,
       AIC,
       BIC
     )
-  
-  
+
   
   # combine the outputs
   output <- list(models = models,
                  model_summary = final_model_summary,
-                 parameters_vector = parameters_vector
+                 parameters_vector = parameters_vector,
+                 config = config
                  )
   
   return(output)

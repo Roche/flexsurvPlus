@@ -59,6 +59,12 @@ articles:
   contents: 
   - Fitting_models_in_R
   - Bootstrap_models_in_R
+- title: "Excel examples"
+  desc: >
+    These vignettes provide examples using some included Excel files to demonstrate 
+    a complete workflow.
+  contents:
+  - Excel_example_ex1
 - title: "Methods appendix"
   desc: >
     These vignettes provide more details on the methods used and formulas for parametric forms

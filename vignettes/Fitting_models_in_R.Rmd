@@ -486,15 +486,56 @@ The inputs for the <tt>bootPSM</tt> function are identical to the
 *  <tt>i</tt> - Index used to select a sample within <tt>boot</tt>
 
 
+As the parameters are stored in the config object returned by runPSM it
+is possible to use <tt>do.call</tt> to simplify these calls assuming that models
+have already been fit using <tt>runPSM</tt>.
+
 ```{r}
+
+# illustrative example using original analysis models
+# only create 2 replicates for illustration
 set.seed(2358)
-# For speed and illustration only 4 models are selected for bootstrapping - all could be included. 
+boot_psm_PFS_all <- do.call(boot, args = c(psm_PFS_all$config, R = 2, statistic = bootPSM))
+
+# is the same as
+set.seed(2358)
+boot_psm_PFS_demo <- boot(
+  R = 2, # number of bootstrap samples
+  statistic = bootPSM, # bootstrap function
+  data=PFS_data,
+  time_var="PFS_days",
+  event_var="PFS_event",
+  model.type= c("Common shape",
+                "Independent shape", 
+                "Separate"),
+  distr = c('exp',
+            'weibull',
+            'gompertz',
+            'lnorm',
+            'llogis',
+            'gengamma',
+            'gamma',
+            'genf'),
+  strata_var = "ARMCD",
+  int_name="A",
+  ref_name = "B"
+)
+
+
+all(boot_psm_PFS_all$t==boot_psm_PFS_demo$t, na.rm = TRUE)
+
+
+```
+
+For speed and to examine how this can be used we will repeat this selecting only 4 models. 
+
+```{r}
+
+set.seed(2358)
 # To minimize vignette computation time only 100 bootstrap samples are taken. In general more samples should be used.
 n.sim <- 100 
 
-PSM_bootstraps_PFS <- boot(
-  statistic = bootPSM, # bootstrap function
-  R=n.sim, # number of bootstrap samples
+psm_PFS_selected <- runPSM(
   data=PFS_data,
   time_var="PFS_days",
   event_var="PFS_event",
@@ -504,6 +545,12 @@ PSM_bootstraps_PFS <- boot(
   int_name = "B",
   ref_name = "A"
 )
+
+PSM_bootstraps_PFS <- do.call(boot, args = c(psm_PFS_selected$config,
+                                             statistic = bootPSM, # bootstrap function
+                                             R=n.sim # number of bootstrap samples
+                                             )
+                              )
 
 ```
 
@@ -536,8 +583,19 @@ PFS_ref_mean <- with(PFS_bootsamples, flexsurv::mean_gamma(shape = sep.gamma.sha
 # using gamma for the intervention
 PFS_int_mean <- with(PFS_bootsamples, flexsurv::mean_weibull(shape = sep.weibull.shape.int, scale = sep.weibull.scale.int))
 
+# we could also calculate these values also for the original data for a deterministic estimate 
+PFS_means <- summaryPSM(psm_PFS_selected,
+                        type = "mean") 
+
+PFS_means %>%
+  dplyr::transmute(Model, Dist, Strata,StrataName, value) %>%
+  dplyr::filter((Dist == "Gamma" & Model == "Separate - Reference") |
+                  (Dist == "Weibull" & Model == "Separate - Intervention") )
+                  
+
 # we can then calculate the incremental mean PFS from these
 PFS_delta = PFS_int_mean - PFS_ref_mean 
+
 
 # if we are interested we can then estimate quantiles from this
 quantile(PFS_delta, probs = c(0.025,0.975))
@@ -548,7 +606,6 @@ density <- density(PFS_delta)
 plot(density, 
      lwd = 2, 
      main = "Density")
-
 
 ```
 

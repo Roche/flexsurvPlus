@@ -3,8 +3,9 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   Bootstrap_models_in_R: Bootstrap_models_in_R.html
+  Excel_example_ex1: Excel_example_ex1.html
   Fitting_models_in_R: Fitting_models_in_R.html
   Model_theory: Model_theory.html
   STEM_compatibility: STEM_compatibility.html
-last_built: 2022-03-31T11:00Z
+last_built: 2022-04-02T11:33Z
 

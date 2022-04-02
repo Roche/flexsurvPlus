@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flexsurvPlus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.05</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.06</span>
       </span>
     </div>
 
@@ -248,8 +248,9 @@ the parameters. Not required when model.type='One arm'.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing 'models' (models fit using flexsurvreg), 'model_summary' (a tibble containing AIC, BIC and convergence information) and
-'parameters_vector', a vector containing the coefficients of each flexsurv model.</p><ul>
+    <p>A list containing 'models' (models fit using flexsurvreg), 'model_summary' (a tibble containing AIC, BIC and convergence information),
+'parameters_vector' (a vector containing the coefficients of each flexsurv model), and 'config' (a list containing
+information on the function call).</p><ul>
 <li><p>'models' is a list of flexsurv objects for each distribution specified</p></li>
 <li><p>'model_summary' is a tibble object containing the fitted model objects, the parameter
 estimates (<code><a href='https://rdrr.io/r/stats/coef.html'>coef</a></code>),  <code><a href='https://rdrr.io/r/stats/AIC.html'>AIC</a></code> and <code><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></code>
