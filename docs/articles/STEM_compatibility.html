@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flexsurvPlus</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.05</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.06</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@
       <h1 data-toc-skip>STEM compatibility</h1>
                         <h4 class="author">Roche</h4>
             
-            <h4 class="date">2022-03-31</h4>
+            <h4 class="date">2022-04-02</h4>
       
       
       <div class="hidden name"><code>STEM_compatibility.Rmd</code></div>
@@ -202,18 +202,7 @@ pre { /* Code block - determines code spacing between lines */
 <span class="co"># Apply bootstrapping for illustration 100 samples are taken</span>
 <span class="co"># In practice a larger number maybe preferable.</span>
 
-<span class="va">psm_boot_PFS_expweib</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/boot/man/boot.html">boot</a></span><span class="op">(</span>statistic <span class="op">=</span> <span class="va">bootPSM</span>, <span class="co"># bootstrap function</span>
-                              R <span class="op">=</span> <span class="fl">100</span>, <span class="co"># number of bootstrap samples</span>
-                              data <span class="op">=</span> <span class="va">PFS_data</span>, <span class="co"># the dataset</span>
-                              time_var <span class="op">=</span> <span class="st">"AVAL"</span>, <span class="co"># the time variable</span>
-                              event_var <span class="op">=</span> <span class="st">"event"</span>, <span class="co"># the event variable coded as 1 for event</span>
-                              model.type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Common shape"</span>, 
-                                             <span class="st">"Separate"</span><span class="op">)</span>, 
-                              distr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'exp'</span>, <span class="st">'weibull'</span><span class="op">)</span>,
-                              int_name <span class="op">=</span> <span class="st">"A"</span>,
-                              ref_name <span class="op">=</span> <span class="st">"B"</span>,
-                              strata_var <span class="op">=</span> <span class="st">"ARMCD"</span>
-<span class="op">)</span></pre></div>
+<span class="va">psm_boot_PFS_expweib</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">boot</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">psm_PFS_expweib</span><span class="op">$</span><span class="va">config</span>, statistic <span class="op">=</span> <span class="va">bootPSM</span>, R <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></pre></div>
 </div>
 <div id="converting-to-a-stem-format" class="section level1">
 <h1 class="hasAnchor">

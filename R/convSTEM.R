@@ -53,7 +53,8 @@ convSTEM <- function(x = NULL, samples = NULL, use = "everything"){
   
   if (!is.null(samples)){
     assertthat::assert_that(
-      samples$call$statistic == "bootPSM", 
+      all(unlist(lapply(strsplit(names(samples$t0), ".", fixed = TRUE), function(x){x[1]})) %in% 
+            c("comshp", "indshp", "sep", "onearm")), 
       msg = "This function only works with bootstrap samples created using boot with statistic = bootPSM"
     )
   }

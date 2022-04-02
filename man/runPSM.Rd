@@ -74,8 +74,9 @@ must be a level of the "strata_var" column in "data", used for labelling
 the parameters. Not required when model.type='One arm'.}
 }
 \value{
-A list containing 'models' (models fit using flexsurvreg), 'model_summary' (a tibble containing AIC, BIC and convergence information) and
-'parameters_vector', a vector containing the coefficients of each flexsurv model.
+A list containing 'models' (models fit using flexsurvreg), 'model_summary' (a tibble containing AIC, BIC and convergence information),
+'parameters_vector' (a vector containing the coefficients of each flexsurv model), and 'config' (a list containing
+information on the function call).
 \itemize{
 \item 'models' is a list of flexsurv objects for each distribution specified
 \item 'model_summary' is a tibble object containing the fitted model objects, the parameter
