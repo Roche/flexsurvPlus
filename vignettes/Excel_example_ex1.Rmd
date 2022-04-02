@@ -184,8 +184,12 @@ Included with the package is an example Excel file called `ex1_calculation.xlsx`
 
 ```{r}
 
+<<<<<<< HEAD
 installed_file <- system.file("extdata/ex1_calculation.xlsx", package = "flexsurvPlus") 
 installed_file
+=======
+installed_file <- system.file("inst/extdata/ex1_calculation.xlsx", package = "flexsurvPlus") 
+>>>>>>> 28e14efb687ceb8a24cad966fd325e375d329bc1
 
 # not run but will give you a local copy of the file
 # file.copy(from = installed_file, to ="copy_of_ex1_calculation.xlsx")
@@ -204,7 +208,10 @@ This contains a copy of the data exported in the last step.
 
 This contains example calculations to extrapolate survival.
 
+<<<<<<< HEAD
 ![Extrapolations tab](excel_ex1_img2.png)
+=======
+>>>>>>> 28e14efb687ceb8a24cad966fd325e375d329bc1
 We can compare the approximate estimates of mean survival with those calculated in R. As the excel model only goes until time t=2000 we can more directly compare to the estimates of restricted mean survival time (rmst) until this time.
 
 ```{r}
@@ -221,3 +228,10 @@ means_est %>%
   pander::pandoc.table()
 
 ```
+<<<<<<< HEAD
+=======
+
+
+![Extrapolations tab](excel_ex1_img2.png)
+
+>>>>>>> 28e14efb687ceb8a24cad966fd325e375d329bc1
