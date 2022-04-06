@@ -8,7 +8,7 @@ Format_data_separate <- function(data, time_var, event_var, weight_var,  strata_
   
   # if weights specified include these
   if (weight_var != ""){
-    dat_wts <- data[,weight_var]
+    dat_wts <- dplyr::tibble(data[,weight_var])
     colnames(dat_wts) <- "Weight"
     dat <- cbind(dat, dat_wts)
   }
@@ -32,7 +32,7 @@ Format_data_onearm <- function(data, time_var, event_var, weight_var, int_name) 
   
   # if weights specified include these
   if (weight_var != ""){
-    dat_wts <- data[,weight_var]
+    dat_wts <- dplyr::tibble(data[,weight_var])
     colnames(dat_wts) <- "Weight"
     dat <- cbind(dat, dat_wts)
   }
@@ -55,7 +55,7 @@ Format_data <- function(data, time_var, event_var, weight_var, strata_var, int_n
   
   # if weights specified include these
   if (weight_var != ""){
-    dat_wts <- data[,weight_var]
+    dat_wts <- dplyr::tibble(data[,weight_var])
     colnames(dat_wts) <- "Weight"
     dat <- cbind(dat, dat_wts)
   }
