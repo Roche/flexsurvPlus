@@ -231,7 +231,7 @@ analysis.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed to <code><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></code></p></td>
+      <td><p>Additional arguments passed to <code>survfit</code></p></td>
     </tr>
     </table>
 
@@ -256,13 +256,14 @@ analysis.</p></td>
     <pre class="examples"><div class='input'>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='input'>
+
 <span class='va'>PFS_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sim_adtte.html'>sim_adtte</a></span><span class='op'>(</span>seed <span class='op'>=</span> <span class='fl'>2020</span>, rho <span class='op'>=</span> <span class='fl'>0.6</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>PARAMCD</span><span class='op'>==</span><span class='st'>"PFS"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span><span class='va'>USUBJID</span>,
             <span class='va'>ARMCD</span>,
             PFS_days <span class='op'>=</span> <span class='va'>AVAL</span>,
-            PFS_event <span class='op'>=</span> <span class='fl'>1</span><span class='op'>-</span> <span class='va'>CNSR</span>
+            PFS_event <span class='op'>=</span> <span class='fl'>1</span><span class='op'>-</span> <span class='va'>CNSR</span>,
+            wt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>500</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>
 <span class='op'>)</span>
 
 <span class='va'>pfs_info</span> <span class='op'>&lt;-</span> <span class='fu'>summaryKM</span><span class='op'>(</span>
@@ -311,6 +312,27 @@ analysis.</p></td>
 #&gt; <span style='color: #BCBCBC;'>2</span> A          est        700   <span style='color: #BB0000;'>NA</span> 
 #&gt; <span style='color: #BCBCBC;'>3</span> B          est        500  321.
 #&gt; <span style='color: #BCBCBC;'>4</span> B          est        700  364.</div><div class='input'> 
+<span class='co'># example with weights</span>
+ <span class='va'>pfs_info_wt</span> <span class='op'>&lt;-</span> <span class='fu'>summaryKM</span><span class='op'>(</span>
+   data <span class='op'>=</span> <span class='va'>PFS_data</span>,
+   time_var <span class='op'>=</span> <span class='st'>"PFS_days"</span>,
+   event_var <span class='op'>=</span> <span class='st'>"PFS_event"</span>,
+   strata_var <span class='op'>=</span> <span class='st'>"ARMCD"</span>,
+   weight_var <span class='op'>=</span> <span class='st'>"wt"</span>,
+   int_name <span class='op'>=</span> <span class='st'>"A"</span>,
+   ref_name <span class='op'>=</span> <span class='st'>"B"</span>,
+   types <span class='op'>=</span> <span class='st'>"survival"</span>
+   <span class='op'>)</span>
+   
+   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>pfs_info</span>, <span class='va'>type</span> <span class='op'>==</span> <span class='st'>"survival"</span>, <span class='va'>variable</span> <span class='op'>==</span> <span class='st'>"est"</span><span class='op'>)</span>,
+          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>time</span>, y <span class='op'>=</span> <span class='va'>value</span>, color <span class='op'>=</span> <span class='va'>StrataName</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_step</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>linetype <span class='op'>=</span> <span class='st'>"Original"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_step</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>pfs_info_wt</span>, <span class='va'>type</span> <span class='op'>==</span> <span class='st'>"survival"</span>, <span class='va'>variable</span> <span class='op'>==</span> <span class='st'>"est"</span><span class='op'>)</span>, 
+               <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>linetype <span class='op'>=</span> <span class='st'>"Weighted"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"Time"</span><span class='op'>)</span> <span class='op'>+</span>
+     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span><span class='op'>(</span><span class='st'>"Survival"</span><span class='op'>)</span> <span class='op'>+</span>
+     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span><span class='op'>(</span><span class='st'>"KM estimates and 95% CI"</span><span class='op'>)</span>
+</div><div class='img'><img src='summaryKM-3.png' alt='' width='700' height='433' /></div><div class='input'>   
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

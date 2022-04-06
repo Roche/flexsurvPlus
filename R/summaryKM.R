@@ -50,7 +50,8 @@
 #' transmute(USUBJID,
 #'             ARMCD,
 #'             PFS_days = AVAL,
-#'             PFS_event = 1- CNSR
+#'             PFS_event = 1- CNSR,
+#'             wt = runif(500,0,1)
 #' )
 #' 
 #' pfs_info <- summaryKM(
@@ -85,6 +86,27 @@
 #' filter(pfs_info, type == "rmst") %>%
 #'   transmute(StrataName, variable, time, value)
 #'  
+#' # example with weights
+#'  pfs_info_wt <- summaryKM(
+#'    data = PFS_data,
+#'    time_var = "PFS_days",
+#'    event_var = "PFS_event",
+#'    strata_var = "ARMCD",
+#'    weight_var = "wt",
+#'    int_name = "A",
+#'    ref_name = "B",
+#'    types = "survival"
+#'    )
+#'    
+#'    ggplot(data = filter(pfs_info, type == "survival", variable == "est"),
+#'           aes(x = time, y = value, color = StrataName)) +
+#'      geom_step(aes(linetype = "Original")) +
+#'      geom_step(data = filter(pfs_info_wt, type == "survival", variable == "est"), 
+#'                aes(linetype = "Weighted")) +
+#'      xlab("Time") +
+#'      ylab("Survival") +
+#'      ggtitle("KM estimates and 95% CI")
+#'    
 #' @export
 summaryKM <- function(data,
                       time_var, event_var, weight_var = "",
