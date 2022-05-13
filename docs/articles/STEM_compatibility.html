@@ -106,7 +106,7 @@
       <h1 data-toc-skip>STEM compatibility</h1>
                         <h4 class="author">Roche</h4>
             
-            <h4 class="date">2022-04-02</h4>
+            <h4 class="date">2022-05-13</h4>
       
       
       <div class="hidden name"><code>STEM_compatibility.Rmd</code></div>
@@ -756,9 +756,9 @@ pre { /* Code block - determines code spacing between lines */
 <p>To derive survival in Excel the following formula are used:</p>
 <ul>
 <li>
-<code>lambda = EXP(-INTERCEPT/SCALE)</code> and/or</li>
-<li><code>lambda = EXP(-(INTERCEPT+TX(INTERVENTION)/SCALE))</code></li>
-<li><code>gamma = 1/SCALE</code></li>
+<code>lambda = EXP(-INTERCEPT)</code> and/or</li>
+<li><code>lambda = EXP(-(INTERCEPT+TX(INTERVENTION)))</code></li>
+<li><code>gamma = SCALE</code></li>
 <li><code>Survival = EXP((lambda/gamma)*(1-EXP(gamma*time)))</code></li>
 </ul>
 </div>
@@ -922,7 +922,7 @@ pre { /* Code block - determines code spacing between lines */
 <li><code>lambda = (EXP(-(INTERCEPT+TX(INTERVENTION))^(SHAPE/SCALE))/(SHAPE^2)</code></li>
 <li><code>gamma = 1/(SHAPE^2)</code></li>
 <li><code>delta = SHAPE/SCALE</code></li>
-<li><code>Survival = IF(gamma&gt;0, 1-GAMMADIST(lambda*$D12^(delta),gamma,1,TRUE), 1-( 1-GAMMADIST(lambda*time^(delta),gamma,1,TRUE)))</code></li>
+<li><code>Survival = IF(gamma&gt;0, 1-GAMMADIST(lambda*time^(delta),gamma,1,TRUE), 1-( 1-GAMMADIST(lambda*time^(delta),gamma,1,TRUE)))</code></li>
 </ul>
 </div>
 </div>
