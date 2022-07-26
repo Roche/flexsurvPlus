@@ -2,7 +2,7 @@ template:
   includes:
     in_header: |
        <!-- Global site tag (gtag.js) - Google Analytics -->
-       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SGZFXJEC6X"#' ></script>
+       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SGZFXJEC6X"></script>
        <script>
          window.dataLayer = window.dataLayer || [];
          function gtag(){dataLayer.push(arguments);}
@@ -39,6 +39,9 @@ navbar:
       href: https://github.com/Roche/flexsurvPlus
 
 reference:
+- title: "Package information"
+  contents:
+  - flexsurvPlus
 - title: "Core functions"
   desc: >
     These functions are the core functions used to perform survival analysis.
