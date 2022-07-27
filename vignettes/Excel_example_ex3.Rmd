@@ -160,7 +160,7 @@ psm_OS_all <- runPSM(data=OSPFS_data,
 
 As described in other vignettes we can use `boot` to explore uncertainty. We can also reuse the seed to maintain correlations by ensuring the same individuals are sampled across each endpoint
 
-```{r message=FALSE, echo=FALSE}
+```{r message=FALSE}
 # fix seed for reproducible samples
 set.seed(bootstrap_seed)
 
