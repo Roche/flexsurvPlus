@@ -1,10 +1,10 @@
 ---
-title: "STEM compatibility - Excel example"
+title: "Excel example 2 - STEM compatibility"
 author: "Roche"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Excel Examples}
+  %\VignetteIndexEntry{Excel example 2 - STEM compatibility}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
