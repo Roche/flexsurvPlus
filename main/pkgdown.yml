@@ -1,0 +1,13 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  Bootstrap_models_in_R: Bootstrap_models_in_R.html
+  Excel_example_ex1: Excel_example_ex1.html
+  Excel_example_ex2: Excel_example_ex2.html
+  Excel_example_ex3: Excel_example_ex3.html
+  Fitting_models_in_R: Fitting_models_in_R.html
+  Model_theory: Model_theory.html
+  STEM_compatibility: STEM_compatibility.html
+last_built: 2023-05-02T12:35Z
+
