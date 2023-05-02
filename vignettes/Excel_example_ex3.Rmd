@@ -1,10 +1,10 @@
 ---
-title: "Excel example - correlated endpoints in PSA"
+title: "Excel example 3 - correlated endpoints in PSA"
 author: "Roche"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Excel Examples}
+  %\VignetteIndexEntry{Excel example 3 - correlated endpoints in PSA}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

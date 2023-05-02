@@ -4,7 +4,7 @@ author: "Roche"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Excel Examples}
+  %\VignetteIndexEntry{Excel example 1 - extrapolation calculations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
