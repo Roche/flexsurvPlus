@@ -28,6 +28,6 @@ Depends:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat,
+    testthat (>= 3.0.0),
     ggplot2 (>= 3.3.0),
     boot (>= 1.3-24)
