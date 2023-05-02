@@ -10,8 +10,7 @@ runPSM(
   event_var,
   weight_var = "",
   model.type = c("Separate", "Common shape", "Independent shape"),
-  distr = c("exp", "weibull", "gompertz", "lnorm", "llogis", "gengamma", "gamma",
-    "genf"),
+  distr = c("exp", "weibull", "gompertz", "lnorm", "llogis", "gengamma", "gamma", "genf"),
   strata_var,
   int_name,
   ref_name
