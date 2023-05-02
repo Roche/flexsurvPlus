@@ -1,10 +1,10 @@
 ---
-title: "STEM compatibility - Excel example"
+title: "Excel example 2 - STEM compatibility"
 author: "Roche"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Excel Examples}
+  %\VignetteIndexEntry{Excel example 2 - STEM compatibility}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -78,13 +78,12 @@ endpoints. In this example, we analyze progression-free survival (PFS). For more
 details on these steps please refer to the other vignettes.
 
 ```{r}
-
 # make reproducible
 set.seed(1234)
 
-# used later 
-(simulation_seed <- floor(runif(1, min=1, max = 10^8)))
-(bootstrap_seed <- floor(runif(1, min=1, max = 10^8)))
+# used later
+(simulation_seed <- floor(runif(1, min = 1, max = 10^8)))
+(bootstrap_seed <- floor(runif(1, min = 1, max = 10^8)))
 
 # low number for speed of execution given illustrating concept
 n_bootstrap <- 10
@@ -94,14 +93,12 @@ head(adtte)
 
 # subset PFS data and rename
 PFS_data <- adtte %>%
-  filter(PARAMCD=="PFS") %>%
+  filter(PARAMCD == "PFS") %>%
   transmute(USUBJID,
-            ARMCD,
-            PFS_days = AVAL,
-            PFS_event = 1- CNSR
+    ARMCD,
+    PFS_days = AVAL,
+    PFS_event = 1 - CNSR
   )
-
-
 ```
 
 # Fitting the models
@@ -109,21 +106,24 @@ PFS_data <- adtte %>%
 More information about each function can be used by running the code <tt>?runPSM</tt> or viewing the other vignettes. 
 
 ```{r}
-psm_PFS_all <- runPSM(data=PFS_data,
-                     time_var="PFS_days",
-                     event_var="PFS_event",
-                     model.type= c("Common shape"),
-                     distr = c('exp',
-                               'weibull',
-                               'gompertz',
-                               'lnorm',
-                               'llogis',
-                               'gengamma',
-                               'gamma'),
-                     strata_var = "ARMCD",
-                     int_name = "B",
-                     ref_name = "A")
-
+psm_PFS_all <- runPSM(
+  data = PFS_data,
+  time_var = "PFS_days",
+  event_var = "PFS_event",
+  model.type = c("Common shape"),
+  distr = c(
+    "exp",
+    "weibull",
+    "gompertz",
+    "lnorm",
+    "llogis",
+    "gengamma",
+    "gamma"
+  ),
+  strata_var = "ARMCD",
+  int_name = "B",
+  ref_name = "A"
+)
 ```
 # Bootstrap the estimated parameters
 
@@ -134,7 +134,6 @@ As described in other vignettes we can use `boot` to explore uncertainty.
 set.seed(bootstrap_seed)
 
 boot_psm_PFS_all <- do.call(boot, args = c(psm_PFS_all$config, statistic = bootPSM, R = n_bootstrap))
-
 ```
 
 # Converting to STEM format
@@ -142,9 +141,7 @@ boot_psm_PFS_all <- do.call(boot, args = c(psm_PFS_all$config, statistic = bootP
 As described in other vignettes we can use `convSTEM` function to transform the parameterisations for backwards compatibility to the SAS macro model formulas.
 
 ```{r message=FALSE}
-
 stemdata <- convSTEM(x = psm_PFS_all, samples = boot_psm_PFS_all, use = "complete.obs")
-
 ```
 
 # Exporting to Excel
@@ -152,7 +149,6 @@ stemdata <- convSTEM(x = psm_PFS_all, samples = boot_psm_PFS_all, use = "complet
 Once the values are calculated we can export to Excel. The following code prepares two tibbles that can be exported. One containing the main estimates. A second containing the covariance matrices.
 
 ```{r}
-
 main_estimates <- stemdata$stem_param %>%
   dplyr::transmute(Dist, Param, Estimate)
 
@@ -160,7 +156,7 @@ cov_estimates <- stemdata$stem_cov %>%
   dplyr::transmute(Dist, rowNum, rowParam, colNum, colParam, CovEst)
 
 # can preview these tables
-  
+
 main_estimates %>%
   head() %>%
   pander::pandoc.table()
@@ -169,15 +165,14 @@ cov_estimates %>%
   head() %>%
   pander::pandoc.table()
 
-# the following code is not run in the vignette but will export this file 
+# the following code is not run in the vignette but will export this file
 
 # require(openxlsx)
 # wb <- openxlsx::createWorkbook()
-# openxlsx::addWorksheet(wb, sheetName = "Exported data") 
+# openxlsx::addWorksheet(wb, sheetName = "Exported data")
 # openxlsx::writeDataTable(wb, sheet = "Exported data", main_estimates, startRow = 2, startCol = 2)
 # openxlsx::writeDataTable(wb, sheet = "Exported data", cov_estimates, startRow = 2, startCol = 3+ncol(main_estimates))
 # openxlsx::saveWorkbook(wb, file = "export_data_ex2.xlsx", overwrite = TRUE)
-
 ```
 
 # The Excel model
@@ -185,13 +180,11 @@ cov_estimates %>%
 Included with the package is an example Excel file called `ex2_stemcalc.xlsx`. This can be extracted using the below code (not run). It can also be found in the github repository at https://github.com/Roche/flexsurvPlus/tree/main/inst/extdata
 
 ```{r}
-
-installed_file <- system.file("extdata/ex2_stemcalc.xlsx", package = "flexsurvPlus") 
+installed_file <- system.file("extdata/ex2_stemcalc.xlsx", package = "flexsurvPlus")
 installed_file
 
 # not run but will give you a local copy of the file
 # file.copy(from = installed_file, to ="copy_of_ex2_stemcalc.xlsx")
-
 ```
 
 This illustrates how all the included survival models can be extrapolated in Excel.
@@ -218,17 +211,17 @@ This contains example calculations to extrapolate survival.
 We can compare the approximate estimates of mean survival with those calculated in R. As the excel model only goes until time t=2000 we can more directly compare to the estimates of restricted mean survival time (rmst) until this time.
 
 ```{r}
-
 means_est <- psm_PFS_all %>%
-  summaryPSM(type = c("mean","rmst"), t = 2000) 
+  summaryPSM(type = c("mean", "rmst"), t = 2000)
 
 # match to selected model in screenshot
 means_est %>%
   dplyr::filter(Model == "Common shape") %>%
-  tidyr::pivot_wider(id_cols = c("Strata", "Dist"),
-                          names_from = c("type"),
-                          values_from = "value") %>%
+  tidyr::pivot_wider(
+    id_cols = c("Strata", "Dist"),
+    names_from = c("type"),
+    values_from = "value"
+  ) %>%
   dplyr::arrange(Strata, Dist) %>%
   pander::pandoc.table()
-
 ```

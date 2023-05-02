@@ -1,10 +1,10 @@
 ---
-title: "Excel example - correlated endpoints in PSA"
+title: "Excel example 3 - correlated endpoints in PSA"
 author: "Roche"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Excel Examples}
+  %\VignetteIndexEntry{Excel example 3 - correlated endpoints in PSA}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -77,13 +77,12 @@ endpoints. In this example, we analyze progression-free survival (PFS)
 and overall survival (OS). For more  details on these steps please refer to the other vignettes.
 
 ```{r}
-
 # make reproducible
 set.seed(1234)
 
-# used later 
-(simulation_seed <- floor(runif(1, min=1, max = 10^8)))
-(bootstrap_seed <- floor(runif(1, min=1, max = 10^8)))
+# used later
+(simulation_seed <- floor(runif(1, min = 1, max = 10^8)))
+(bootstrap_seed <- floor(runif(1, min = 1, max = 10^8)))
 
 # low number for speed of execution given illustrating concept
 n_bootstrap <- 100
@@ -92,28 +91,26 @@ adtte <- sim_adtte(seed = simulation_seed, rho = 0.6)
 
 # subset PFS data and rename
 PFS_data <- adtte %>%
-  filter(PARAMCD=="PFS") %>%
+  filter(PARAMCD == "PFS") %>%
   transmute(USUBJID,
-            ARMCD,
-            PFS_days = AVAL,
-            PFS_event = 1- CNSR
+    ARMCD,
+    PFS_days = AVAL,
+    PFS_event = 1 - CNSR
   )
 
 # subset PFS data and rename
 OS_data <- adtte %>%
-  filter(PARAMCD=="OS") %>%
+  filter(PARAMCD == "OS") %>%
   transmute(USUBJID,
-            ARMCD,
-            OS_days = AVAL,
-            OS_event = 1- CNSR
+    ARMCD,
+    OS_days = AVAL,
+    OS_event = 1 - CNSR
   )
 
 OSPFS_data <- PFS_data %>%
   left_join(OS_data, by = c("USUBJID", "ARMCD"))
 
 head(OSPFS_data)
-
-
 ```
 
 # Fitting the models
@@ -121,40 +118,46 @@ head(OSPFS_data)
 More information about each function can be used by running the code <tt>?runPSM</tt> or viewing the other vignettes. Here only common shape models are fit but the same concept applies to all other models.
 
 ```{r}
-psm_PFS_all <- runPSM(data=OSPFS_data,
-                     time_var="PFS_days",
-                     event_var="PFS_event",
-                     model.type= c("Common shape"),
-                     distr = c('exp',
-                               'weibull',
-                               'gompertz',
-                               'lnorm',
-                               'llogis',
-                               'gengamma',
-                               'gamma',
-                               'genf'),
-                     strata_var = "ARMCD",
-                     int_name = "B",
-                     ref_name = "A")
+psm_PFS_all <- runPSM(
+  data = OSPFS_data,
+  time_var = "PFS_days",
+  event_var = "PFS_event",
+  model.type = c("Common shape"),
+  distr = c(
+    "exp",
+    "weibull",
+    "gompertz",
+    "lnorm",
+    "llogis",
+    "gengamma",
+    "gamma",
+    "genf"
+  ),
+  strata_var = "ARMCD",
+  int_name = "B",
+  ref_name = "A"
+)
 
 
-psm_OS_all <- runPSM(data=OSPFS_data,
-                     time_var="OS_days",
-                     event_var="OS_event",
-                     model.type= c("Common shape"),
-                     distr = c('exp',
-                               'weibull',
-                               'gompertz',
-                               'lnorm',
-                               'llogis',
-                               'gengamma',
-                               'gamma',
-                               'genf'),
-                     strata_var = "ARMCD",
-                     int_name = "B",
-                     ref_name = "A")
-
-
+psm_OS_all <- runPSM(
+  data = OSPFS_data,
+  time_var = "OS_days",
+  event_var = "OS_event",
+  model.type = c("Common shape"),
+  distr = c(
+    "exp",
+    "weibull",
+    "gompertz",
+    "lnorm",
+    "llogis",
+    "gengamma",
+    "gamma",
+    "genf"
+  ),
+  strata_var = "ARMCD",
+  int_name = "B",
+  ref_name = "A"
+)
 ```
 # Bootstrap the estimated parameters
 
@@ -170,14 +173,12 @@ boot_psm_PFS_all <- do.call(boot, args = c(psm_PFS_all$config, statistic = bootP
 set.seed(bootstrap_seed)
 
 boot_psm_OS_all <- do.call(boot, args = c(psm_OS_all$config, statistic = bootPSM, R = n_bootstrap))
-
 ```
 # Exporting to Excel
 
 Once the values are calculated we can export to Excel. The following code prepares four tibbles that can be exported. Two containing the main estimates for PFS & OS respectively. And two more containing the bootstrap samples.
 
 ```{r}
-
 main_estimates_PFS <- psm_PFS_all$parameters_vector %>%
   t() %>%
   as.data.frame()
@@ -187,21 +188,21 @@ main_estimates_OS <- psm_OS_all$parameters_vector %>%
   as.data.frame()
 
 boot_estimates_PFS <- boot_psm_PFS_all$t %>%
-  as.data.frame() 
+  as.data.frame()
 
 boot_estimates_OS <- boot_psm_OS_all$t %>%
-  as.data.frame() 
+  as.data.frame()
 
 colnames(main_estimates_PFS) <- colnames(boot_estimates_PFS) <- names(psm_PFS_all$parameters_vector)
 
 colnames(main_estimates_OS) <- colnames(boot_estimates_OS) <- names(psm_OS_all$parameters_vector)
 
 # can preview these tables
-  
-main_estimates_PFS[,1:5] %>%
+
+main_estimates_PFS[, 1:5] %>%
   pander::pandoc.table()
 
-# the following code is not run in the vignette but will export this file 
+# the following code is not run in the vignette but will export this file
 
 # require(openxlsx)
 # wb <- openxlsx::createWorkbook()
@@ -220,8 +221,6 @@ main_estimates_PFS[,1:5] %>%
 # openxlsx::createNamedRegion(wb, sheet = "OS Exported data",
 #                             cols = 2:(2+length(main_estimates_OS)), rows = 6:(6-1+nrow(boot_estimates_OS)), name = "OS_Samples")
 # openxlsx::saveWorkbook(wb, file = "export_data.xlsx", overwrite = TRUE)
-
-
 ```
 
 # The Excel model
@@ -229,13 +228,11 @@ main_estimates_PFS[,1:5] %>%
 Included with the package is an example Excel file called `ex3_correlation.xlsm`. This can be extracted using the below code (not run). It can also be found in the github repository at https://github.com/Roche/flexsurvPlus/tree/main/inst/extdata. Also included are two files with pre calculated results for correlated and un-correlated PSA and excluding the excel PSA macro. These are `ex3_results_corr.xlsx` for correlated PSA and `ex3_results_not.xlsx` for un-correlated.
 
 ```{r}
-
-installed_file <- system.file("extdata/ex3_correlation.xlsm", package = "flexsurvPlus") 
+installed_file <- system.file("extdata/ex3_correlation.xlsm", package = "flexsurvPlus")
 installed_file
 
 # not run but will give you a local copy of the file
 # file.copy(from = installed_file, to ="ex3_correlation.xlsm")
-
 ```
 
 This illustrates how all the included survival models can be extrapolated in Excel and PSA setup to correlate two outcomes.

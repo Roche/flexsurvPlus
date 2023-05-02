@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.github$
+^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^update_github_sites.R$
