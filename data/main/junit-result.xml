@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="internal_functions" timestamp="2023-05-02T12:22:42Z" hostname="d70358acf207" tests="1" skipped="0" failures="0" errors="0" time="0.025">
+    <testcase time="0.0250000000000004" classname="internal_functions" name="dummy_test_passes"/>
+  </testsuite>
+</testsuites>
