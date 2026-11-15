@@ -43,7 +43,16 @@ get_model_summary <- function(models) {
       Dist = name,
       AIC = sapply(models.flexsurv, stats::AIC), #get AIC
       BIC = sapply(models.flexsurv, stats::BIC), #get BIC
-      Status = "Converged"
+      Status = vapply(models.flexsurv, function(model) {
+        code <- model$opt$convergence
+        if (length(code) != 1L || is.na(code)) {
+          "Unknown (optimizer code unavailable)"
+        } else if (code == 0L) {
+          "Converged"
+        } else {
+          paste0("Not converged (optim code ", code, ")")
+        }
+      }, character(1))
     ) %>%
     dplyr::select(-value, -name) %>% 
     as.data.frame()
