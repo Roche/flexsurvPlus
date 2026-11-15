@@ -276,7 +276,7 @@ summaryKM <- function(data,
         rc_surv %>%
         dplyr::filter(variable == "est") %>%
         dplyr::mutate(variable = "se",
-                      value = sf$std.err) %>%
+                      value = smry_cens$std.err) %>%
         dplyr::bind_rows(rc_surv)
       }
   
